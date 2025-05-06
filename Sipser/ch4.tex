@@ -1,0 +1,111 @@
+\chapter{Decidability}
+
+\begin{reference}{Thm}{adfa}
+  (4.1) $A_{\mathrm{DFA}}=\{\langle B, w\rangle|B\text{ is a DFA that accepts }w\}$ is decidable.
+\end{reference}
+
+\begin{proof}[Proof Idea]
+  We use a TM to simulate $B$ on $w$, this is clearly a decider.
+\end{proof}
+
+\begin{reference}{Thm}{anfa}
+  (4.2) Also, $A_{\mathrm{NFA}}$ is decidable.
+\end{reference}
+
+\begin{proof}[Proof Idea]
+  Convert the NFA to a DFA and use the TM from \ref{adfa} to decide. Actually an NFA might loop for that it takes $\varepsilon$. It actually still will be decidable, but that is something we have to prove.
+\end{proof}
+
+\begin{reference}{Thm}{edfa}
+  (4.3) $E_{\mathrm{DFA}}=\{\langle A\rangle|A\text{ is a DFA and }L(A)=\emptyset\}$ is decidable.
+\end{reference}
+
+\begin{proof}[Proof Idea]
+  We use BFS to see which of the states of $A$ are reachable.
+\end{proof}
+
+\begin{reference}{Thm}{eqdfa}
+  (4.5) $EQ_{\mathrm{DFA}}=\{\langle A,B\rangle|A\text{ and }B\text{ are DFAs and }L(A)=L(B)\}$ is decidable.
+\end{reference}
+
+\begin{proof}[Proof Idea]
+  Make DFA $C$ that accepts $w$ where $A$ and $B$ disagree (easily, $L(C)=(L(A)\cap \overline{L(B)})\cup(\overline{L(A)}\cap L(B))$) and test if $L(C)=\emptyset$. If we are to prove it by feeding strings into the simulated DFAs it would be way more complicated. A basic idea is to try to prove that if $L(A)\neq L(B)$, some strings whose length are at most some bound (say the sum or product of the numbers of states in $A$ and $B$) are going to behave differently when fed to $A$ and $B$.
+\end{proof}
+
+\begin{reference}{Thm}{acfg}
+  (4.7) $A_{\mathrm{CFG}}=\{\langle G, w\rangle|G\text{ is a CFG that generates }w\}$ is decidable.
+\end{reference}
+
+\begin{proof}[Proof Idea]
+  By \ref{cnfthm} and \ref{2.26} this is trivial. So $A_{\mathrm{PDA}}$ is also decidable. Note that this is not easy to prove on its own, since PDAs may not halt.
+\end{proof}
+
+\begin{reference}{Thm}{ecfg}
+  (4.8) $E_{\mathrm{CFG}}=\{\langle G\rangle|G\text{ is a CFG and }L(G)=\emptyset\}$ is decidable.
+\end{reference}
+
+\begin{proof}[Proof Idea]
+  Mark all the terminals in $G$. Then repeat the following until new variables are marked: mark all occurrences of variable $A$ if $A\to B_1B_2\cdots B_k$ is a rule and all $B_i$'s were already marked.
+\end{proof}
+
+\begin{reference}{Thm}{cfldeci}
+  (4.9) Every context-free language is decidable.
+\end{reference}
+
+\begin{proof}[Proof Idea]
+  It follows immediately from \ref{acfg}. Note that we know it is decidable, without knowing \textit{how} to decide it.
+\end{proof}
+
+\begin{reference}{Thm}{eqcfg}
+  $EQ_{\mathrm{CFG}}=\{\langle G,H\rangle|G,H\text{ are CFGs and }L(G)=L(H)\}$ is undecidable.
+\end{reference}
+
+\begin{reference}{Thm}{atm}
+  (4.11) $A_{\mathrm{TM}}=\{\langle M,w\rangle|M\text{ is a TM that accepts }w\}$ is undecidable.
+\end{reference}
+
+\begin{reference}{Rmk}{atmreco}
+  $A_{\mathrm{TM}}$ is recognizable.
+\end{reference}
+
+We can prove it by simulating. Note that we do not ask the simulator TM to reject if $M$ rejects by looping (one should prove that this can be carried out effectively, but shows that it cannot) and instead we say nothing about the looping condition, for that if $M$ rejects by looping, our simulator will as well. This simulator is of great historical importance, as the \textit{first} machine described (due to Alan Turing) to operate based on a stored program, and it later came to be known as the Von Neumann architecture.
+
+% TODO: Refer to the halting problem.
+
+\section*{Exercises and Problems}
+
+\setcounter{exercise}{13}
+
+\begin{exercise}{4.14}
+  Question to fill in.
+\end{exercise}
+
+\textcolor{red}{to do (hard!)}
+
+\setcounter{exercise}{17}
+
+\begin{exercise}{4.18}
+  Let $C$ be a language. Prove that $C$ is T-recognizable iff a decidable language $D$ exists such that $C=\{x|\exists y(\langle x,y\rangle\in D)\}$.
+\end{exercise}
+
+\begin{proof}
+  ($\Leftarrow$) Consider a string $x$, we enumerate $y\in \Sigma^*$ and see if $\langle x,y_i\rangle\in D$ for at least one $i$. Thus $C$ is recognizable. *($\Rightarrow$) Say that $L(M)=C$, where $M$ is a TM. Let $D=\{\langle x,y\rangle|M\text{ accepts }x\text{ in }y\text{ steps}\}$, and we are done.
+\end{proof}
+
+\textit{Comment.} A bound that can approach infinity can be useful to turn something recognizable into something decidable.
+
+\setcounter{exercise}{23}
+
+\begin{exercise}{4.24}
+  A \textit{useless state} in a pushdown automaton is never entered on any input string. Consider the problem of determining whether a pushdown automaton has any useless states. Formulate this problem as a language and show that it is decidable.
+\end{exercise}
+
+\textcolor{red}{to do}
+
+\setcounter{exercise}{26}
+
+\begin{exercise}{4.26}
+  Question to fill in.
+\end{exercise}
+
+\textcolor{red}{to do}

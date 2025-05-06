@@ -1,0 +1,256 @@
+\chapter{Regular Languages}
+
+\begin{reference}{Defn}{dfa}
+  (1.15) A \textbf{\textit{finite automaton}} is a 5-tuple $(Q,\Sigma,\delta,q_0,F)$, where
+  \begin{enumerate}
+    \item $Q$ is a finite set called the \textbf{\textit{states}},
+    \item $\Sigma$ is a finite set called \textbf{\textit{alphabet}},
+    \item $\delta:Q\times\Sigma\rightarrow Q$ is the \textbf{\textit{transition function}},
+    \item $q_0\in Q$ is the \textbf{\textit{start state}}, and
+    \item $F\subseteq Q$ is the \textbf{\textit{set of accept states}}.\qedhere
+  \end{enumerate}
+\end{reference}
+
+\begin{reference}{Defn}{strlan}
+  A \textbf{\textit{string}} is a finite sequence of symbols in $\Sigma$. A \textbf{\textit{language}} is a set of strings (finite or infinite). Definition of FAs \textbf{\textit{accepting}} strings and \textbf{\textit{recognizing}} languages on page 40.
+\end{reference}
+
+\begin{reference}{Defn}{regularlan}
+  (1.16) A language is called a \textbf{\textit{regular language}} if some finite automaton
+  recognizes it.
+\end{reference}
+
+\begin{reference}{Rmk}{constructfa}
+  To construct an FA is to keep track of several different possibilities with one state for each.
+\end{reference}
+
+
+\begin{reference}{Defn}{regularoper}
+  (1.23) The \textbf{\textit{regular operations}} include \textbf{\textit{union}} ($A\cup B$), \textbf{\textit{concatenation}} ($AB$) and \textbf{\textit{star}} $A^*$, where $A$ and $B$ are languages.
+\end{reference}
+
+\begin{reference}{Defn}{regularexpr}
+  (1.52) The set of \textbf{\textit{regular expressions}} is generated from $B$ by regular operations (\ref{regularoper}), where $B=\{\emptyset\}\cup\{\{a\}|a\in \Sigma\}$.
+\end{reference}
+
+\begin{reference}{Thm}{unionclosure}
+  (1.25) The class of regular languages is closed under the union operation.
+\end{reference}
+
+\begin{proof}[Proof Idea]
+  We construct an FA that keeps track of the states of \textit{both} given FAs, and terminates when either does. Hence $Q=Q_1\times Q_2, F=(F_1\times Q_2)\cup(Q_1\times F_2)$ and so forth.
+\end{proof}
+
+\begin{reference}{Thm}{concatenateclosure}
+  (1.26) The class of regular languages is closed under the concatenation operation.
+\end{reference}
+
+\begin{reference}{Defn}{nfa}
+  (1.37) A \textbf{\textit{Nondeterministic}} FA is again a 5-tuple, differing from an DFA in that the transition function $\delta$ is of the form $Q\times \Sigma_{\varepsilon}\rightarrow \mathcal{P}(Q)$.
+\end{reference}
+
+\begin{reference}{Rmk}{nondeterminism}
+  Ways to think about nondeterminism:
+  \begin{enumerate}
+    \item Computational: Fork new parallel thread and accept if any thread leads to an accept state.
+    \item Mathematical: Tree with branches. Accept if any branch leads to an accept state.
+    \item Magical: Guess at each nondeterministic step which way to go. Machine always makes the right guess that leads to accepting, if possible.\qedhere
+  \end{enumerate}
+\end{reference}
+
+\begin{reference}{Thm}{nfaequaldfa}
+  (1.39) Every nondeterministic finite automaton has an equivalent deterministic finite automaton.
+\end{reference}
+
+\begin{proof}[Proof Idea]
+  We construct a DFA $M'$ that keeps track of the set of possible states in the given NFA $M$. Hence $Q'=\mathcal{P}(Q), q_0'=\{q_0\}, F'=\{R\in Q'|R\cap F\neq\emptyset\}$ and so forth.
+\end{proof}
+
+\begin{proof}[Proof Idea for \ref{concatenateclosure}]
+  We construct an NFA by putting in $\varepsilon$ transitions going from $F_1$ to $q_2$. The other accomodations are immediate.
+\end{proof}
+
+\begin{reference}{Thm}{starcolsure}
+  The class of regular languages is closed under the star operation.
+\end{reference}
+
+\begin{proof}[Proof Idea]
+  We construct an NFA by putting in $\varepsilon$ transitions going from $F$ to $q_0$. The new start state $q_0'$ is in $F'$ and has an $\varepsilon$ transition pointing toward $q_0$. We can not simply put $q_0$ in $F'$ for that if $q_0\notin F$, $M'$ might accept some string that $M$ does not.
+\end{proof}
+
+\begin{reference}{Lem}{regularexprlan}
+  (1.55) If a language is described by a regular expression, then it is regular.
+\end{reference}
+
+\begin{proof}[Proof Idea]
+  We construct NFAs for regular expressions in $B$ (\ref{regularexpr}), and composite them the way described when proving that the class of regular languages is closed under regular operations. (This is indeed indution.)
+\end{proof}
+
+\begin{reference}{Lem}{regularlanexpr}
+  (1.60) If a language is regular, then it is described by a regular expression.
+\end{reference}
+
+\begin{proof}[Proof Idea]
+  We construct a special type of NFAs that can be easily converted to a form equivalent to a regular expression, and then describe a procedure that takes a DFA, converts it to an NFA of such type and returns a regular expression. The conversion procedure should maintain the language our automata recognize.
+  \begin{reference}{Defn}{gnfa}
+    (1.64) A \textit{Generalized} NFA is an NFA that allows regular expressions as transition labels.
+  \end{reference}
+  For convenience assume that (1) one accept state, separate from the start state and (2) one arrow from each state to each state, except only exiting the start state and only entering the accept state. This is the type of NFAs we ask for, and the conversion from DFAs to this type is trivial. After conversion we prove by induction that this NFA is \textit{indeed} equivalent to a regular expression.
+\end{proof}
+
+\begin{reference}{Thm}{pumpinglem}
+  (1.70) \textbf{Pumping lemma:} For every regular language $A$, there is a number $p$ (the ``pumping length'') such that if $s\in A$ and $|s|\geq p$ then $s=xyz$ where
+  \begin{enumerate}
+    \item $xy^iz\in A$ for all $i\geq0$
+    \item $y\neq \varepsilon$
+    \item $|xy|\leq p$\qedhere
+  \end{enumerate}
+\end{reference}
+
+\begin{proof}[Proof Idea]
+  There are finite states, and a long enough input string is going to go through some state twice. This lemma essentially formalizes this.
+\end{proof}
+
+\begin{reference}{Eg}{pumpinglemapplications}
+  We show a bunch of examples of proving (by contradiction) non-regularity according to \ref{pumpinglem}, where $\Sigma=\{0,1\}$, $L$ is the language, $s\in L$ and $p$ is the pumping length.
+  \begin{enumerate}
+    \item $L=0^k1^k$. We choose $s=0^p1^p$.
+    \item $L=\{ww|w\in \Sigma^*\}$. We choose $s=0^p10^p1$.
+    \item $L=\{w|w\text{ has equal numbers of $0$s and $1$s}\}$. We can easily show that regular languages are closed under intersection, so $L\cap 0^*1^*$ is regular, which is item 1. Thus contradiction.\qedhere
+  \end{enumerate}
+\end{reference}
+
+\section*{Exercises and Problems}
+
+\setcounter{exercise}{30}
+
+\begin{exercise}{1.31}
+  Show that if language $A$ is regular, so is its \textit{reverse} $A^{\mathcal{R}}$.
+\end{exercise}
+
+Given a DFA $M$ that recognizes $A$, we construct an equivalent NFA $M'$ by adding a new state $q$ and putting $\varepsilon$ transitions going from $F$ to $q$. So $q$ is the unique accept state in $M'$. Swap the start state and $q$ in $M'$ and define a new $\delta$ accordingly and we have an NFA that recognizes $A^{\mathcal{R}}$.
+
+\begin{exercise}{1.32}
+  Let
+  \[
+    \Sigma_3 = \left\{
+    \begin{bmatrix}
+      0 \\ 0 \\ 0
+    \end{bmatrix},\
+    \begin{bmatrix}
+      0 \\ 0 \\ 1
+    \end{bmatrix},\
+    \begin{bmatrix}
+      0 \\ 1 \\ 0
+    \end{bmatrix},\
+    \dots,\
+    \begin{bmatrix}
+      1 \\ 1 \\ 1
+    \end{bmatrix}
+    \right\}.
+  \]
+  \noindent
+  $\Sigma_3$ contains all size 3 columns of 0s and 1s. A string of symbols in $\Sigma_3$ gives three rows of 0s and 1s. Consider each row to be a binary number and let
+  \[
+    B = \left\{ w \in \Sigma_3^* \mid \text{the bottom row of } w \text{ is the sum of the top two rows} \right\}.
+  \]
+  \noindent
+  Show that $B$ is regular.
+\end{exercise}
+
+By \ref{1.31} consider $B^{\mathcal{R}}$. A DFA is straightforward that only has 3 states.
+
+\setcounter{exercise}{40}
+
+\begin{exercise}{1.41}
+  For languages $A$ and $B$, let the \textbf{\textit{perfect shuffle}} of $A$ and $B$ be the language
+  \[
+    \{w|w=a_1b_1\cdots a_kb_k,\text{ where }a_1\cdots a_k\in A\text{ and }b_1\cdots b_k\in B,\text{ each }a_i,b_i\in \Sigma\}
+  \]
+  Show that the class of regular languages is closed under perfect shuffle.
+\end{exercise}
+
+Similar to the proof of \ref{unionclosure}, we construct an FA that keeps track of the states of both given FAs \textit{and} parity, and terminates when both does \textit{and} the parity is even. Hence $Q=Q_1\times Q_2\times\{0,1\}, F=F_1\times F_2\times \{0\}$, $\delta$ behaves like $\delta_A$ on the set of even states and so forth.
+
+\setcounter{exercise}{50}
+
+\begin{exercise}{1.51}
+  Let $x$ and $y$ be strings and let $L$ be any language. We say that $x$ and $y$ are \textbf{\textit{distinguishable by $L$}} if some string $z$ exists whereby exactly one of the strings $xz$ and $yz$ is a member of $L$; otherwise, for every string $z$, we have $xz \in L$ iff $yz \in L$ and we say that $x$ and $y$ are \textbf{\textit{indistinguishable by $L$}} (written $x \equiv_L y$). Show that $\equiv_L$ is an equivalence relation.
+\end{exercise}
+
+Omitted as trivial.
+
+\begin{exercise}{1.52}
+  \textbf{Myhill-Nerode theorem.} Refer to \ref{1.51}. Let $L$ be a language and let $X$ be a set of strings. Say that $X$ is \textbf{\textit{pairwise distinguishable by $L$}} if every two distinct strings in $X$ are distinguishable by $L$. Define the \textbf{\textit{index of $L$}} to be the maximum number of elements in any set that is pairwise distinguishable by $L$. The index of $L$ may be finite or infinite.
+
+  \begin{enumerate}[label=\textbf{\alph*.}]
+    \item Show that if $L$ is recognized by a DFA with $k$ states, $L$ has index at most $k$.
+    \item Show that if the index of $L$ is a finite number $k$, it is recognized by a DFA with $k$ states.
+    \item Conclude that $L$ is regular iff it has finite index. Moreover, its index is the size of the smallest DFA recognizing it.\qedhere
+  \end{enumerate}
+\end{exercise}
+
+\begin{proof}
+  \begin{enumerate}[label=\textbf{\alph*.}]
+    \item If $\alpha_1$ and $\alpha_2$ is distinguishable by DFA $M$, the states $M$ ends in upon inputs $\alpha_1$ and $\alpha_2$ have to differ. Thus $k$ states indicates the index of $L$ is not greater than $k$.
+    \item Let $X = \{s_1, \dots, s_k\}$ be pairwise distinguishable by $L$. We construct DFA $M = (Q, \Sigma, \delta, q_0, F)$ with $k$ states recognizing $L$. Let $Q = \{q_1, \dots, q_k\}$, $F = \{q_i \mid s_i \in L\}$, the start state $q_0$ be the $q_i$ such that $s_i \equiv_L \varepsilon$ and define $\delta(q_i,a)$ to be $q_j$ where $s_j\equiv_L s_ia$. $M$ is constructed so that, for any state $q_i$, $\{s' \mid \delta(q_0, s') = q_i\} = \{s' \mid s' \equiv_L s_i\}$. Hence $M$ recognizes $L$. (I thought I had to construct according to $k$ \textit{strings} but I was actually given the quotient of \textit{all strings} w.r.t. $\equiv_L$ and that actually defines the DFA \textit{itself}.)
+    \item This conclusion is immediate by item a and b.\qedhere
+  \end{enumerate}
+\end{proof}
+
+\begin{exercise}{1.53}
+  Let $\Sigma = \{0, 1, +, =\}$ and
+  \[
+    \textit{ADD} = \{x = y + z \mid x, y, z \text{ are binary integers, and } x \text{ is the sum of } y \text{ and } z\}.
+  \]
+  Show that \textit{ADD} is not regular.
+\end{exercise}
+
+Suppose \textit{ADD} is regular and has pumping length $p$ for the sake of contradiction. For $y,z\in1^p\{0,1\}^*$, of course $|x|>p$. According to \ref{pumpinglem} we have multiple sum of $y$ and $z$, hence contradiction.
+
+\setcounter{exercise}{58}
+
+\begin{exercise}{1.59}
+  Let $M = (Q, \Sigma, \delta, q_0, F)$ be a DFA and let $h$ be a state of $M$ called its ``home''. A \textbf{\textit{synchronizing sequence}} for $M$ and $h$ is a string $s \in \Sigma^*$ where $\delta'(q, s) = h$ for every $q \in Q$, where $\delta'$ is intuitively extended onto strings. Say that $M$ is \textbf{\textit{synchronizable}} if it has a synchronizing sequence for some state $h$. Prove that if $M$ is a $k$-state synchronizable DFA, then it has a synchronizing sequence of length at most $k^3$. Can you improve upon this bound?
+\end{exercise}
+
+\textcolor{red}{to do}
+
+\begin{exercise}{1.60}
+  Let $\Sigma = \{a, b\}$. $C_k = \Sigma^* a \Sigma^{k-1}$. Describe an NFA with $k + 1$ states that recognizes $C_k$ in terms of both a state diagram and a formal description.
+\end{exercise}
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[
+      shorten >=1pt,
+      node distance=2cm,
+      on grid,
+      auto
+    ]
+    \node[state, initial]             (q0)   {$q_0$};
+    \node[state]                      (q1)  [right=of q0] {$q_1$};
+    \node                             (dots)  [right=of q1] {$\cdots$};
+    \node[state]                      (qkm1)  [right=of dots] {$q_{k-1}$};
+    \node[state, accepting]           (qk)  [right=of qkm1] {$q_k$};
+    \path[->]
+    (q0) edge[loop above]        node{a,b}          ()
+    (q0) edge                    node{a}            (q1)
+    (q1) edge                    node{a,b}          (dots)
+    (dots) edge                  node{a,b}          (qkm1)
+    (qkm1) edge                    node{a,b}          (qk)
+    ;
+    \draw[decorate,decoration={brace,amplitude=10pt,raise=5pt}]
+    ([yshift=4pt]q1.north west) -- ([yshift=4pt]qk.north east)
+    node[midway,yshift=15pt]{\(\displaystyle k-1\text{ transitions}\)};
+  \end{tikzpicture}
+  \caption{State diagram. A formal description is omitted.}
+\end{figure}
+
+\begin{exercise}{1.61}
+  Consider the languages $C_k$ defined in Problem 1.60. Prove that for each $k$, no DFA can recognize $C_k$ with fewer than $2^k$ states.
+\end{exercise}
+
+\begin{proof}
+  There are $2^k$ distinct Myhill-Nerode equivalence classes of strings w.r.t. $\equiv_{C_k}$. They are exactly the equivalence classes of strings with suffix $b^k, b^{k-1}a,b^{k-2}ab,\dots,a^k$ respectively. By \ref{1.52} we are done.
+\end{proof}

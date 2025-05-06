@@ -1,0 +1,26 @@
+\chapter{Useful Facts about Sets}
+
+\begin{reference}{Lem}{l0a}
+  (0A) Assume that
+  $
+    \langle x_1,\dots,x_m\rangle=\langle y_1,\dots,y_m,\dots,y_{m+k}\rangle
+  $
+  Then
+  \[x_1=\langle y_1,\dots,y_{k+1}\rangle.\qedhere\]
+\end{reference}
+\begin{proof}[Proof Sketch]
+  We use induction on $m$.
+\end{proof}
+
+Suppose that $A$ is a set such that no member of $A$ is a finite sequence of other members, then if $\langle x_1,\dots,x_m\rangle=\langle y_1,\dots,y_n\rangle$, and each $x_i$ and $y_j$ is in $A$, the by the above lemma $m=n$. Whereupon we have $x_i=y_i$ as well.
+
+\begin{reference}{Thm}{t0b}
+  (0B) Let $A$ be a countable set. Then the set of all finite sequences of members of $A$ is also countable.
+\end{reference}
+\begin{proof}[Proof]
+  The set $S$ of all such finite sequences can be characterized by the equation
+  \[
+    S=\bigcup_{n\in\mathbb{N}}A^{n+1}.
+  \]
+  Since $A$ is countable, we have a function $f$ mapping $A$ one-to-one into $\mathbb{N}$. The basic idea is to map $S$ one-to-one into $\mathbb{N}$ by assigning to $\langle a_0,a_1,\dots,a_m\rangle$ the number $2^{f(a_0)+1}3^{f(a_1)+1}\cdots p_m^{f(a_m)+1}$, where $p_m$ is the $(m+1)$st prime. This suffers from the defect that this assignment might not be well-defined. For conceivably there could be $\langle a_0,a_1,\dots,a_m\rangle=\langle b_0,b_1,\dots,b_n\rangle$, with $a_i$ and $b_j$ in $A$ but with $m\neq n$. But this is not serious; just assign to each number of $S$ the \textit{smallest} number obtainable in the above fashion. This gives us a well-defined map; it is easy to see that it is one-to-one.
+\end{proof}

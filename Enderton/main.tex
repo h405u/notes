@@ -1,0 +1,85 @@
+\documentclass[12pt, openany]{book}
+
+\usepackage{parskip}
+\usepackage{amsmath, amssymb, amsthm, stmaryrd}
+\usepackage{graphicx}
+\usepackage[centering, includeheadfoot, width=6in, height=9in]{geometry}
+\usepackage{enumitem}
+\usepackage{alphalph}
+\usepackage[colorlinks=true, linkcolor=cyan, citecolor=green, urlcolor=blue]{hyperref}
+
+\renewcommand{\qedsymbol}{$\dashv$}
+
+\newcounter{reference}[section]
+\renewcommand{\thereference}{\arabic{chapter}\arabic{section}\AlphAlph{\value{reference}}}
+
+\NewDocumentEnvironment{reference}{m m +b}
+  {
+    \refstepcounter{reference}
+  \renewcommand{\qedsymbol}{$\diamond$}
+
+    \noindent\textbf{#1~\thereference}\label{#2}
+    \pushQED{\qed}
+    #3
+    \popQED
+
+  }
+  {}
+
+\newcounter{exercise}[section]
+\renewcommand{\theexercise}{\thesection.\arabic{exercise}}
+
+\NewDocumentEnvironment{exercise}{m +b}
+  {
+    \refstepcounter{exercise}
+    \renewcommand{\qedsymbol}{$\triangleleft$}
+
+    \noindent\textbf{\theexercise}\label{#1}
+    \pushQED{\qed}
+    #2
+    \popQED
+
+  }
+  {}
+
+\makeatletter
+\providecommand*{\Dashv}{%
+  \mathrel{%
+    \mathpalette\@Dashv\vDash
+  }%
+}
+\newcommand*{\@Dashv}[2]{%
+  \reflectbox{$\m@th#1#2$}%
+}
+\makeatother
+
+\overfullrule=5pt
+
+\title{Notes on A Mathematical Introduction to Logic}
+\author{Hao Su}
+\date{\today}
+
+\setcounter{chapter}{-1}
+
+\begin{document}
+
+\frontmatter
+
+\maketitle
+\tableofcontents
+
+\mainmatter
+
+\input{ch0.tex}
+\input{ch1.tex}
+\input{ch2.tex}
+\input{ch3.tex}
+
+\backmatter
+
+\appendix
+
+\bibliographystyle{plain}
+\bibliography{references}
+
+\end{document}

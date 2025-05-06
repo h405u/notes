@@ -1,0 +1,43 @@
+\documentclass{article}
+
+\usepackage{parskip}
+\usepackage{amsmath, amssymb, amsthm, stmaryrd}
+\usepackage{graphicx}
+\usepackage[centering, includeheadfoot, width=6in, height=9in]{geometry}
+\usepackage{enumitem}
+\usepackage{alphalph}
+\usepackage[colorlinks=true, linkcolor=cyan, citecolor=blue]{hyperref}
+\usepackage[backend=biber, style=authoryear]{biblatex}
+\addbibresource{references.bib}
+\usepackage{etoolbox}
+
+\renewcommand{\qedsymbol}{$\dashv$}
+
+\makeatletter
+\providecommand*{\Dashv}{%
+  \mathrel{%
+    \mathpalette\@Dashv\vDash
+  }%
+}
+\newcommand*{\@Dashv}[2]{%
+  \reflectbox{$\m@th#1#2$}%
+}
+\makeatother
+
+\overfullrule=5pt
+
+\title{\Huge Trivial Notes 2025}
+\author{\Large Hao Su}
+\date{\Large\today}
+
+\begin{document}
+
+\maketitle
+\clearpage
+
+\input{silver2025welcome.tex}
+
+\clearpage
+\printbibliography
+
+\end{document}

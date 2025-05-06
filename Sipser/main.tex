@@ -1,0 +1,92 @@
+\documentclass[12pt, openany]{book}
+
+\usepackage{parskip}
+\usepackage{amsmath, amssymb, amsthm, stmaryrd}
+\usepackage{graphicx}
+\usepackage[centering, includeheadfoot, width=6in, height=9in]{geometry}
+\usepackage{enumitem}
+\usepackage{xparse}
+\usepackage{tikz}
+\usetikzlibrary{automata, positioning, fit, decorations.pathreplacing}
+\usepackage[colorlinks=true, linkcolor=cyan, citecolor=green, urlcolor=blue]{hyperref}
+\usepackage{float}
+
+\renewcommand{\qedsymbol}{$\dashv$}
+
+\newcounter{reference}[chapter]
+\renewcommand{\thereference}{\thechapter.\arabic{reference}}
+
+\NewDocumentEnvironment{reference}{m m +b}
+  {
+    \refstepcounter{reference}
+    \renewcommand{\qedsymbol}{$\diamond$}
+
+    \noindent\textbf{#1~\thereference}\label{#2}
+    \pushQED{\qed}
+    #3
+    \popQED
+
+  }
+  {}
+
+\newcounter{exercise}[chapter]
+\renewcommand{\theexercise}{\thechapter.\arabic{exercise}}
+
+\NewDocumentEnvironment{exercise}{m +b}
+  {
+    \refstepcounter{exercise}
+    \renewcommand{\qedsymbol}{$\triangleleft$}
+
+    \noindent\textbf{\theexercise}\label{#1}
+    \pushQED{\qed}
+    #2
+    \popQED
+
+  }
+  {}
+
+\makeatletter
+\newcommand{\xRightarrow}[2][]{\ext@arrow 0359\Rightarrowfill@{#1}{#2}}
+\makeatother
+
+\makeatletter
+\providecommand*{\Dashv}{
+  \mathrel{
+    \mathpalette\@Dashv\vDash
+  }
+}
+\newcommand*{\@Dashv}[2]{
+  \reflectbox{$\m@th#1#2$}
+}
+\makeatother
+
+\overfullrule=5pt
+
+\title{Notes on Theory of Computation\footnote{Actually notes on \href{https://ocw.mit.edu/courses/18-404j-theory-of-computation-fall-2020/}{MIT OCW 18.404J}, but indexed according to Sipser's \emph{Introduction to the Theory of Computation} (3\textsuperscript{rd} ed).}}
+\author{Hao Su}
+\date{\today}
+
+\begin{document}
+
+\frontmatter
+
+\maketitle
+\tableofcontents
+
+\mainmatter
+
+\input{ch1.tex}
+\input{ch2.tex}
+\input{ch3.tex}
+\input{ch4.tex}
+\input{ch5.tex}
+\input{ch6.tex}
+
+\backmatter
+
+\appendix
+
+\bibliographystyle{plain}
+\bibliography{references}
+
+\end{document}

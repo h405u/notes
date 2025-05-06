@@ -1,0 +1,801 @@
+\chapter{Sentential Logic}
+\setcounter{section}{-1}
+
+\section{Informal Remarks on Formal Languages}
+
+To describe a formal language, we specify:
+\begin{enumerate}
+  \item The set of \textit{symbols} (the alphabet).
+  \item The definition of \textit{wff}s.
+  \item The meaning of the language, or its rule for translation into natual languages.
+\end{enumerate}
+
+Item 3 is of less importance, especially considering that digital computers carry out caculation according to programming languages, which are formal languages, without knowledge of the meaning of them.
+
+\section{The Language of Sentential Logic}
+
+\textit{Symbols} are described as follows.
+\begin{enumerate}
+  \item Logical symbols.
+        \begin{enumerate}
+          \item Sentential connective symbols.
+          \item Parentheses.
+        \end{enumerate}
+  \item Nonlogical symbols (parameters or proposition or sentence symbols).
+\end{enumerate}
+
+Note that symbols can be themselves formulas in another language, say a first-order language. Note also that we assume no symbols is a finite sequence of other symbols, to assure that finite sequences of symbols are uniquely decomposable (see \ref{l0a}, and the subsequent remarks).
+
+An \textit{expression} is a finite sequence of symbols.
+
+We introduce \textit{formula-building operation} $\mathcal{E}$ before the definition of \textit{wffs}.
+\begin{align*}
+  \mathcal{E}_{\neg}(\alpha)=                  & (\neg \alpha)                 \\
+  \mathcal{E}_{\wedge}(\alpha,\beta)=          & (\alpha\wedge \beta)          \\
+  \mathcal{E}_{\vee}(\alpha,\beta)=            & (\alpha\vee \beta)            \\
+  \mathcal{E}_{\rightarrow}(\alpha,\beta)=     & (\alpha\rightarrow \beta)     \\
+  \mathcal{E}_{\leftrightarrow}(\alpha,\beta)= & (\alpha\leftrightarrow \beta)
+\end{align*}
+
+We want our definition of \textit{wffs} as a formal version of the following descrptions.
+
+\begin{enumerate}
+  \item Every sentence symbol is a wff.
+  \item If $\alpha$ and $\beta$ are wffs, then so are $\mathcal{E}_{\neg}(\alpha), \mathcal{E}_{\wedge}(\alpha,\beta), \mathcal{E}_{\vee}(\alpha,\beta), \mathcal{E}_{\rightarrow}(\alpha,\beta)$ and $\mathcal{E}_{\leftrightarrow}(\alpha,\beta)$.
+  \item No expression is a wff, unless it is compelled to be one by Item 1 and 2.
+\end{enumerate}
+
+The following principle qualifies.
+
+\begin{reference}{Thm}{inductionp0}
+  \textbf{Induction Principle}\quad If $S$ is a set of wffs containing all the sentence symbols and closed under $\mathcal{E}$, then $S$ is the set of all wffs.
+\end{reference}
+
+\begin{proof}[Proof Sketch]
+  For arbitrary wff $\alpha$, consider some construction sequence $\langle \varepsilon_1,\dots,\varepsilon_n\rangle$. We use strong induction on $i\leq n$ with the hypothesis claiming $\forall j<i\ \varepsilon_j\in S$.
+\end{proof}
+
+Intuitively, an arbitrary wff $\alpha$ is built up by finitely applying $\mathcal{E}$, and thus belongs to $S$. Also, note that $S$ contains only wffs, by starting upon some of them.
+
+\begin{reference}{Eg}{parenthesese}
+  Any expression with more left parentheses than right parentheses is not a wff.
+\end{reference}
+
+\begin{proof}[Proof Sketch]
+  We prove that the set of ``balanced'' wffs contains all sentence symbols and is closed under $\mathcal{E}$ and apply \ref{inductionp0}.
+\end{proof}
+
+\subsection*{Exercises}
+
+\begin{exercise}{E.1.1.1}
+  Question to fill in.
+\end{exercise}
+
+Omitted as I do not like this exercise.
+
+\begin{exercise}{E.1.1.2}
+  Question to fill in.
+\end{exercise}
+
+For the first part, we show first that any wff, in whose construction $\mathcal{E}$ is used at most 2 times, is not of length 2, 3, or 6. Then we show that the length of any other wff is at least 7. For the second part, We use induction on the length of a wff.
+
+\begin{exercise}{E.1.1.3}
+  Question to fill in.
+\end{exercise}
+
+We use induction on the number of times $\mathcal{E}$ is used in the construction of a wff.
+
+\begin{exercise}{E.1.1.4}
+  Question to fill in.
+\end{exercise}
+
+* We can show that the last expression in the sequence containing $A_4$ is not used by any other expression in the sequence, and neither is any expression containing $A_4$. Note that an expression in the sequence may not be used in its successors.
+
+\begin{exercise}{E.1.1.5}
+  Question to fill in.
+\end{exercise}
+
+\begin{enumerate}
+  \item We use induction on the number of times $\mathcal{E}$ is used in the construction of a wff.
+  \item We use again induction to show that the length is of the form $4k+1$.
+\end{enumerate}
+
+\section{Truth Assignments}
+
+A \textit{truth assignment} $v$ for a set $\mathcal{S}$ of sentence symbols is a function
+\[
+  v:\mathcal{S}\rightarrow\{F,T\}
+\]
+
+Let $\mathcal{S}$ be the set of wffs that can be built up from $\mathcal{S}$ by $\mathcal{E}$. An extention $\overline{v}$ of $v$
+\[
+  \overline{v}:\overline{\mathcal{S}}\rightarrow\{F,T\}
+\]
+is intuitively defined on $\overline{\mathcal{S}}$.
+
+\begin{reference}{Thm}{t12a}
+  (12A) For any truth assignment $v$ for a set $\mathcal{S}$ these is a unique extension $\overline{v}$ on $\overline{\mathcal{S}}$.
+\end{reference}
+
+\begin{proof}
+  See \ref{sec:1.3}.
+\end{proof}
+
+A truth assignment $v$ \textit{satisfies} $\varphi$ iff $\overline{v}(\varphi)=T$.
+
+\begin{reference}{Defn}{tautology}
+  A set $\Sigma$ of wffs \textit{tautologically implies} a wff $\tau$ (written $\Sigma\vDash\tau$) iff every truth assignment for the sentence symbols in $\Sigma$ and $\tau$ that satisfies every member of $\Sigma$ also satisfies $\tau$. Say that $\tau$ is a \textit{tautology} (written $\vDash \tau$) when $\varnothing\vDash \tau$. If $\Sigma$ is singleton $\{\sigma\}$, then we write ``$\sigma\vDash \tau$'' instead. If both $\sigma\vDash \tau$ and $\tau\vDash \sigma$, then they are said to be \textit{tautologically equivalent} (written $\sigma\vDash\Dashv\tau$).
+\end{reference}
+
+\ref{compactnesst} is a nontrivial fact.
+
+Applying the \textit{truth-table} method to a wff with $n$ sentence symbols requires $2^n$ lines. By the way, the famous ``\textit{P versus NP}'' problem can be formulated as, might there be some general method that, given any wff $\alpha$ with $n$ sentence symbols, will determine whether or not $\alpha$ is a tautology in polynomial time?
+
+\begin{reference}{Eg}{tautologyex}
+  It is hardly evident that
+  \[
+    ((((P\wedge Q)\rightarrow R)\rightarrow S)\rightarrow((P \rightarrow R)\rightarrow S))
+  \]
+  is a tautology, unless we observe
+  \begin{align*}
+    (P\wedge Q)                               & \vDash P,                                       \\
+    (P\rightarrow R)                          & \vDash ((P\wedge Q)\rightarrow R),              \\
+    (((P\wedge Q)\rightarrow R)\rightarrow S) & \vDash ((P\rightarrow R)\rightarrow S).\qedhere
+  \end{align*}
+\end{reference}
+
+\subsection*{Exercises}
+
+\begin{exercise}{E.1.2.1}
+  Question to fill in.
+\end{exercise}
+
+Omitted as trivial. One will find it highly nontrivial if they neglect `neither', as I did.
+
+\begin{exercise}{E.1.2.2}
+  Question to fill in.
+\end{exercise}
+
+Omitted as trivial. We can consider this exercise intuitively by observing that $P \rightarrow Q$ is as helpful as a tautology to the truthfulness of $P$.
+
+\begin{exercise}{E.1.2.3}
+  Question to fill in.
+\end{exercise}
+
+Omitted as trivial.
+
+\begin{exercise}{E.1.2.4}
+  Show that \begin{enumerate}[label=(\alph*)]
+    \item $\Sigma;\alpha\vDash \beta$ iff $\Sigma\vDash(\alpha\rightarrow \beta)$.
+    \item $\alpha\vDash\Dashv \beta$ iff $\vDash(\alpha\rightarrow \beta)$.\qedhere
+  \end{enumerate}
+\end{exercise}
+
+\begin{enumerate}[label=(\alph*)]
+  \item Omitted for brevity. A key step should be to state that ``for each truth assignment $\overline{v}$ that satisfies $\Sigma;\alpha$, it also satisfies $\beta$'' iff ``for each truth assignment $\overline{v}$ that satisfies $\Sigma$, if $\overline{v}(\alpha)=T$ then $\overline{v}(\beta)=T$''.
+  \item ``For each truth assignment $\overline{v}$ that satisfies $\alpha$, it also satisfies $\beta$'' iff ``for each truth assignment $\overline{v}$, if $\overline{v}(\alpha)=T$ then $\overline{v}(\beta)=T$.'' The rest is omitted for brevity.
+\end{enumerate}
+
+\begin{exercise}{E.1.2.5}
+  Prove or refute each of the following assertions:
+  \begin{enumerate}[label=(\alph*)]
+    \item If either $\Sigma \vDash \alpha$ or $\Sigma \vDash \beta$, then $\Sigma \vDash (\alpha \lor \beta)$.
+    \item If $\Sigma \vDash (\alpha \lor \beta)$, then either $\Sigma \vDash \alpha$ or $\Sigma \vDash \beta$.\qedhere
+  \end{enumerate}
+\end{exercise}
+
+* (a) Obviously true. (b) $\vDash(\alpha\vee\neg \alpha)$, but in general neither $\vDash \alpha$ nor $\vDash (\neg \alpha)$ (except one of them is tautology.) Actually (b) is true iff $\Sigma$ is complete (\ref{complete}).
+
+\begin{exercise}{E.1.2.6}
+  Question to fill in.
+\end{exercise}
+
+\begin{enumerate}[label=(\alph*)]
+  \item Let $B$ be the set of all sentence symbols in $\alpha$, $C$ the set generated from $B$ by $\mathcal{E}$ and the set on which $\bar{v}_1$ and $\bar{v}_2$ agree $S$. We can show that $\alpha\in C$, $B\subseteq S$ and $S$ is inductive.
+  \item Let $\mathcal{S}'\subseteq \mathcal{S}$ be the set of sentence symbols used in $\Sigma;\tau$. Every truth assignment for $\mathcal{S}'$ that satisfies every member of $\Sigma$ agrees with some truth assignment for $S$ that satisfies every member of $\Sigma$, and thus satisfies $\tau$.
+\end{enumerate}
+
+\begin{exercise}{E.1.2.7}
+  Question to fill in.
+\end{exercise}
+
+Which fork leads to the capital, if you belong to the people who always tell falsehoods?
+
+\begin{exercise}{E.1.2.8}
+  (\textit{Substitution}) Consider a sequence $\alpha_1,\alpha_2,\dots$ of wffs. For each wff $\varphi$ let $\varphi^*$ be the result of replacing the sentence symbol $\mathrm{A_n}$ by $\alpha_n$ for each $n$.\begin{enumerate}[label=(\alph*)]
+    \item Let $v$ be a truth assignment for the set of all sentence symbols; define $u$ to be the truth assignment for which $u(A_n)=\bar{v}(\alpha_n)$. Show that $\bar{u}(\varphi)=\bar{v}(\varphi^*)$.
+    \item Show that if $\varphi$ is a tautology, then so is $\varphi^*$.\qedhere
+  \end{enumerate}
+\end{exercise}
+
+\begin{enumerate}[label=(\alph*)]
+  \item Say $S$ is the set of wffs such that satisfies what substitution requires. We can show by induction that $S$ include all sentence symbols and is closed under $\mathcal{E}$.
+  \item It follows trivially from (a).
+\end{enumerate}
+
+\begin{exercise}{E.1.2.9}
+  (\textit{Duality}) Let $\alpha$ be a wff whose only connective symbols are $\wedge,\vee$ and $\neg$. Let $\alpha^*$ be the result of interchanging $\wedge$ and $\vee$ and replacing each sentence symbol by its negation. Show that $\alpha^*$ is tautologically equivalent to $(\neg \alpha)$.
+\end{exercise}
+
+Say $D$ is the set of wffs such that $\overline{v}(\neg\alpha)=\overline{v}(\alpha^*)$, where $\alpha$ is a wff and $\overline{v}$ is any truth assignment for $\alpha$. We can show that $D$ contains all sentence symbols and is closed under $\mathcal{E}_\neg$, $\mathcal{E}_\wedge$ and $\mathcal{E}_\vee$. We can apply substitution (Exercise \ref{E.1.2.8}) in the process.
+
+\begin{exercise}{E.1.2.10}
+  Say that a set $\Sigma_1$ of wffs is \textit{equivalent} to a set $\Sigma_2$ of wffs iff for any wff $\alpha$, we have $\Sigma_1\vDash \alpha$ iff $\Sigma_2\vDash \alpha$. A set $\Sigma$ is \textit{independent} iff no member of $\Sigma$ is tautologically implied by the remaining members in $\Sigma$. Show that the following hold.\begin{enumerate}[label=(\alph*)]
+    \item A finite set of wffs has an independent equivalent subset.
+    \item An infinite set need not have an independent equivalent subset.
+    \item Let $\Sigma=\{\sigma_0,\sigma_1,\dots\}$, show that there is an independent equivalent set $\Sigma'$.\qedhere
+  \end{enumerate}
+\end{exercise}
+
+\begin{enumerate}[label=(\alph*)]
+  \item
+        We do the following to any finite set $\Sigma$ of wffs until we obtain a independent subset of it: remove a wff $\alpha\in \Sigma$ such that $\Sigma-\alpha\vDash \alpha$. We claim that equivalence is kept during this procedure. A key part of the proof of this claim should be: a truth assignment $v$ satisfies $\Sigma$ iff it satisfies $\Sigma-\alpha$.
+  \item
+        Note that we are supposed to provide a counterexample by giving a set that is infinite and not independent. One could be $\Gamma=\{A_1, (A_1\wedge A_2), \dots, (A_1\wedge A_2\wedge A_3\wedge\cdots\wedge A_n),\dots\}$. * The set of independent subsets of $\Gamma$ is $\{\emptyset, \{A_1\}, \{A_1\wedge A_2\},\dots, \{A_1\wedge A_2\wedge A_3\wedge\cdots\wedge A_n\},\dots\}$, in which none is equivalent to $\Gamma$.
+  \item
+        The leading motivation during our set construction should be to achieve ``independence'', which means that we should make sure that for each formula $\sigma_i$ some truth assignment $\overline{v}$ exists such that $\overline{v}(\sigma_i)=F$ and $\overline{v}(\sigma)=T$, where $\sigma$ is any formula other than $\sigma_i$. That is why we may consider
+        \begin{align*}
+          \Sigma'=\{\sigma_0,(\sigma_0\rightarrow \sigma_1), ((\sigma_0\wedge \sigma_1)\rightarrow \sigma_2),\dots, \\((\sigma_0\wedge \sigma_1\wedge\cdots\wedge \sigma_n)\rightarrow \sigma_{n+1}),\dots\}\setminus\{\sigma:\vDash \sigma\}.
+        \end{align*}
+        It is equivalent to $\Sigma$, for we can verify that $\Sigma'\vDash \Sigma$ using induction and $\Sigma\vDash \Sigma'$ is trivial. We can also easily verify that it is independent.
+\end{enumerate}
+
+\begin{exercise}{E.1.2.11}
+  Question to fill in.
+\end{exercise}
+
+This is trivial considering that $\leftrightarrow$ is associative and commutative.
+
+\begin{exercise}{E.1.2.12}
+  Question to fill in.
+\end{exercise}
+
+Omitted for brevity.
+
+\begin{exercise}{E.1.2.13}
+  Question to fill in.
+\end{exercise}
+
+Watching Tennis. The formalization is omitted for brevity.
+
+\begin{exercise}{E.1.2.14}
+  Question to fill in.
+\end{exercise}
+
+Omitted for it is a trivial specification of Exercise \ref{E.1.2.6}(a).
+
+\begin{exercise}{E.1.2.15}
+  Question to fill in.
+\end{exercise}
+
+We could use a truth table, but the results are straightforward if we consider to simplify (b) and (c).
+
+\section{A Parsing Algorithm}\label{sec:1.3}
+
+A parsing algorithm for wffs is crucial (explained in \ref{sec:recur}) in that it guarantees the uniqueness of the construction trees of wffs, and thus proves the existence of the extension $\overline{v}$ of a truth assignment $v$. That is to say, For any wff $\varphi$ there is a unique tree constructing it, so we can unambiguously arrive at a value for $\overline{v}(\varphi)$.
+
+We must show that with our current notation (with the parentheses) ambiguity does not arise. There is one sense in which this fact is unimportant: If it failed, we would simply change notation until it was true.
+
+This paragraph introduces some technical details and is not of vital importance. To describe our algorithm, we might first prove that every wff has the same number of left as right parentheses (see \ref{parenthesese}) and that any proper initial segment of a wff contains an excess of left parentheses (which can be proved similarly). The essence of the algorithm is that we know when to stop when we recognize a vertex according to the count of parentheses, scanning a expression from the left until first observing a balance between left and right parentheses. Also, the procedure is finite and the given expression is not a wff if it is rejected.
+
+Polish notation avoids both ambiguity and parentheses.
+
+Conventions on notations are similar to \ref{sub: On Notation}.
+
+\subsection*{Exercises}
+
+\begin{exercise}{E.1.3.1}
+  Question to fill in.
+\end{exercise}
+
+Omitted as trivial.
+
+\begin{exercise}{E.1.3.2}
+  Question to fill in.
+\end{exercise}
+
+$\begin{aligned}[t]
+    \alpha= & (\gamma_0\wedge\theta_0), \\\beta=&\beta_0,\\\gamma=&(\gamma_0,\\\delta=&\theta_0)\wedge \beta_0.
+  \end{aligned}$
+
+\begin{exercise}{E.1.3.3}
+  Question to fill in.
+\end{exercise}
+
+Omitted as trivial.
+
+\begin{exercise}{E.1.3.4}
+  Question to fill in.
+\end{exercise}
+
+A working intuition can be to put back the right parentheses. We do this by examining vertices. Specifically, we mark all sentence symbols as vertices, and then proceed iteratively with the following procedure:
+\begin{enumerate}
+  \item If any connective symbol is on the proper position of vertices, a right parenthesis is added accordingly.
+  \item A newly added right parenthesis is then paired to the closest left parenthesis on its left, forming a new vertex.
+\end{enumerate}
+A tree can be therefore constructed. We should then examine various properties of this tree, especially that it remains identical with or without right parentheses.
+
+An other observation, as suggested, states that any wff
+\begin{enumerate}
+  \item has the same number of parentheses as connective symbols and,
+  \item is a sentence symbol \textit{or} ends with a connective symbol followed by a sentence symbol.
+\end{enumerate}
+We can state the algorithm accordingly.
+
+\begin{exercise}{E.1.3.5}
+  The English language has a tendency to use two-part connectives:
+  “both ... and ...” “either ... or ...” “if ..., then ....” How does
+  this affect unique readability in English?
+\end{exercise}
+
+I personally, due to limited proficiency in English, do not feel constrained or ambiguity when expressing using these connectives. We might though note that ``if'' often means iff in daily usage. For example, ``you can pass the exam if you score more than 60 percent of the points''.
+
+\begin{exercise}{E.1.3.6}
+  We have given an algorithm for analyzing a wff by constructing its tree from the top down. There are also ways of constructing the tree from the bottom up. This can be done by looking through the formula for innermost pairs of parentheses. Give a complete description of an algorithm of this sort.
+\end{exercise}
+
+Omitted for brevity. This can be done very similarly to what we did in Exercise 4. The key is to recognize the vertices in a bottom up manner.
+
+\begin{exercise}{E.1.3.7}
+  Question to fill in.
+\end{exercise}
+
+Yes. The corresponding algorithm is the same as that in Exercise 6 (which is, unfortunately, omitted). This can be obvious considering that the algorithm never directly worked with parentheses but with lower vertices on our parsing tree. Also we may note that any sff has twice as many parentheses as connective symbols and give accordingly an parsing algorithm. Remember in both ways we need to carefully reject expressions that are not wffs.
+
+\section{Induction and Recursion}
+
+\subsection*{Induction}
+
+We may occationally want to seek a smallest subset of a set $U$ whose members can be built up from some initial elements by applying some operations some finite number of times.
+
+\begin{reference}{Defn}{generation}
+  Let $U$ be the set of expressions, $B\subseteq U$ an initial set and a class $\mathcal{F}$ of functions, for the sake of simplicity, containing two members $f$ and $g$, where
+  \[
+    f:U\times U\rightarrow U \text{ and } g:U\rightarrow U.
+  \]
+  Say $C$ is the set we wish to construct, namely the set \textit{generated} from $B$ by $\mathcal{F}$. We give two definitions ($C^\star$ and $C_\star$) of $C$ and verify their equivalence.
+  \begin{enumerate}
+    \item
+          Say a subset $S$ of $U$ is \textit{inductive} iff $B\subseteq S$ and $S$ is closed under $f$ and $g$. Let $C^\star$ be the intersection of all the inductive subsets of $U$. Note that $C^\star$ is the smallest (by which we mean, being a subset of any set in comparison) inductive set.
+    \item Temporarily define a \textit{construction sequence} to be a finite sequence $\langle x_1,\dots,x_n\rangle$ of elements of $U$ such that for each $i\leq n$ we have at least one of
+          \begin{align*}
+            x_i & \in B,                                    \\
+            x_i & =f(x_j,x_k) \text{  for some  } j<i, k<i, \\
+            x_i & =g(x_j) \text{  for some  } j<i.
+          \end{align*}
+          Let $C_\star$ be the set of points $x$ such that some construction sequence ends with $x$. To better describe this, let $C_n$ be the set of points $x$ such that some construction sequence of length $n$ ends with $x$. Then
+          \[
+            B=C_1\subseteq C_2\subseteq C_3\subseteq\cdots\text{ and } C_\star=\bigcup_{n} C_n.\qedhere
+          \]
+  \end{enumerate}
+\end{reference}
+
+Now we verify their equivalence.
+\begin{enumerate}
+  \item To demonstrate that $C^\star\subseteq C_\star$ it suffices to show that $C_\star$ is inductive, which is obvious.
+  \item For a construction sequence $\langle x_0,\dots,x_n\rangle$, we use strong induction (which is a little bit similar to what we did in \ref{inductionp0}) on $i$ to see that $x_i\in C^\star, i\leq n$, thus $x_n\in C^\star$ and hence $C_\star\subseteq C^\star$.
+\end{enumerate}
+
+We have consequently an extended version of \ref{inductionp0}:
+
+\begin{reference}{Thm}{inductionp}
+  \textbf{Induction Principle}\quad If $S$ is a subset of $C$ that is inductive then $S=C$.
+\end{reference}
+
+\begin{proof}
+  It suffices to show $C\subseteq S$, which is given by definition $C^\star$.
+\end{proof}
+
+\begin{reference}{Eg}{inductivesetsex}
+  Inductively constructed sets.
+  \begin{enumerate}
+    \item Let $U$ be the set of all real numbers, $B=\{0\}$ and $\mathcal{F}=\{S\}$. Then $C$ is the set of natural numbers.
+    \item Let $U$ contain all functions whose domain and range are each sets of real numbers, $B$ contain the identity function and all constant functions and $\mathcal{F}$ contain the operations of addition, multiplication, division and root extraction. Then $C$ is the set of algebraic functions.
+    \item The set of wffs, as a generated set, is of special interest in that each consitituent in the family tree of a wff is a proper segment of the end product.
+    \item Let $U$ be a set of propositions that can be indexed by natual numbers like $P_i$, $B=\{P_0\}$, $\mathcal{F}=\{f:P_i\rightarrow P_{S(i)}\}$, $C$ the set generated from $B$ by $\mathcal{F}$ (we have a trivial fact that $C=U$), and $T$ the largest subset of $U$ whose members are true. If we can show that $B\subseteq T$ and $T$ is closed under $f$ (in other words, $T$ is inductive), then it follows that $T=C=U$, according to \ref{inductionp}.\qedhere
+  \end{enumerate}
+\end{reference}
+
+\subsection*{Recursion}\label{sec:recur}
+
+The problem we now want to consider is that of defining a function on $C$ recursively, which means, when given $h(x)$ on $B$, we would like to extend it to $\overline{h}(x)$ on $C$ with regard to given rules for computing $\overline{h}(f(x,y))$ and $\overline{h}(g(x))$.
+
+Such $\overline{h}$ may not exist, in that if any member of $C$ can be constructed according to two different trees, we can easily design the rules to generate contradiction. We are basically intended to construct $\overline{h}$ as a homomorphism from $C$ into ran $\overline{h}$, which is not likely to exist, except that $C$ is \textit{freely} generated, which is described as follows:
+\begin{enumerate}
+  \item $f_C$ and $g_C$ are one-to-one.
+  \item Ran $f_C$, ran $g_C$ and $B$ are pairwise disjoint.
+\end{enumerate}
+
+\begin{reference}{Thm}{recursiont}
+  \textbf{Recursion Theorem}\quad Assume that the subset $C$ of $U$ is freely generated from $B$ by $f$ and $g$, where
+  \begin{align*}
+    f:U\times U\rightarrow & U, \\
+    g:U\rightarrow         & U.
+  \end{align*}
+  Further assume that $V$ is a set and $F,G$ and $h$ are functions such that
+  \begin{align*}
+    h:B\rightarrow         & V, \\
+    F:V\times V\rightarrow & V, \\
+    G:V\rightarrow         & V.
+  \end{align*}
+  Then there is a unique function
+  \[
+    \overline{h}:C\rightarrow V
+  \]
+  such that
+  \begin{enumerate}
+    \item For $x$ in $B$, $\overline{h}(x)=h(x)$;
+    \item For $x,y$ in $C$,
+          \begin{align*}
+            \overline{h}(f(x,y))= & F(\overline{h}(x),\overline{h}(y)), \\
+            \overline{h}(g(x))=   & G(\overline{h}(x)).\qedhere
+          \end{align*}
+  \end{enumerate}
+\end{reference}
+
+\begin{proof}[Proof Sketch]
+  The idea is to construct $\overline{h}$ as the union of many approximating functions. Temporarily call a function $v$ acceptable iff dom $v$ is a subset of $C$, ran $v$ a subset of $V$, and for any $x$ and $y$ in $C$:
+  \begin{enumerate}
+    \item If $x$ belongs to $B$ and to dom $v$, then $v(x)=h(x)$.
+    \item If $f(x,y)$ belongs to the domain of $v$, then so do $x$ and $y$, and $v(f(x,y))=F(v(x),v(y))$. If $g(x)$ belongs to the domain of $v$, then so does $x$, and $v(g(x))=G(v(x))$.
+  \end{enumerate}
+  Let $K$ be the collecion of all acceptable functions, and let $\overline{h}=\bigcup K$, thus $\langle x,z\rangle\in\overline{h}$ iff $v(x)=z$ for some acceptable $v$.
+
+  We claim that $\overline{h}$ meets our requirements, which we can prove in four steps:
+  \begin{enumerate}
+    \item We claim that $\overline{h}$ is a function. Let
+          \[
+            S=\{x\in C|\text{ for at most one $z$, }\langle x,z\rangle\in \overline{h}\}
+          \]
+          We can then show that $S=C$ by verifying that $S$ is inductive by using what we require from $v$. A tricky thing to think of is that $S$ is not the domain of $\overline{h}$.
+    \item We claim that $\overline{h}$ itself is an acceptable function.
+    \item We claim that $\overline{h}$ is defined throughout $C$. It suffices to show that the domain of $\overline{h}$ is inductive. It is here that the assumption of freeness is used. For example is the following: Suppose that $x$ is in the domain of $\overline{h}$. Then $\overline{h};\langle g(x),G(\overline{h}(x))\rangle$ is acceptable. Consequently, $g(x)$ is in the domain of $\overline{h}$.
+    \item We claim that $\overline{h}$ is unique, which follows from step 1 and step 2.\qedhere
+  \end{enumerate}
+\end{proof}
+The detailed proof in the book (page 42) was done in a respected manner and is worth reading (except for the $4$th step).
+
+This theorem says that any map $h$ of $B$ into $V$ can be extended to a homomorphism $\overline{h}$ from $C$ (with operations $f$ and $g$) into $V$ (with operations $F$ and $G$), if $C$ is freely generated.
+
+Note that the set of wffs is freely generated from the set of sentence symbols by $\mathcal{E}$ (because of \ref{sec:1.3}).
+
+\subsection*{Exercises}
+
+\begin{exercise}{E.1.4.1}
+  Question to fill in.
+\end{exercise}
+
+Omitted as trivial.
+
+\begin{exercise}{E.1.4.2}
+  Question to fill in.
+\end{exercise}
+
+We can show that $\rightarrow\wedge$ is not a proper segment of any wff by considering a inductive subset of the set of wffs, any of whose members does not have $\rightarrow\wedge$ as a proper segment.
+
+\begin{exercise}{E.1.4.3}
+  Question to fill in.
+\end{exercise}
+
+Omitted as trivial. Note that that $\mathcal{F}$ is restricted did not play a definite part in the original proof.
+
+\section{Sentential Connectives}
+
+Suppose that $\alpha$ is a wff whose sentence symbols are at most $A_1,\dots,A_n$. We say that an $n$-place Boolean function $B_\alpha^n$ is \textit{realized} by $\alpha$, if
+\begin{align*}
+  B_{\alpha}^n(X_1,\dots,X_n)= & \text{ the truth value given to $\alpha$ when}             \\
+                               & \ A_1,\dots,A_n\text{ are given the values }X_1,\dots,X_n.
+\end{align*}
+
+\begin{reference}{Thm}{t15a}
+  (15A) Let $\alpha$ and $\beta$ be wffs whose sentence symbols are among $A_1,\dots,A_n$. Then
+  \begin{enumerate}
+    \item $\alpha\vDash \beta$ iff for all $X\in\{F,T\}^n$, $B_{\alpha}(X)\leq B_{\beta}(X)$.
+    \item $\alpha\vDash\Dashv \beta$ iff $B_{\alpha}=B_{\beta}$.
+    \item $\vDash \alpha$ iff $B_{\alpha}$ is the constant function with the value $T$.\qedhere
+  \end{enumerate}
+\end{reference}
+
+\begin{proof}[Proof of 1]
+  \begin{align*}
+    \alpha\vDash \beta & \text{ iff for all $2^n$ assignments $v$, } & \overline{v}(\alpha)=T\Rightarrow \overline{v}(\beta)=T, \\
+                       & \text{ iff for all $2^n$ $n$-tuples $X$, }  & B^n_{\alpha}(X)=T\Rightarrow B^n_{\beta}(X)=T,           \\
+                       & \text{ iff for all $2^n$ $n$-tuples $X$, }  & B^n_{\alpha}(X)\leq B^n_{\beta}(X),
+  \end{align*}
+  where $F<T$.
+\end{proof}
+
+\begin{reference}{Thm}{t15b}
+  (15B) Let $G$ be an $n$-place Boolean function, $n\geq 1$. We can find a wff $\alpha$ such that $G=B_{\alpha}^n$, i.e., such that $\alpha$ realizes $G$.
+\end{reference}
+
+\begin{proof}
+  Case I: $G$ is the constant function with value $F$. Let $\alpha=A_1\wedge\neg A_1$.
+
+  Case II: Otherwise there are $k$ points at which $G$ has the value $T$, $k>0$. List these:
+  \begin{align*}
+     & X_1=\langle X_{11},X_{12},\dots,X_{1n}\rangle, \\
+     & X_2=\langle X_{21},X_{22},\dots,X_{2n}\rangle, \\
+     & \cdots                                         \\
+     & X_k=\langle X_{k1},X_{k2},\dots,X_{kn}\rangle. \\
+  \end{align*}
+  Let
+  \begin{align*}
+    \beta_{ij} & =\begin{cases}
+                    A_j        & \text{iff }X_{ij}=T, \\
+                    (\neg A_j) & \text{iff }X_{ij}=F,
+                  \end{cases}             \\
+    \gamma_i   & = \beta_{i1}\wedge\cdots\wedge \beta_{in},     \\
+    \alpha     & =\gamma_1\vee \gamma_2\vee\cdots\vee \gamma_k.
+  \end{align*}
+  We claim that $G=B_{\alpha}^n$, and the proof is omitted as trivial.
+\end{proof}
+
+Say a wff $\alpha$ is in \textit{disjunctive normal form} (abbr. DNF), if $\alpha$ is a disjunction
+\[
+  \alpha=\gamma_1\vee\cdots\vee \gamma_k,
+\]
+where each $\gamma_i$ is a conjunction
+\[
+  \gamma_i=\beta_{i1}\wedge\cdots\wedge \beta{in_i}
+\]
+and each $\beta_{ij}$ is a sentence symbol or the negation of one. DNFs are good in that they explicitly list the truth assignments satisfying them.
+
+\begin{reference}{Cor}{c15c}
+  (15C) For any wff $\varphi$, we can find a tautologically equivalent wff $\alpha$ in disjunctive normal form.
+\end{reference}
+
+A set $B$ of Boolean functions is \textit{complete}, if every boolean function $G:\{F,T\}^n\rightarrow\{F,T\}$ for $n\geq 1$ can be ``realized'' by $B$.
+
+It follows from Exercise \ref{E.1.2.9} and \ref{c15c} that both $\{\neg,\wedge\}$ and $\{\neg,\vee\}$ are complete.
+
+\begin{reference}{Eg}{incompleteex}
+  $\{\wedge,\rightarrow\}$ is not complete.
+\end{reference}
+
+\begin{proof}
+  We can show by induction that for any wff $\alpha$ using only these connectives and having $A$ as its only sentence symbol, we have $A\vDash \alpha$. Thus, none of them are tautologically equivalent to $\neg A$. (This is usually how we prove that a certain set of connectives is not complete.)
+\end{proof}
+
+There are two $0$-place Boolean functions, $F$ and $T$. For the corresponding connective symbols we take $\bot$ and $\top$. Note that $\bot$ is a wff by itself, which is always assigned $F$. Also we have $A\rightarrow\bot\vDash\neg A$.
+
+\begin{reference}{Eg}{completeex}
+  $\{\downarrow\}$, $\{|\}$, $\{\neg,\rightarrow\}$ and $\{\bot,\rightarrow\}$ are complete.
+\end{reference}
+
+\subsection*{Exercises}
+
+\begin{exercise}{E.1.5.1}
+  Question to fill in.
+\end{exercise}
+
+\begin{enumerate}[label=(\alph*)]
+  \item Omitted as trivial.
+  \item A valid one should be $((A_1\vee A_2)\rightarrow(\neg(A_3\vee(A_1\wedge A_2))))$. The idea is to construct in form $\alpha\rightarrow \beta$.
+\end{enumerate}
+
+\begin{exercise}{E.1.5.2}
+  Question to fill in.
+\end{exercise}
+
+$<$, $>$ and $+$ suffer the same limit that they fail to map two $F$s to a $T$.
+
+\section{Switching Circuits}
+
+We may simulate circuits using wffs (or equivalently, Boolean functions).
+
+Given a circuit (or its wff), it is of particular interest to find an equivalent circuit (or a tautologically equivalent wff) for which the cost (for example, the number of connective symbols used) is a minimum, subject to constraints such as a maximum allowable delay (the depth of the construction tree of the wff). This is easily a highly nontrivial problem, and the book features a briliant example (page 58) which is approached like a dimensionality reduction task.
+
+Relay switch (page 57) is also of particular interest in that it is very easy to realize using circuits and switches.
+
+(For exercise 2) Define a \textit{literal} to be a wff which is either a sentence symbol or the negation of a sentence symbol. An \textit{implicant} of $\varphi$ is a conjunction $\alpha$ of literals (using distinct sentence symbols) such that $\alpha\vDash \varphi$. For example, in \ref{c15c} we showed that any satisfiable wff $\varphi$ is tautologically equivalent to a disjunction $\alpha_1\vee\cdots\vee \alpha_n$ where each $\alpha_i$ is an implicant of $\varphi$. An implicant $\alpha$ of $\varphi$ is \textit{prime} iff it ceases to be an implicant upon the deletion of any of its literals. The motivation for us to find prime implicants could be to find a wff $\alpha$ in DNF such that $\alpha\vDash\Dashv \varphi$ and that $\alpha$ is of minimum length.
+
+\subsection*{Exercises}
+
+\begin{exercise}{E.1.6.1}
+  Question to fill in.
+\end{exercise}
+
+Omitted for brevity. I suggest to use enumeration and to utilize symmetry and no better solutions occurred me.
+
+\begin{exercise}{E.1.6.2}
+  Question to fill in.
+\end{exercise}
+
+\begin{enumerate}
+  \item $((\neg A)\wedge C)$, $(A\wedge B)$ and * $(B\wedge C)$.
+        To see this, we verify the following matrix, which states the assignments satisfying the wff:
+        \[\begin{matrix}A&B&C\\ T&T&T\\ T&T&F\\ F&F&T\\ F&T&T\end{matrix}\]
+        For example, we may consider two implicants $(A\wedge B\wedge C)$ and $(A\wedge B\wedge\neg C)$, thus the assignment of $C$ doesn't really matter, and hence obtain $(A\wedge B)$.
+  \item $(((\neg A)\wedge C)\vee(A\wedge B))$ and * $(((\neg A)\wedge C)\vee(A\wedge B)\vee(B\wedge C))$. We would like our disjunctions to span all rows of the matrix.
+\end{enumerate}
+
+\begin{exercise}{E.1.6.3}
+  Question to fill in.
+\end{exercise}
+
+The structure of wff did not play a definite part in exercise 2, so this exercise is omitted for brevity.
+
+\section{Compactness and Effectiveness}
+
+\subsection*{Compactness}
+
+Call a set $\Sigma$ of wffs \textit{satisfiable} iff there is a truth assignment that satisfies every member of $\Sigma$.
+
+\begin{reference}{Rmk}{r17a}
+  If a set $\Sigma$ of wffs is satisfiable, so is at least one of $\Sigma;\alpha$ and $\Sigma;\neg \alpha$, where $\alpha$ is a wff.
+\end{reference}
+
+\begin{proof}
+  Suppose otherwise for the sake of contradiction.
+  \begin{align*}
+                & \Sigma;\alpha\text{ is unsatisfiable } \\\text{iff }&\text{for any truth assignment $\overline{v}$ such that $\overline{v}(\Sigma)=T, \overline{v}(\alpha)=F$} \\
+    \text{iff } & \Sigma\vDash\neg \alpha,
+  \end{align*}
+  which contradicts that $\Sigma;\neg\alpha$ is unsatisfiable.
+\end{proof}
+
+
+\begin{reference}{Thm}{compactnesst}
+  \textbf{Compactness Theorem}\quad A set of wffs is satisfiable iff every finite subset is satisfiable.
+\end{reference}
+
+It is called ``compactness theorem'', for it does assert the compactness of a certain topological space, and thus can be proved by using Tychonoff’s theorem on product spaces.
+
+%  TODO: Prove this way.
+
+We temporarily say that $\Sigma$ is \textit{finitely satisfiable} iff every finite subset of $\Sigma$ is satisfiable, which coincides with satisfiability according to the compactness theorem.
+
+\begin{proof}
+  The proof consists of two distinct parts. We first take our given finitely satisfiable set $\Sigma$ and extend it to a maximal such set $\Delta$ (such that (1) $\Sigma\subseteq \Delta$, that (2) for any wff $\alpha$ either $\alpha\in \Delta$ or $\neg \alpha\in \Delta$, and that (3) $\Delta$ is finitely satisfiable). We then utilize $\Delta$ to make a truth assignment that satisfies $\Sigma$.
+
+  For the first part, let $\alpha_1,\alpha_2,\dots$ be a fixed enumeration of the wffs. (This is possible since the set of sentence symbols, and hence the set of expressions, is countable; see \ref{t0b}.) Define by recursion (on the natural numbers)
+  \begin{align*}
+    \Delta_0=     & \Sigma,                                                              \\
+    \Delta_{n+1}= & \begin{cases}
+                      \Delta_n;\alpha_{n+1}      & \text{if this is finitely satisfiable}, \\
+                      \Delta_n;\neg \alpha_{n+1} & \text{otherwise}.
+                    \end{cases}
+  \end{align*}
+  We show that this definition is valid by asserting that if $\Sigma$ is finitely satisfiable, then so is at least one of the sets $\Sigma;\alpha$ and $\Sigma;\neg \alpha$. If not, then $\Sigma_1;\alpha$ and $\Sigma_2;\neg \alpha$ are unsatisfiable for some finite $\Sigma_1\subseteq \Sigma$ and $\Sigma_2\subseteq \Sigma$, and hence $\Sigma_1\cup \Sigma_2;\alpha$ and $\Sigma_1\cup \Sigma_2;\neg \alpha$ are both unsatisfiable, which contradicts \ref{r17a}. Let $\Sigma=\bigcup_n \Delta_n$, the limit of the $\Delta_n$'s. Note that $\Delta$ is finitely satisfiable, for any finite subset is already a finite subset of some $\Delta_n$ and hence is satisfiable. Thus we now have a set $\Delta$ having properties (1)-(3). This can also be done employing Zorn's lemma, which I am not familiar with for now.
+
+  For the second part we define a truth assignment $v$ for the set of all sentence symbols:
+  \[
+    v(A)=T\text{ iff }A\in \Delta
+  \]
+  for any sentence symbol $A$. Consider a set $C=\{\alpha|\overline{v}(\alpha)=T\text{ iff }\alpha\in \Delta\}$, where $\alpha$ is a wff and $\overline{v}$ the extended $v$, we show by induction as follows that $C=S$, where $S$ is the set of all wffs.
+  \begin{enumerate}
+    \item $B$ of all sentence symbols is a subset of $C$ according to the definition of $v$.
+    \item We show as follows that $C$ is closed under $\mathcal{E}_{\neg}$ and $\mathcal{E}_{\wedge}$, since $\{\neg,\wedge\}$ is complete. For $\alpha\in C$ and $\beta\in C$, (1) $\overline{v}(\neg\alpha)=T$ iff $\overline{v}(\alpha)=F$ iff $\alpha\notin \Delta$ iff $\neg \alpha\in \Delta$, (2) $\overline{v}(\alpha\wedge \beta)=T$ iff $\overline{v}(\alpha)=T$ and $\overline{v}(\beta)=T$ iff $\alpha\in \Delta$ and $\beta\in \Delta$ iff $\neg(\alpha\wedge \beta)\notin \Delta$ (otherwise we have $\{\alpha,\beta,\neg(\alpha\wedge \beta)\}\subseteq \Delta$ contradicting that $\Delta$ is finitely satisfiable) iff $(\alpha\wedge\beta)\in \Delta$.
+  \end{enumerate}
+  Therefore $\overline{v}$ satisfies $\Delta$ and also its subset $\Sigma$.
+\end{proof}
+
+\begin{reference}{Cor}{c17a}
+  (17A) If $\Sigma\vDash \tau$ then there is a finite $\Sigma_0\subseteq \Sigma$ such that $\Sigma_0\vDash \tau$.
+\end{reference}
+
+\begin{proof}
+  We contrapositively state the \ref{compactnesst}: for a set $\Sigma$ of wffs, $\Sigma$ is unsatisfiable iff there is a finite $\Sigma_0\subseteq \Sigma$ that $\Sigma_0$ is unsatisfiable. $\Sigma\vDash \tau$ iff $\Sigma;\neg \tau$ is unsatisfiable, thus there is a finite $\Sigma_0\subseteq \Sigma;\neg\tau$ that is unsatisfiable. If $\neg\tau\in \Sigma_0$ then $\Sigma_0-\neg\tau\vDash \tau$, else $\Sigma_0\vDash \tau$ is vacuously true. Note that this proof can be done in the opposite direction, like what is done on page 60 of the book.
+\end{proof}
+
+\begin{proof}[Second Proof]
+  We construct $\Sigma_0$ from $\Sigma;\tau$. Let $V=\{v_1,v_2,\dots,v_k\}$ denote the set of truth assignments that fail to satisfy $\tau$. Apparently $k\leq2^n$, where $n$ is the number of distinct variables in $\tau$. For each $v_i$ select $\alpha_i\in \Sigma$ such that $\overline{v_i}(\alpha_i)=F$. Let $\Sigma_0=\{\alpha_i|1\leq i\leq k\}$. Thus $\Sigma_0$ is finite. We claim that $\Sigma_0\vDash \tau$. This construction mainly takes advantage of the finiteness of the truth table of $\tau$.
+\end{proof}
+
+\subsection*{Effectiveness and Computability\footnote{Discussion in this subsection are carried out informally.}}
+
+\begin{reference}{Defn}{effectivedecidable}
+  A procedure is \textit{effective}, if it is an algorithm that can be mechanically implemented and takes finite time to execute. A set $\Sigma$ of expressions is \textit{decidable} iff there exists an effective procedure that, given an expression $\alpha$, will decide whether or not $\alpha\in \Sigma$.
+\end{reference}
+
+There are $2^{\aleph_0}$ set of expressions and $\aleph_0$ effective procedures (for there are $\aleph_0$ finite sequences of letters), therefore some sets are not decidable. (Note that procedures and sets of expressions correspond one to one.)
+
+The truth-table is an effective procedure that decides whether or not $\Sigma\vDash \tau$, where $\Sigma;\tau$ is a finite set of wffs. Therefore we have that the set of tautological consequences of $\Sigma$ is decidable. In particular, the set of tautologies is decidable.
+
+\begin{reference}{Defn}{effectivelyenumerable}
+  A set $A$ of expressions is \textit{effectively enumerable} iff there exists an effective procedure that lists, in some order, the members of $A$ (or, for any specified member of $A$, it must eventually appear on the list). Say that $A$ is \textit{semidecidable} iff there exists an effective procedure that, given any expression $\varepsilon$, produces the answer ``yes'' iff $\varepsilon\in A$.
+\end{reference}
+
+Similarly, say that a function $f$ is \textit{effectively computable} (or simply \textit{computable}) iff there exists an effective procedure that, given an input $x$, will produce the output $f(x)$.
+
+\begin{reference}{*Thm}{t17e}
+  (17E) A set is effectively enumerable iff it is semidecidable.
+\end{reference}
+
+\begin{proof}
+  We consider the nontrivial direction, that is, to create a listing of $A$ given a procedure that makes $A$ semidecidable. Note that we can effectively enumerate all expressions:
+  \[
+    \varepsilon_1,\varepsilon_2,\varepsilon_3,\dots
+  \]
+  Then any scheme that spends infinite time testing each $\varepsilon_i$ qualifies. A working one that avoids duplication is:
+  Suppose $T$ is a fixed period of time. Spend $\frac{T}{2^i}$ testing $\varepsilon_i$ in each iteration that takes $T$. If ``yes'' is produced upon $\varepsilon_j$, output $\varepsilon_j$ on the list and wait the rest of $\frac{T}{2^j}$. In the following iterations, skip $\varepsilon_j$ and spend $\frac{T}{2^{(i-1)}}$ testing $\varepsilon_i$ for $i>j$. The list's order is fixed due to the determinism of our procedure.
+\end{proof}
+
+\begin{reference}{*Thm}{t17f}
+  (17F) A set of expressions is decidable iff both it and its complement (in a larger decidable set) are effectively enumerable.
+\end{reference}
+
+\begin{proof}
+  Suppose $T$ is a fixed period of time, $\Sigma$ a set of expressions and $\alpha$ the expression we would like to decide. We are essentially given two effective procedures. It should make an effective procedure that decides whether or not $\alpha\in \Sigma$ to spend $\frac{T}{2}$ testing $\alpha$ according to each procedure in each iteration that takes $T$.
+\end{proof}
+
+\begin{reference}{*Thm}{t17g}
+  (17G) If $\Sigma$ is a semidecidable set of wffs, then the set of tautological consequences of $\Sigma$ is effectively enumerable.
+\end{reference}
+
+\begin{proof}
+  We can effectively enumerate all wffs in $\Sigma$:
+  \[
+    \alpha_1,\alpha_2,\alpha_3,\dots
+  \]
+  and the finite subsets of $\Sigma$:
+  \[
+    \emptyset,\{\alpha_1\},\{\alpha_1,\alpha_2\},\{\alpha_1,\alpha_2,\alpha_3\},\dots
+  \]
+  and the set of tautological consequences of each of the finite subsets. Therefore we can easily design a scheme according to which we can effectively enumerate the tautological consequences of all finite subsets of $\Sigma$, which is equivalent to the set of tautological consequences of $\Sigma$ according to \ref{c17a}.
+\end{proof}
+
+\subsection*{Exercises}
+
+\begin{exercise}{E.1.7.1}
+  Question to fill in.
+\end{exercise}
+
+See \ref{compactnesst}.
+
+\begin{exercise}{E.1.7.2}
+  Question to fill in.
+\end{exercise}
+
+See \ref{compactnesst}.
+
+\begin{exercise}{E.1.7.3}
+  Question to fill in.
+\end{exercise}
+
+For a non-empty set $\Sigma$ of wffs and $\alpha\in \Sigma$, we have that
+\begin{align*}
+              & \Sigma-\alpha;\alpha\text{ is unsatisfiable}                                                        \\
+  \text{iff } & \Sigma-\alpha\vDash\neg\alpha                                                                       \\
+  \text{iff } & \text{there is a finite }\Sigma_0\subseteq(\Sigma-\alpha)\text{ such that }\Sigma_0\vDash\neg\alpha \\
+  \text{iff } & (\Sigma_0;\alpha)\subseteq \Sigma\text{ is unsatisfiable}.
+\end{align*}
+The choice of $\alpha$ is arbitrary, thus we have \ref{compactnesst} stated contrapositively.
+
+\setcounter{exercise}{4}
+
+\begin{exercise}{E.1.7.5}
+  Where $\Sigma$ is a set of wffs, define a \textit{deduction} from $\Sigma$ to be a finite sequence $\langle \alpha_0,\dots,\alpha_n\rangle$ of wffs such that for each $k\leq n$, either (a) $\alpha_k$ is a tautology, (b) $\alpha_k\in \Sigma$, or (c) for some $i$ and $j$ less than $k$, $\alpha_i$ is $(\alpha_j\rightarrow \alpha_k)$ (\textit{modus ponens}). Give a decution from the set $\{\mathrm{\neg S\vee R, R\rightarrow P, S}\}$, the last component of which is $\mathrm{P}$.
+\end{exercise}
+
+%  TODO: Refer to modus ponens in chapter 2.
+$\mathrm{\langle S,\neg S\wedge R, (\neg S\wedge R)\rightarrow(S\rightarrow R), S\rightarrow R, R, R\rightarrow P, P\rangle.}$
+
+\begin{exercise}{E.1.7.6}
+  (\textit{Soundness}) Let $\langle \alpha_0,\dots,\alpha_n\rangle$ be a deduction from $\Sigma$. Show that $\Sigma\vDash \alpha_k$ for each $k\leq n$.
+\end{exercise}
+
+We use strong induction and we mainly consider case (c), where for some $i$ and $j$ less than $k$, $\alpha_i=\alpha_j\rightarrow \alpha_k$. For every truth assignment $v$ that satisfies every member of $\Sigma$, we have $\bar{v}(\alpha_j)=\bar{v}(\alpha_j\rightarrow \alpha_k)=T$ considering the induction hypothesis, then according to the defintion of $\bar{v}$ we have $\bar{v}(\alpha_k)$.
+
+\begin{exercise}{E.1.7.7}
+  (\textit{Completeness}) Show that whenever $\Sigma\vDash \tau$, then there exists a deduction from $\Sigma$, the last component of which is $\tau$.
+\end{exercise}
+
+Whenever $\Sigma\vDash\tau$, it follows from \ref{c17a} that there is a finite $\Sigma_0\subseteq \Sigma$ such that $\Sigma_0\vDash\tau$. Let $\Sigma_0=\{\alpha_1,\dots,\alpha_k\}$, we have that $\vDash \alpha_1\rightarrow \alpha_2\rightarrow\cdots\rightarrow \alpha_k\rightarrow\tau$.  A deduction the last component of which is $\tau$ is then immediate.
+
+\begin{exercise}{E.1.7.8}
+  Question to fill in.
+\end{exercise}
+
+See \ref{t17f}.
+
+\setcounter{exercise}{10}
+
+\begin{exercise}{E.1.7.11}
+  Question to fill in.
+\end{exercise}
+
+We are essentially trying to express the relation between sets by operations upon procedures. The details are ommitted for brevity.
+
+% TODO: soundness & completeness of propositional logic and dai's homework 6.

@@ -1,0 +1,1429 @@
+\chapter{First-Order Logic}
+\setcounter{section}{-1}
+
+\section{Preliminary Remarks}
+
+The model of sentential logic may be inadequate to capture the subtlety of some deduction, and to help with that we introduce first-order logic, the essence of which is well respected in the following remark:
+when the ``working mathematician'' finds a proof, almost invariably what is meant is a proof that can be mirrored in first-order logic.
+
+\section{First-Order Languages}
+
+\begin{reference}{Defn}{symbolsfol}
+  \textit{Symbols} are arranged as follows:
+  \begin{enumerate}
+    \item Logical symbols
+          \begin{enumerate}
+            \item Parenthesis: $(,)$.
+            \item Sentential connective symbols: $\rightarrow, \neg$.
+            \item Variables: $v_1,v_2,\dots$.
+            \item Equality symbol (optional): $=$.
+          \end{enumerate}
+    \item Parameters
+          \begin{enumerate}
+            \item Quantifier symbol: $\forall$.
+            \item Predicate symbols (possibly empty).
+            \item Function symbols (possibly empty).
+            \item Constant symbols ($0$-place function symbols).\qedhere
+          \end{enumerate}
+  \end{enumerate}
+\end{reference}
+
+As before, we assume that the symbols are distinct and that no symbol is a finite sequence of other symbols.
+
+We specify our first-order language by saying (1) whether or not the equality symbol is present and (2) what the parameters are. An example is as follows.
+
+\begin{reference}{Eg}{lanex}
+  \textit{Language of set theory}:
+  Equality: Yes (usually).
+  Predicate symbols: $\in$.
+  Function symbols: None (or a constant symbol $\emptyset$).
+\end{reference}
+
+It is generally agreed that, by and large, mathematics can be embedded into set theory. By this is meant that
+\begin{enumerate}
+  \item Statements in mathematics (such as the fundamental theorem of calculus) can be expressed in the language of set theory; and
+  \item The theorems of mathematics follow logically from the axioms of set theory.
+\end{enumerate}
+
+\subsection*{Formulas}
+
+An \textit{expression} is any finite sequence of symbols.
+
+\begin{reference}{Defn}{termsfol}
+  We define for each $n$-place function symbol $f$, an $n$-place term-building operation $\mathcal{F}_f$ on expressions:
+  \[
+    \mathcal{F}_f(\varepsilon_1,\dots,\varepsilon_n)=f \varepsilon_1\cdots \varepsilon_n
+  \]
+  and say that the set of \textit{terms} is the set generated (\ref{generation}) from $B$ by the $\mathcal{F}_f$ operations, where $B$ is the set of constant symbols and variables.
+\end{reference}
+
+An \textit{atomic formula} (\textit{atomic}) an expression of the form
+\[
+  P\ t_1\cdots t_n,
+\]
+where $P$ is an $n$-place predicate symbol and $t_1\cdots t_n$ are terms.
+
+We define the formula-building operations on expressions:
+\begin{align*}
+  \mathcal{E}_{\neg}(\gamma)               & =(\neg \gamma),               \\
+  \mathcal{E}_{\rightarrow}(\gamma,\delta) & =(\gamma \rightarrow \delta), \\
+  \mathcal{Q}_i(\gamma)                    & =\forall v_i \gamma.
+\end{align*}
+
+The set of \textit{well-formed fomulas} (\textit{wffs}, or just \textit{formulas}) the set generated from $B$ by the formula-building operations, where $B$ is the set of atomics.
+
+The terms are the expressions that are translated as names of objects (noun phrases), in contrast to the wffs which are translated as assertions about objects.
+
+\subsection*{Free Variables}
+
+We define function $h$ on atomics:
+\[
+  h(\alpha)=\text{ the set of all variables, if any, in the atomic formula }\alpha.
+\]
+And we want to extend $h$ to a function $\overline{h}$ defined on all wffs in such a way that
+\begin{align*}
+  \overline{h}(\mathcal{E}_{\neg}(\alpha))=         & \bar{h}(\alpha),                                         \\
+  \bar{h}(\mathcal{E}_{\rightarrow}(\alpha,\beta))= & \bar{h}(\alpha)\cup\bar{h}(\beta),                       \\
+  \bar{h}(\mathcal{Q}_i(\alpha))=                   & \bar{h}(\alpha)\text{ after removing $v_i$, if present.}
+\end{align*}
+Then we say that $x$ occurs \textit{free} in $\alpha$ (or that $x$ is a \textit{free variable} of $\alpha$) iff $x\in\bar{h}(\alpha)$. The existence of a unique such $\bar{h}$ (and hence the meaningfulness of our definition) follows from \ref{recursiont} and from the fact that each wff has a unique decomposition (\ref{sec:2.3}).
+
+If no variable occurs free in the wff $\alpha$ (i.e., if $\bar{h}(\alpha)=\emptyset$), then $\alpha$ is a \textit{sentence}.
+
+\subsection*{On Notation}
+\label{sub: On Notation}
+
+\begin{enumerate}
+  \item Outermost parentheses may be dropped.
+  \item $\neg,\forall,$ and $\exists$ apply to as little as possible.
+  \item $\wedge$ and $\vee$ apply to as little as possible, subject to item 2.
+  \item When one connective is used repeatedly, the expression is grouped to the right.
+\end{enumerate}
+
+\subsection*{Exercises}
+
+\begin{exercise}{E.2.1.1}
+  Translate from English to the first-order language specified as follows. ($\forall$, for all things; $N$, is a number; $I$, interesting; $<$, is less than; $0$, a constant symbol intended to denote zero.)
+  \begin{enumerate}[label=(\alph*)]
+    \item Zero is less than any number.
+    \item If any number is interesting, then zero is interesting.
+    \item No number is less than zero.
+    \item Any uninteresting number with the property that all smaller numbers are interesting certainly is interesting.
+    \item There is no number such that all numbers are less than it.
+    \item There is no number such that no number is less than it.\qedhere
+  \end{enumerate}
+\end{exercise}
+
+\begin{enumerate}
+  \item \(
+        \forall x(Nx\rightarrow 0<x).
+        \)
+  \item \(
+        \forall x (\neg Nx\vee\neg Ix )\rightarrow \neg I0.
+        \)
+  \item \(
+        \forall x (x<0\rightarrow\neg Nx).
+        \)
+  \item \(
+        \forall x(Nx\wedge\neg Ix\wedge\forall y (Ny\wedge y<x\rightarrow Iy)\rightarrow Ix).
+        \) Note that this is a translation task. Sentences can be contradictory.
+  \item \(
+        \forall x(Nx\rightarrow\neg\forall y(Ny\rightarrow y<x)).
+        \)
+  \item \(
+        \neg\exists x(Nx\wedge\neg\exists y(Ny\wedge y<x)).
+        \)
+\end{enumerate}
+
+\begin{exercise}{E.2.1.2}
+  Translate with the language specified in \ref{E.2.1.1} $\forall x(Nx\rightarrow Ix\rightarrow\neg\forall y(Ny\rightarrow Iy\rightarrow\neg x<y))$.
+\end{exercise}
+
+Any interesting number has the property that that it is not less than any insteresting number is not true (can be rephrased as: Any interesting number is less than some interesting number.)
+
+\setcounter{exercise}{4}
+
+\begin{exercise}{E.2.1.5}
+  Translate from English to the first-order language specified as follows. ($\forall$ , for all things; $P$, is a person; $T$, is a time; $Fxy$, you can fool $x$ at $y$. One or more of the above may be ambiguous, in which case you will need more than one translation.) (a) You can fool some of the people all of the time. (b) You can fool all of the people some of the time. (c) You can’t fool all of the people all of the time.
+\end{exercise}
+
+(a) Here ambiguity is in that it either says that there are some (fixed) people you can fool all time, or says that at every moment there are (some, not fixed) people you can fool, i.e. either $\exists x(Px\wedge\forall y(Ty\to Fxy))$ or $\forall y(Ty\to\exists x(Px\wedge Fxy))$. (b) Here ambiguity is in that it either says that you can fool each person at some time (times can be different for different people), or says that at some (fixed) time you can fool everyone (at that specific time): $\forall x(Px\to\exists y(Ty\wedge Fxy))$ or $\exists y(Ty\wedge\forall x(Px\to Fxy))$. (c) $\neg\forall x(Px\to\forall y(Ty\to Fxy)).$
+
+\setcounter{exercise}{8}
+
+\begin{exercise}{E.2.1.9}
+  Question to fill in.
+\end{exercise}
+
+This can be trivially done by recursion as an extension to the definition of free variables, considering the structures of wffs. I, however, personally believe we can comfortably say that $x$ occurs free as the $i$th symbol in $\alpha$ if $x$ occurs free in $\alpha$ and is the $i$th symbol in $\alpha$.
+
+\section{Truth and Models}
+
+A \textit{structure} $\mathfrak{A}$ for a given first-order language is a function whose domain is the set of parameters satisfying
+\begin{enumerate}
+  \item $\forall^{\mathfrak{A}}=\left|\mathfrak{A}\right|$, where $\forall$ is the quantifier symbol.
+  \item $P^{\mathfrak{A}}\in\left|\mathfrak{A}\right|^{n}$, where $P$ is an $n$-place predicate symbol.
+  \item $f^{\mathfrak{A}}:\left|\mathfrak{A}\right|^{n}\rightarrow\left|\mathfrak{A}\right|$, where $f$ is an $n$-place function symbol.
+  \item $c^{\mathfrak{A}}\in\left|\mathfrak{A}\right|$, where $c$ is a constant symbol, as a special case for item 3.
+\end{enumerate}
+Note that we require $\left|\mathfrak{A}\right|$ to be nonempty. A structure essentially explains to us the universal quantifier symbol and other parameters of a first-order language.
+
+\begin{reference}{Defn}{satisfactionfol}
+  Let $\psi$ be a wff of our language, $\mathfrak{A}$ a structure for the language, $s:V\rightarrow\left|\mathfrak{A}\right|$, a function from the set $V$ of all variables (\ref{symbolsfol}) into $\left|\mathfrak{A}\right|$. We as follows formally define what it means for $\mathfrak{A}$ to \textit{satisfy} $\varphi$ \textit{with} $s$, written $\vDash_{\mathfrak{A}}\varphi[s]$.
+
+  We first recursively define the extension $\overline{s}:T \rightarrow \left|\mathfrak{A}\right|$, a function from the set $T$ of all terms (\ref{termsfol}) into $\left|\mathfrak{A}\right|$.
+  \begin{enumerate}
+    \item For each variable $x$, $\overline{s}(x)=s(x)$.
+    \item For each $c$, $\overline{s}(c)=c^{\mathfrak{A}}$.
+    \item For terms $t_1,\dots,t_n$ and $n$-place function symbol $f$,
+          \[\overline{s}(f(t_1,\dots,t_n))=f^{\mathfrak{A}}(\overline{s}(t_1),\dots,\overline{s}(t_n)).\]
+  \end{enumerate}
+  The idea is that $\bar{s}(t)$ should be the member of the universe $|\mathfrak{A}|$ that is named by the term $t$. The existence of a unique such extension $\bar{s}$ of $s$ follows from \ref{recursiont}, by using the fact that the terms have unique decompositions (\ref{sec:2.3}).
+
+  Then we define satisfaction of atomics. (We should see that 1 and 2 are essentially the same.)
+  \begin{enumerate}
+    \item $\vDash_{\mathfrak{A}}=t_1t_2[s]$ iff $\bar{s}(t_1)=\bar{s}(t_2)$.
+    \item For an $n$-place predicate parameter $P$,
+          \[
+            \vDash_{\mathfrak{A}}P\ t_1\cdots t_n[s]\text{ iff }\langle\bar{s}(t_1),\dots,\bar{s}(t_n)\rangle\in P^{\mathfrak{A}}.
+          \]
+  \end{enumerate}
+
+  Finally we define recursively satisfaction of other wffs. Note that we essentially define a truth assignment, or a homomorphism, that preserves formula-building operations ($\mathcal{E}_{\neg}$, $\mathcal{E}_{\rightarrow}$ and $\mathcal{Q}_i$) from the set of wffs to (informally) $\{\vDash,\nvDash\}$, which again follows from \ref{recursiont} and the fact that wffs have unique decompositions (\ref{sec:2.3}).
+  \begin{enumerate}
+    \item For atomic formulas, the definition is above.
+    \item $\vDash_{\mathfrak{A}}\neg\varphi[s]\text{ iff }\nvDash_{\mathfrak{A}}\varphi[s].$
+    \item $\vDash_{\mathfrak{A}}(\varphi\rightarrow \psi)[s]\text{ iff either }\nvDash_{\mathfrak{A}}\varphi[s]\text{ or }\vDash_{\mathfrak{A}}\psi[s]\text{ or both.}$
+    \item $\vDash_{\mathfrak{A}}\forall x\ \varphi[s]\text{ iff for every }d\in|\mathfrak{A}|,\text{ we have }\vDash_{\mathfrak{A}}\varphi[s(x|d)],$
+  \end{enumerate}
+  where
+  \[
+    s(x|d)(y)=\begin{cases}
+      s(y) & y\neq x, \\
+      d    & y=x.
+    \end{cases}\qedhere
+  \]
+\end{reference}
+
+\begin{reference}{Defn}{altersatisfaction}
+  To give an alternative definition of \textit{satisfaction}, we first define a function $h: A\rightarrow \mathcal{P}(|\mathfrak{A}|^V)$, where $A$ is the set of atomics: for an $n$-place predicate parameter $P$ (we include $=$ as a $2$-place predicate if it exists),
+  \[
+    h(P\ t_1\cdots t_n)=\{s: V\rightarrow|\mathfrak{A}||\langle\bar{s}(t_1),\dots,\bar{s}(t_n)\rangle\in P^{\mathfrak{A}}.\}
+  \]
+
+  Then we extend $h$ to $\bar{h}$ with the set of wffs as its domain.
+  \begin{enumerate}
+    \item $h(\varphi)\subseteq\bar{h}(\varphi).$
+    \item $\bar{h}(\neg \varphi)=\{s: V\rightarrow|\mathfrak{A}||s\notin\bar{h}(\varphi)\}.$
+    \item $\bar{h}(\varphi\rightarrow \psi)=\bar{h}(\varphi)\cup\bar{h}(\psi).$
+    \item $\bar{h}(\forall x\ \varphi)=\{s: V\rightarrow|\mathfrak{A}||\text{ for every }d\in|\mathfrak{A}|, s(x|d)\in\bar{h}(\varphi)\}.$
+  \end{enumerate}
+  We at last define
+  \[
+    \vDash_{\mathfrak{A}}\varphi[s]\text{ iff }s\in\bar{h}(\varphi).\qedhere
+  \]
+\end{reference}
+
+\begin{reference}{Thm}{t22a}
+  (22A) Assume that $s_1$ and $s_2$ are functions from $V$ into $|\mathfrak{A}|$ which agree at all free variables (if any) of the wff $\varphi$. Then
+  \[
+    \vDash_{\mathfrak{A}}\varphi[s_1]\text{ iff }\vDash_{\mathfrak{A}}\varphi[s_2]\qedhere
+  \]
+\end{reference}
+
+\begin{proof}[Proof Sketch]
+  We use \ref{inductionp}.
+\end{proof}
+The proof amounts to seeing what infomation given by $s$ was actually used. An analogous fact regarding structures is if $\mathfrak{A}$ and $\mathfrak{B}$ agree at all the parameters that occur in $\varphi$, then $\vDash_{\mathfrak{A}}\varphi[s]$ iff $\vDash_{\mathfrak{B}}\varphi[s]$.
+
+Suppose that $\varphi$ is a formula such that all variables occuring free in $\varphi$ are included among $v_1,\dots,v_k$. Then for elements $a_1,\dots,a_k$ of $|\mathfrak{A}|$,
+\[
+  \vDash_{\mathfrak{A}} \varphi \llbracket a_1, \dots, a_k \rrbracket
+\]
+means that $\mathfrak{A}$ satisfies $\varphi$ with some (and hence with any) function $s: V\rightarrow|\mathfrak{A}|$ for which $s(v_i)=a_i,1\leq i\leq k.$
+
+\begin{reference}{Cor}{c22b}
+  (22B) For a sentence $\sigma$, either
+  \begin{enumerate}[label=(\alph*)]
+    \item $\mathfrak{A}$ satisfies $\sigma$ with every function $s: V\rightarrow|\mathfrak{A}|$, or
+    \item $\mathfrak{A}$ does not satisfy $\sigma$ with any such function.\qedhere
+  \end{enumerate}
+\end{reference}
+
+If alternative (a) holds, then we say that $\sigma$ is \textit{true} in $\mathfrak{A}$ (written $\vDash_{\mathfrak{A}}\sigma$) or that $\mathfrak{A}$ is a \textit{model} of $\sigma$. And if alternative (b) holds, then $\sigma$ is \textit{false} in $\mathfrak{A}.$ (They cannot both hold since $|\mathfrak{A}|$ is nonempty.) $\mathfrak{A}$ is a \textit{model} of a set $\Sigma$ of sentences iff it is a model of every member of $\Sigma$.
+
+\begin{reference}{Eg}{modelex}
+  The sentence $\exists x(x\cdot x=1+1)$ is true in $(\mathbb{R};0,1,+,\times)$ and false in $(\mathbb{Q};0,1,+,\times)$. We state again here that structures determine the interpretation of the parameters in a formula while choices of $s: V\rightarrow|\mathfrak{A}|$ determine that of the free variables in it.
+\end{reference}
+
+\subsection*{Logical Implication}
+
+\begin{reference}{Defn}{logicalimplication}
+  Let $\Gamma$ be a set of wffs, $\varphi$ a wff. Then $\Gamma$ \textit{logically implies} $\varphi$, written $\Gamma\vDash\varphi$, iff for every structure $\mathfrak{A}$ for the language and every function $s: V\rightarrow|\mathfrak{A}|$ such that $\mathfrak{A}$ satisfies every member of $\Gamma$ with $s$, $\mathfrak{A}$ also satisfies $\varphi$ with $s$.
+\end{reference}
+
+\begin{reference}{Defn}{validness}
+  We write ``$\gamma\vDash \varphi$'' in place of ``$\{\gamma\}\vDash \varphi$.'' Say that $\varphi$ and $\psi$ are \textit{logically equivalent} ($\varphi\vDash\Dashv \psi$) iff $\varphi\vDash \psi$ and $\psi\vDash \varphi$. The first-order analogue of the concept of a tautology is the concept of a valid formula: A wff $\varphi$ is \textit{valid} iff $\emptyset\vDash \varphi$ (written simply ``$\vDash \varphi$'').
+\end{reference}
+
+\begin{reference}{Cor}{c22c}
+  (22C) For a set $\Sigma;\tau$ of sentences, $\Sigma\vDash \tau$ iff every model of $\Sigma$ is also a model of $\tau$. A sentence $\tau$ is valid iff it is true in every structure.
+\end{reference}
+
+\subsection*{Definability in a Structure}
+
+Consider a structure $\mathfrak{A}$ and a formula $\varphi$ whose free variables are among $v_1,\dots,v_k$. Then we can construct the $k$-ary relation on $|\mathfrak{A}|$:
+\[
+  \{\langle a_1,\dots,a_k\rangle|\vDash_{\mathfrak{A}}\varphi\llbracket a_1,\dots,a_k\rrbracket\}.
+\]
+Call this the $k$-ary relation $\varphi$ \textit{defines} in $\mathfrak{A}$. In general, a $k$-ary relation on $|\mathfrak{A}|$ is said to be \textit{definable} in $\mathfrak{A}$ iff there is a formula (whose free variables are among $v_1,\dots,v_k$) that defines it there.
+
+\begin{reference}{Eg}{defineex}
+  Consider $\mathfrak{R}=(\mathbb{N};0,S,+,\cdot).$
+  \begin{enumerate}
+    \item Some relations on $\mathbb{N}$ are not definable, for there are uncountably many relations on $\mathbb{N}$ but only countably many possible defining formulas. There is an inherent difficulty in giving a specific example. After all, if something is undefinable, then it is hard to say exactly what it is!
+          % TODO: Name one. Cf. sec 3.5.
+    \item We say that $2$ is a \textit{definable element} in $\mathfrak{R}$, for $\{2\}$ is defined by $v_1=SS0.$
+    \item The set of primes is defined by
+          \[
+            1<v_1\wedge\forall v_2\forall v_3(v_1=v_2\cdot v_3\rightarrow v_2=1\vee v_3=1),
+          \]
+          where parameters $1$ and $<$ are definable.
+    \item Exponentiation, $\{\langle m,n,p\rangle|p=m^n\}$ is definable but by no means obviously.\qedhere
+          %  TODO: define exponentiation.
+  \end{enumerate}
+\end{reference}
+
+In fact, we will argue later that any decidable relation on $\mathbb{N}$ is definable in $\mathfrak{R}$, as is any effectively enumerable relation and a great many others. To some extent the complexity of a definable relation can be measured by the complexity of the simplest defining formula.
+% TODO: discussion on this para.
+
+\subsection*{Definability of a Class of Structures}
+
+Consider some concepts we come upon in mathematics, say \textit{graphs}, \textit{groups}, \textit{vector spaces}, and so forth. In each case, the objects of study are \textit{structures} for a suitable language. They are required to satisfy a certain set $\Sigma$ of sentences (referred to as ``axioms''). The relevant theory then studies the models of the set $\Sigma$ of axioms (or at least some of them).
+
+For a set $\Sigma$ of sentences, let Mod $\Sigma$ be the class of all models of $\Sigma$ (write Mod $\tau$ in place of Mod $\{\tau\}$). Note that ``class'' instead of ``set'' is used here.
+
+\begin{reference}{Defn}{ec}
+  A class $\mathcal{K}$ of structures for our language is an \textit{elementary class} (EC) iff $\mathcal{K}=\text{ Mod }\tau$ for some sentence $\tau$. $\mathcal{K}$ is an \textit{elementary class in the wider sense} ($\mathrm{EC}_{\Delta}$) iff $\mathcal{K}=\mathrm{Mod}\ \Sigma$ for some set $\Sigma$ of sentences. (The adjective “elementary” is employed as a synonym for “first-order”.)
+\end{reference}
+
+\begin{reference}{Eg}{defineclassex}
+  \begin{enumerate}
+    \item
+          Assuming equality and $\forall$ and and a two-place predicate symbol $E$,  then a \textit{graph} is a structure for this language $\mathfrak{A}=(V;E^{\mathfrak{A}}),$ with the axiom stating that the edge relation is symmetric and irreflexive can be translated by the sentence
+          \[ \forall x(\neg xEx\wedge\forall y(xEy\rightarrow yEx)). \] So the class of all graphs is an elementary class. But the class of all finite graphs is not one.
+    \item Assuming equality, $\forall$ and a two-place predicate symbol $P$, the class of \textit{nonempty ordered sets} is an elementary class Mod $\tau$, where $\tau$ is the conjunction of
+          \begin{align*}
+             & \forall x\forall y\forall z(xPy\rightarrow yPz\rightarrow xPz); \\
+             & \forall x\forall y(xPy\vee x=y\vee yPx);                        \\
+             & \forall x\forall y(xPy\rightarrow\neg yPx).
+          \end{align*}
+    \item Assuming equality, $\forall$ and a two-place function symbol $\circ$, the class of all \textit{groups} is an elementary class Mod $\tau$, where $\tau$ is the conjunction of \textit{the group axioms}:
+          \begin{align*}
+             & \forall x\forall y\forall z(x\circ y)\circ z=x\circ(y\circ z); \\
+             & \forall x\forall y\exists z\ x\circ z=y;                       \\
+             & \forall x\forall y\exists z\ z\circ x=y.
+          \end{align*}
+          Let
+          \begin{align*}
+             & \lambda_2=\exists x\exists y\ x\neq y,                                      \\
+             & \lambda_3=\exists x\exists y\exists z(x\neq y\wedge x\neq z\wedge y\neq z), \\
+             & \cdots
+          \end{align*}
+          Thus $\lambda_n$ translates, ``There are at least $n$ things.'' Then the group axioms together with $\{\lambda_2,\lambda_3,\dots\}$ form a set $\Sigma$ for which Mod $\Sigma$ is the class of infinite groups, thus $\mathrm{EC}_{\Delta}$. It is not EC though.
+    \item Assuming equality and the parameters $\forall,0,1,+,\cdot.$ \textit{Fields} can be reagarded as structures for this language. The class of all fields is an elementary class. The class of fields of characteristic zero is $\mathrm{EC}_{\Delta}$. It is not EC.\qedhere
+  \end{enumerate}
+\end{reference}
+
+% TODO: Prove that 1,3,4 are not ECs.
+
+\subsection*{Homomorphisms}
+
+\begin{reference}{Defn}{homoiso}
+  Let $\mathfrak{A},\mathfrak{B}$ be structure for the language. A \textit{homomorphism} $h$ of $\mathfrak{A}$ into $\mathfrak{B}$ is a function $h:|\mathfrak{A}|\rightarrow|\mathfrak{B}|$ with the properties:
+  \begin{enumerate}[label=(\alph*)]
+    \item For each $n$-place predicate parameter $P$ and each $n$-tuple $\langle a_1,\dots,a_n\rangle$ of elements of $|\mathfrak{A}|$,
+          \[
+            \langle a_1,\dots,a_n\rangle\in P^{\mathfrak{A}}\text{ iff }\langle h(a_1),\dots,h(a_n)\rangle\in P^{\mathfrak{B}}.
+          \]
+    \item For each $n$-place function symbol $f$ and each such $n$-tuple,
+          \[
+            h(f^{\mathfrak{A}}(a_1,\dots,a_n))=f^{\mathfrak{B}}(h(a_1),\dots,h(a_n)).
+          \]
+          In the case of a constant symbol $c$ this becomes
+          \[
+            h(c^{\mathfrak{A}})=c^{\mathfrak{B}}.
+          \]
+  \end{enumerate}
+  Say that $h$ \textit{preserves} the relation and functions. If, in addition, $h$ is one-to-one, it is then called an \textit{isomorphism} (or an \textit{isomorphic embedding}) of $\mathfrak{A}$ into $\mathfrak{B}$. If there is an isomorphism of $\mathfrak{A}$ \textit{onto} $\mathfrak{B}$, then $\mathfrak{A}$ and $\mathfrak{B}$ are said to be \textit{isomorphic} (written $\mathfrak{A}\cong \mathfrak{B}$).
+\end{reference}
+
+Consider two sturctures $\mathfrak{A}$ and $\mathfrak{B}$ for the language such that $|\mathfrak{A}|\subseteq|\mathfrak{B}|$. Then the identity map from $|\mathfrak{A}|$ into $|\mathfrak{B}|$ is an isomorphism of $\mathfrak{A}$ into $\mathfrak{B}$ iff
+\begin{enumerate}[label=(\alph*)]
+  \item $P^{\mathfrak{A}}$ is the restriction of $P^{\mathfrak{B}}$ to $|\mathfrak{A}|$, for each predicate symbol $P$;
+  \item $f^{\mathfrak{A}}$ is the restriction of $f^{\mathfrak{B}}$ to $|\mathfrak{A}|$, for each function symbol $f$, and $c^{\mathfrak{A}}=c^{\mathfrak{B}}$ for each constant symbol $c$.
+\end{enumerate}
+Say that $\mathfrak{A}$ is a \textit{substructure} of $\mathfrak{B}$, and $\mathfrak{B}$ is an \textit{extension} of $\mathfrak{A}$.
+
+\begin{reference}{Eg}{pnex}
+  Let $\mathbb{P}$ be the set of positive integers, $<_P$ the usual ordering relation on $\mathbb{P}$ and so be $<_N$. Then the identity map $Id:\mathbb{P}\rightarrow\mathbb{N}$ is an isomorphism of $(\mathbb{P};<_P)$ into $(\mathbb{N};<_N).$ Thus $(\mathbb{P};<_P)$ is a substructure of $(\mathbb{N};<_N).$ Similarly we have that $(\mathbb{Q};+_Q)$ is a substructure of $(\mathbb{C};+_C)$.
+\end{reference}
+
+\begin{reference}{Thm}{homomorphismt}
+  \textbf{Homomorphism Theorm}\quad Let $h$ be a homomorphism of $\mathfrak{A}$ into $\mathfrak{B}$, and let $s$ map the set of variables into $|\mathfrak{A}|$.
+  \begin{enumerate}[label=(\alph*)]
+    \item For any term $t$, we have $h(\overline{s}(t))=\overline{h\circ s}(t)$, where $\bar{s}(t)$ is computed in $\mathfrak{A}$ and $\overline{h\circ s}(t)$ is computed in $\mathfrak{B}$.
+    \item For any quantifier-free formula $\alpha$ not containing the equality symbol,
+          \[
+            \vDash_{\mathfrak{A}}\alpha[s]\text{ iff }\vDash_{\mathfrak{B}}\alpha[h\circ s].
+          \]
+    \item ``Not containing the equality symbol'' in (b) is not necessary if $h$ is one-to-one.
+    \item ``Quantifier-free'' in (b) is not necessary if $h$ is a homomorphism of $\mathfrak{A}$ \textit{onto} $\mathfrak{B}$.\qedhere
+  \end{enumerate}
+\end{reference}
+
+\begin{proof}
+  \begin{enumerate}[label=(\alph*)]
+    \item We use induction on $t$.
+    \item For an atomic formula \textit{such as} $P\ t$, we have
+          \begin{align*}
+            \vDash_{\mathfrak{A}}P\ t[s] & \Leftrightarrow \bar{s}(t)\in P^{\mathfrak{A}}             \\
+                                         & \Leftrightarrow h(\bar{s}(t))\in P^{\mathfrak{B}}          \\
+                                         & \Leftrightarrow \overline{h\circ s}(t)\in P^{\mathfrak{B}} \\
+                                         & \Leftrightarrow\ \vDash_{\mathfrak{B}}P\ t[h\circ s].
+          \end{align*}
+          Then we use induction on wffs.
+    \item Note that the second $\Leftrightarrow$ in (b) holds for the special predicate symbol ``='' iff $h$ is one-to-one.
+    \item For any element $a$ of $|\mathfrak{A}|$,
+          \begin{align*}
+            \vDash_{\mathfrak{B}}\forall x\ \varphi[h\circ s] & \Rightarrow\ \vDash_{\mathfrak{B}}\varphi[(h\circ s)(x|h(a))] \\
+                                                              & \Leftrightarrow\ \vDash_{\mathfrak{B}}\varphi[h\circ(s(x|a))] \\
+                                                              & \Leftrightarrow\ \vDash_{\mathfrak{A}}\varphi[s(x|a)]
+          \end{align*}
+          Thus $\vDash_{\mathfrak{B}}\forall x\ \varphi[h\circ s]\Rightarrow\ \vDash_{\mathfrak{A}}\forall x\ \varphi[s].$ If $h$ maps $|\mathfrak{A}|$ \textit{onto} $|\mathfrak{B}|$, the counterpart of the above argument is immediate.\qedhere
+  \end{enumerate}
+\end{proof}
+
+The above theorem essentially depicts how homomorphic structures ``preserve'' satisfaction.
+
+\begin{reference}{Defn}{elequiv}
+  Two structures $\mathfrak{A}$ and $\mathfrak{B}$ for the language are said to be \textit{elementarily equivalent} (written $\mathfrak{A}\equiv \mathfrak{B}$) iff for any sentence $\sigma$,
+  \[
+    \vDash_{\mathfrak{A}}\sigma\Leftrightarrow\ \vDash_{\mathfrak{B}}\sigma.\qedhere
+  \]
+\end{reference}
+
+\begin{reference}{Cor}{c22d}
+  (22D) $\mathfrak{A}\cong \mathfrak{B}\Rightarrow \mathfrak{A}\equiv \mathfrak{B}$.
+\end{reference}
+
+Actually more is true. Isomorphic structures are alike in every “structural” way; not only do they satisfy the same first-order sentences, they also satisfy the same second-order (and higher) sentences, i.e., they are secondarily equivalent and more.
+
+\begin{reference}{Eg}{isomorphismex}
+  \begin{enumerate}
+    \item $(\mathbb{R};<_R)\equiv(\mathbb{Q};<_Q)$, but they are not isomorphic. (See the comment for \ref{cantor}.)
+    \item In \ref{pnex}, $Id$ and $h: n\mapsto n-1$ are both isomorphisms. The latter, in paticular, is \textit{onto} $(\mathbb{N};<_N)$. Therefore $(\mathbb{P};<_P)$ and $(\mathbb{N};<_N)$ are indistinguishable by first-order sentences. But we may tell a difference, by applying wffs that contain quantifiers, in case we use $Id$ as the isomorphism.\qedhere
+  \end{enumerate}
+\end{reference}
+
+An \textit{automorphism} of the structure $\mathfrak{A}$ is an isomorphism of $\mathfrak{A}$ onto $\mathfrak{A}$. The identity function on $|\mathfrak{A}|$ is trivially an automorphism of $\mathfrak{A}$. Say that $\mathfrak{A}$ is \textit{rigid} if the identity function is its only automorphism.
+
+\begin{reference}{Cor}{c22e}
+  (22E) Let $h$ be an automorphism of the structure $\mathfrak{A}$, and $R$ an $n$-ary relation on $|\mathfrak{A}|$ definable in $\mathfrak{A}$. Then for any $a_1,\dots,a_n$ in $|\mathfrak{A}|$,
+  \[
+    \langle a_1,\dots,a_n\rangle\in R\Leftrightarrow\langle h(a_1),\dots,h(a_n)\rangle\in R.\qedhere
+  \]
+\end{reference}
+
+\begin{reference}{Eg}{automorphismex}
+  \begin{enumerate}
+    \item Consider sturcture $(\mathbb{R};<)$. An automorphism of it is simply a function $h$ from $\mathbb{R}$ onto $\mathbb{R}$ that is strictly increasing:
+          \[
+            a<b\Leftrightarrow h(a)<h(b).
+          \]
+          Therefore $h: a\mapsto a^3$ qualifies. Since this function maps points outside of $\mathbb{N}$ into $\mathbb{N}$, the set $\mathbb{N}$ is not definable in $(\mathbb{R};<)$.
+    \item Consider structure $(E;+,f_r)_{r\in\mathbb{R}}$, where $E$ is a plane, $+$ a binary function symbol of vector addition and $f_r$ a unary function of scalar multiplication by $r$. $h: \mathbf{x}\mapsto 2\mathbf{x}$ is an automorphism of it, but $h$ does not preserve the set of unit vectors,
+          \[
+            \{\mathbf{x}|\mathbf{x}\in E\text{ and }\mathbf{x}\text{ has length }1\}.
+          \]
+          So this set, and therefore lengths of the vectors in the plane, is not definable in $(E;+,f_r)$. (Incidentally, the homomorphisms of vector spaces are called \textit{linear transformations}.)\qedhere
+  \end{enumerate}
+\end{reference}
+
+\subsection*{Exercises}
+
+\begin{exercise}{E.2.2.1}
+  Show that (a) $\Gamma;\alpha\vDash \varphi$ iff $\Gamma\vDash(\alpha\to \varphi)$; and (b) $\varphi\vDash\Dashv \psi$ iff $\vDash(\varphi \leftrightarrow \psi).$
+\end{exercise}
+
+\begin{enumerate}[label=(\alph*)]
+  \item
+        $\begin{aligned}[t]
+            \Gamma;\alpha\vDash \varphi & \Leftrightarrow(\forall\tau\ \tau\in\Gamma;\alpha\rightarrow\ \vDash_{\mathfrak{A}}\tau[s])\rightarrow\ \vDash_{\mathfrak{A}}\varphi[s]                                 \\
+                                        & \Leftrightarrow(\forall\tau\ \tau\in \Gamma\rightarrow\ \vDash_{\mathfrak{A}}\tau[s])\ \wedge\vDash_{\mathfrak{A}}\alpha[s]\rightarrow\ \vDash_{\mathfrak{A}}\varphi[s] \\
+                                        & \Leftrightarrow(\forall\tau\ \tau\in \Gamma\rightarrow\ \vDash_{\mathfrak{A}}\tau[s])\rightarrow\ \vDash_{\mathfrak{A}}(\alpha\rightarrow \varphi)[s]                   \\
+                                        & \Leftrightarrow \Gamma\vDash (\alpha\rightarrow \varphi).
+          \end{aligned}$
+  \item This should be a specification of (a), and is omitted for brevity.
+\end{enumerate}
+
+\begin{exercise}{E.2.2.2}
+  Question to fill in.
+\end{exercise}
+
+Observe that $P$ is a transitive relation in (a), an antisymmetric one in (b) and one with a right-absorbing element in the universe in (c).
+\begin{enumerate}
+  \item $(\{a,b\},\{\langle a,b\rangle,\langle b,b\rangle,\langle b,a\rangle\})$.
+  \item $(\{a,b\},\{\langle a,b\rangle,\langle b,b\rangle,\langle b,a\rangle,\langle a,a\rangle\})$.
+  \item $(\mathbb{Z}_{>0}, |)$, where $|$ is the ``divides'' relation on positive integers.
+\end{enumerate}
+
+\begin{exercise}{E.2.2.3}
+  Question to fill in.
+\end{exercise}
+
+Consider a fixed $\mathfrak{A}$ and $s$, for every $d\in|\mathfrak{A}|$,
+\begin{align*}
+                  & (\vDash_{\mathfrak{A}}\forall x(\alpha\rightarrow \beta)[s])\wedge(\vDash_{\mathfrak{A}}\forall x\ \alpha[s])                    \\
+  \Leftrightarrow & (\vDash_{\mathfrak{A}}(\alpha\rightarrow \beta)[s(x|d)])\wedge(\vDash_{\mathfrak{A}} \alpha[s(x|d)])                             \\
+  \Leftrightarrow & (\vDash_{\mathfrak{A}}\alpha[s(x|d)]\rightarrow\ \vDash_{\mathfrak{A}}\beta[s(x|d)])\wedge(\vDash_{\mathfrak{A}} \alpha[s(x|d)]) \\
+  \Rightarrow     & \vDash_{\mathfrak{A}}\beta[s(x|d)]                                                                                               \\
+  \Leftrightarrow & \vDash_{\mathfrak{A}}\forall x\ \beta[s].
+\end{align*}
+Thus $\{\forall x(\alpha\rightarrow \beta),\forall x\ \alpha\}\vDash\forall x\ \beta$. One should note that the $\wedge$ and $\Leftrightarrow$ and $\Rightarrow$ used in this proof are only simplifications of meta-reasoning in English. The Same works for many exercises (for example, \ref{E.2.2.1}).
+
+\begin{exercise}{E.2.2.4}
+  Show that if $x$ does not occur free in $\alpha$, then $\alpha\vDash\forall x \alpha$.
+\end{exercise}
+
+Consider a fixed $\mathfrak{A}$ and $s$. For every $d\in|\mathfrak{A}|$, we have that $s$ and $s(x|d)$ agree at all free variables of $\alpha$, and by \ref{t22a} $\vDash_{\mathfrak{A}}\alpha[s]\Leftrightarrow\ \vDash_{\mathfrak{A}}\alpha[s(x|d)]\Leftrightarrow\ \vDash_{\mathfrak{A}}\forall x\ \alpha[s].$
+
+\begin{exercise}{E.2.2.5}
+  Question to fill in.
+\end{exercise}
+
+By \ref{E.2.2.1} it suffices to show that $\{=xy, Pzfx\}\vDash Pzfy$. Consider a fixed $\mathfrak{A}$ and $s$ and arbitrary $d\in|\mathfrak{A}|$,
+\begin{align*}
+  (\vDash_{\mathfrak{A}}=xy[s])\wedge(\vDash_{\mathfrak{A}}Pzfx[s])
+  \Leftrightarrow & (\bar{s}(x)=\bar{s}(y))\wedge(\langle\bar{s}(z),f\bar{s}(x)\rangle\in P^{\mathfrak{A}}) \\
+  \Rightarrow     & \langle\bar{s}(z),f\bar{s}(y)\rangle\in P^{\mathfrak{A}}                                \\
+  \Leftrightarrow & \vDash_{\mathfrak{A}}Pzfy[s].
+\end{align*}
+Thus $\{=xy, Pzfx\}\vDash Pzfy$.
+
+\begin{exercise}{E.2.2.6}
+  Show that a formula $\theta$ is valid iff $\forall\theta$ is valid.
+\end{exercise}
+
+By \ref{E.2.2.4} it suffices to show that if a wff $\varphi$ has free variables then it is not valid. To show that we first prove that for any wff $\varphi$ there exist $\mathfrak{A}$ and $s$ such that $\vDash_{\mathfrak{A}}\varphi[s]$ and then show that if $\varphi$ is not a sentence, there exist $\mathfrak{A}'$ and $s'$ such that $\nvDash_{\mathfrak{A}'}\varphi[s']$. I suppose the above is a working proof sketch but we might as well instead prove this directly for the sake of brevity: Consider a fixed $\mathfrak{A}$ and $s$, $\vDash_{\mathfrak{A}}\varphi[s(x|d)]$ holds for every $d\in|\mathfrak{A}|$ since $\varphi$ is \textit{valid}, and that is exactly $\vDash_{\mathfrak{A}}\forall x\ \varphi$. Thus $\varphi \Leftrightarrow\forall x\ \varphi$.
+
+\begin{exercise}{E.2.2.7}
+  Restate the definition of ``$\mathfrak{A}$ satisfies $\varphi$ with $s$'' by defining recursively a function $\overline{h}$ such that $\mathfrak{A}$ satisfies $\varphi$ with $s$ iff $s\in \overline{h}(\varphi).$
+\end{exercise}
+
+See \ref{altersatisfaction}.
+
+\setcounter{exercise}{8}
+
+\begin{exercise}{E.2.2.9}
+  Assume that the language has equality and a two-place predicate symbol $P$. For each of the following conditions, find a sentence $\sigma$ such that the structure $\mathfrak{A}$ is a model of $\sigma$ iff the condition is met.
+  \begin{enumerate}
+    \item $|\mathfrak{A}|$ has exactly two members.
+    \item $P^{\mathfrak{A}}$ is a function from $|\mathfrak{A}|$ into $|\mathfrak{A}|$.
+    \item $P^{\mathfrak{A}}$ is a permutation of $|\mathfrak{A}|$.\qedhere
+  \end{enumerate}
+\end{exercise}
+
+\begin{enumerate}
+  \item $\exists a\exists b\forall c(\neg a=b\wedge(c=a\vee c=b))$.
+  \item $\forall x\exists y\forall z(P\ xy\wedge(P\ xz\to y=z))$.
+  \item $\forall x\exists y\forall z\exists p\forall q\forall r(P\ xy\wedge(P\ xz\to y=z)\wedge P\ pq\wedge(P\ rq\to p=r))$.
+\end{enumerate}
+
+\begin{exercise}{E.2.2.10}
+  Show that
+  \[
+    \models_{\mathfrak{A}} \forall v_2 \, Q v_1 v_2 [ [c^\mathfrak{A}] ] \quad \text{iff} \quad \models_{\mathfrak{A}} \forall v_2 \, Q c v_2.
+  \]
+  Here \( Q \) is a two-place predicate symbol and \( c \) is a constant symbol.
+\end{exercise}
+
+See \ref{substitutionl}.
+
+\begin{exercise}{E.2.2.11}
+  For each of the following relations, give a formula which defines it in \((\mathbb{N}; +, \cdot)\). (The language is assumed to have equality and the parameters \(\forall\), \(+\), and \(\cdot\)).
+  \begin{enumerate}
+    \item \(\{0\}\).
+    \item \(\{1\}\).
+    \item \(\{ \langle m, n \rangle \mid n \text{ is the successor of } m \text{ in } \mathbb{N} \}\).
+    \item \(\{ \langle m, n \rangle \mid m < n \text{ in } \mathbb{N} \}\).\qedhere
+  \end{enumerate}
+\end{exercise}
+
+\begin{enumerate}
+  \item $\forall x\ x+a=x$.
+  \item $\forall x\ x\cdot a=x$.
+  \item $\exists y\forall x(x\cdot y=x\wedge n=m+y)$.
+  \item $\exists y\forall x\exists k(x+y=x\wedge \neg k=y\wedge n=m+k)$.
+\end{enumerate}
+
+% TODO: section 3.5.
+
+\setcounter{exercise}{12}
+
+\begin{exercise}{E.2.2.13}
+  Question to fill in.
+\end{exercise}
+
+Omitted as trivial.
+
+\setcounter{exercise}{15}
+
+\begin{exercise}{E.2.2.16}
+  Give a sentence having models of size $2n$ for every positive integer $n$, but no finite models of odd size. (The language should have equality and whatever parameters you choose.)
+\end{exercise}
+
+Idea: One method is to make a sentence that says, “Everything is either red or blue, and f is a color-reversing permutation.” So we may write $\forall x(f(f(x))=x\wedge\neg f(x)=x)$. (We are not exactly following the method, but instead making sure things occur in pairs.)
+
+\begin{exercise}{E.2.2.17}
+  (a) Consider a language with equality whose only parameter (aside from $\forall$) is a two-place predicate symbol $P$. Show that if $\mathfrak{A}$ is finite and $\mathfrak{A}\equiv \mathfrak{B}$ then $\mathfrak{A}$ is isomorphic to $\mathfrak{B}$.
+  (b) Show that the result of part (a) holds regardless of what the parameters the language contains.
+\end{exercise}
+
+(a) Let $V_c=\{v_1,\dots,v_n\}$, where $n=\mathrm{card}|\mathfrak{A}|$. Consider fixed $s_{\mathfrak{A}}:V\to|\mathfrak{A}|$ that is one-to-one when restricted to $V_c$.  Make a sentence $\sigma$ of the form $\exists v_1\cdots\exists v_n(\bigwedge \Sigma)$, where  and $\Sigma$ contains the following formulas: (i) $\bigwedge_{i\neq j}\neg =v_iv_j$; (ii) $\forall x\ x\in\{v_1,\dots,v_n\}$; (iii) one saying that $Pv_iv_j$ iff $\vDash_{\mathfrak{A}}Pv_iv_j[s_{\mathfrak{A}}]$. Then we have $\vDash_{\mathfrak{A}}\sigma$. Now make $s_{\mathfrak{B}}:V\to|\mathfrak{B}|$ such that (i) is one-to-one when restricted to $V_c$ and (ii) if $\vDash_{\mathfrak{A}}Pv_iv_j[s_{\mathfrak{A}}]$, then $\vDash_{\mathfrak{B}}Pv_iv_j[s_{\mathfrak{B}}]$. This is valid due to that $\vDash_{\mathfrak{B}}\sigma$. Then we have $(s_{\mathfrak{B}}|_{V_c})\circ(s_{\mathfrak{A}}|_{V_c})^{-1}$ as an isomorphism of $\mathfrak{A}$ into $\mathfrak{B}$.
+(b) This is a trivial extension of part (a). We only need to make sure that there is a sentence $\sigma$ that ``describes'' $\mathfrak{A}$ to preserve the parameters, which is feasible when $\mathfrak{A}$ is finite.
+
+\section{A Parsing Algorithm}\label{sec:2.3}
+
+We \textit{must} show that we can decompose formulas (and terms) in a unique way to justify our definitions by recursion. Omitting technical details (which, like \ref{sec:1.3}, brilliantly utilized some traits of the notations we use), we state that the set of terms \textit{is} freely generated from the set of variables and constant symbols by the $\mathcal{F}_f$ operations, and that the set of wffs \textit{is} freely generated from the set of atomic formulas by the operations $\mathcal{E}_{\neg}$, $\mathcal{E}_{\rightarrow}$ and $\mathcal{Q}_i(i=1,2,\dots).$ The solutions to the exercises are omitted as trivial.
+
+\section{A Deductive Calculus}
+
+Suppose $\Sigma\vDash \tau$ and we want to demonstrate it. We can achieve this goal in the context of sentential logic by definition (using the truth table method) (or we may use deduction introduced in \ref{E.1.7.5}, but we might not bother to, for that the truth table method is already effective). But to do this by definition (\ref{logicalimplication}) in the context of first-order logic is significantly more difficult. So we consider \textit{formal proofs} and ask them to be finitely long and decidable (for otherwise there is no point in introducing them).
+
+Then we argue that such proofs exist. The finiteness demands \ref{compactnesstfol} and the effectiveness demands \ref{enumerabilityt}. (The set of proofs from $\emptyset$ should be decidable, then we can effectively enumerate all strings and sort out non-proofs, thus the validities should be effectively enumerable.) These two theorems are sufficient. For there exists by \ref{compactnesstfol} a finite set $\{\sigma_0,\dots,\sigma_n\}\subseteq \Sigma$ that logically implies $\tau$. Then $\sigma_0\rightarrow\cdots\rightarrow \sigma_n\rightarrow \tau$ is valid, and by \ref{enumerabilityt} we can find it after a finite number of enumerations. The record of enumeration procedure \textit{is} a proof. It \textit{is} finite and decidable.
+
+According to the above motivation we aim to derive one type of proofs, or \textit{deduction}, that is, in the context of first-order logic, adequate (by proving the two theorem) and correct (by describing a correct procedure that enumerates validities).
+
+\subsection*{Formal Deductions}
+
+To present a deductive calculus for first-order logic is to choose a set $\Lambda$ of formulas that are called \textit{logical axioms} and a set of \textit{rules} of inference. In our case we will have a infinite $\Lambda$ (with detailed discussion to follow) and only one rule of inference, traditionally known as \textit{modus ponens} and usually stated: From the formulas $\alpha$ and $\alpha\rightarrow \beta$ we may infer $\beta$:
+\[
+  \frac{\alpha,\alpha\rightarrow \beta}{\beta}.
+\]
+Then we can define that a \textit{deduction of} $\varphi$ \textit{from} $\Gamma$ is a finite sequence $\langle \alpha_0,\dots,\alpha_n\rangle$ of formulas such that $\alpha_n$ is $\varphi$ and for each $k\leq n$, either (a) $\alpha_k$ is in $\Gamma\cup \Lambda$, or (b) for some $i$ and $j$ less than $k$, $\alpha_j$ is $\alpha_i\rightarrow \alpha_k$. If such a deduction exists, we say that $\varphi$ is \textit{deducible} from $\Gamma$, or that $\varphi$ is a \textit{theorem} of $\Gamma$, for which we write $\Gamma\vdash \varphi$.
+
+We may adopt a viewpoint that is similar to \ref{generation}. This would differ from the generation of wffs in that the set of theorems is \textit{not} freely generated from $\Gamma\cup \Lambda$ by modus ponens, and that the domain is ``partial'', in the form $\langle \alpha,\alpha\rightarrow \beta\rangle$, instead of arbitrary wffs. Say that a set $S$ of formulas is \textit{closed} under modus ponens if whenever both $\alpha\in S$ and $(\alpha\rightarrow \beta)\in S$ then also $\beta\in S.$
+
+\begin{reference}{Thm}{inductionp1}
+  \textbf{Induction Principle}\quad Suppose that $S$ is a set of wffs that includes $\Gamma\cup \Lambda$ and is closed under modus ponens. Then $S$ contains every theorem of $\Gamma$.
+\end{reference}
+
+\begin{reference}{Defn}{axioms}
+  Say that a wff $\varphi$ is a \textit{generalization} of wff $\psi$ iff for some $n\geq 0$ and some variables $x_1,\dots,x_n,$
+  \[
+    \varphi=\forall x_1\cdots\forall x_n \psi.
+  \]
+  The set $\Lambda$ we give contains all generalizations of wffs of the following forms, where $x$ and $y$ are variables and $\alpha$ and $\beta$ are wffs:
+  \begin{enumerate}
+    \item Tautologies;
+    \item $\forall x\ \alpha\rightarrow \alpha_t^x$, where $t$ is substitutable for $x$ in $\alpha$;
+    \item $\forall x(\alpha\rightarrow \beta)\rightarrow(\forall x\ \alpha\rightarrow\forall x\ \beta)$;
+    \item $\alpha\rightarrow\forall x\ \alpha$, where $x$ does not occur free in $\alpha$.
+  \end{enumerate}
+  And if the language includes equality, we add
+  \begin{enumerate}
+    \setcounter{enumi}{4}
+    \item $x=x$;
+    \item $x=y\rightarrow(\alpha\rightarrow \alpha')$, where $\alpha$ is atomic and $\alpha'$ is obtained from $\alpha$ by replacing $x$ in zero or more places by $y$.\qedhere
+  \end{enumerate}
+\end{reference}
+
+For the origins of the axioms see \ref{subsec:final}.
+
+\subsection*{Substitution}\label{subsec:substitution}
+
+\begin{reference}{Defn}{substiterm}
+  For term $t$ and variable $x$, we define $\sigma_{x\mapsto t}:V\rightarrow T$, where $V$ is the set of variables, $T$ the set of terms and $\sigma_{x\mapsto t}$ identity except that it maps $x$ to $t$ and then recursively define the extension $\overline{\sigma_{x\mapsto t}}:T\rightarrow T$:
+  \begin{enumerate}
+    \item For each variable $v$, $\overline{\sigma_{x\mapsto t}}(v)=\sigma_{x\mapsto t}(v)$.
+    \item For each constant symbol $c$, $\overline{\sigma_{x\mapsto t}}(c)=c$.
+    \item For terms $t_1,\dots,t_n$ and $n$-place function symbol $f$,
+          \[\overline{\sigma_{x\mapsto t}}(f(t_1,\dots,t_n))=f(\overline{\sigma_{x\mapsto t}}(t_1),\dots,\overline{\sigma_{x\mapsto t}}(t_n)).\qedhere\]
+  \end{enumerate}
+\end{reference}
+
+The fact that $\mathrm{ran}\ \overline{\sigma_{x\mapsto t}}\subseteq T$, though trivial, follows from \ref{inductionp}, where the two sets of interest are $\mathrm{ran}\ \overline{\sigma_{x\mapsto t}}$ and the subset of $\mathrm{ran}\ \overline{\sigma_{x\mapsto t}}$ containing only terms.
+
+Then we define $\alpha_t^x$ recursively:
+\begin{enumerate}
+  \item For atomic $\alpha=P\ t_1,\dots,t_n$, $\alpha_t^x=P\ \overline{\sigma_{x\mapsto t}}(t_1),\dots,\overline{\sigma_{x\mapsto t}}(t_n)$.
+  \item $(\neg \alpha)_t^x=(\neg \alpha_t^x)$.
+  \item $(\alpha\rightarrow \beta)_t^x=(\alpha_t^x\rightarrow \beta_t^x).$
+  \item $(\forall y\ \alpha)_t^x=\begin{cases}
+            \forall y\ \alpha     & x=y     \\
+            \forall y(\alpha_t^x) & x\neq y
+          \end{cases}$
+\end{enumerate}
+Therefore $\alpha_t^x$ is the expression (also formula, trivially) obtained from $\alpha$ by replacing $x$, wherever it occurs free in $\alpha$, by $t$.
+
+\begin{reference}{Defn}{substitutability}
+  The phrase ``$t$ is \textit{substitutable} for $x$ in $\alpha$'' is recursively defined as follows:
+  \begin{enumerate}
+    \item For atomic $\alpha$, $t$ is always substitutable for $x$ in $\alpha$.
+    \item $t$ is substitutable for $x$ in $(\neg \alpha)$ iff it is substitutable for $x$ in $\alpha$. $t$ is substitutable for $x$ in $(\alpha\rightarrow \beta)$ iff it is substitutable for $x$ in both $\alpha$ and $\beta$.
+    \item $t$ is substitutable for $x$ in $\forall y\ \alpha$ iff either
+          \begin{enumerate}
+            \item $x$ does not occur free in $\forall y\ \alpha$, or
+            \item $y$ does not occur in $t$ and $t$ is substitutable for $x$ in $\alpha$.\qedhere
+          \end{enumerate}
+  \end{enumerate}
+\end{reference}
+
+\subsection*{Tautologies}
+
+We devide the set of wffs into two groups:
+\begin{enumerate}
+  \item The \textit{prime} formulas are the atomic formulas and those of the form $\forall x\ \alpha$.
+  \item The nonprime formulas are the others.
+\end{enumerate}
+Thus any formula is generated from the set of prime formulas by operations $\mathcal{E}_{\neg}$ and $\mathcal{E}_{\rightarrow}$. Say that any tautology (\ref{tautology}) of sentential logic is a \textit{tautology} in axiom group 1, where the sentence symbols are prime formulas.
+
+Note that we are employing an extension of Chapter 1 to the case of an uncountable set of sentence symbols. Note also that we could use less tautologies and obtain others by use of modus ponens. The whole set of tautologies is a nice decidable set, but not one polynomial-time decidable.
+
+Now that first-order formulas are also wffs of sentential logic, we can apply concepts from both Chapters 1 and 2 to them.
+
+\begin{reference}{Defn}{truchassignmentonprimeformulas}
+  Define on the set of prime formulas a truth assignment
+  \[
+    v(\alpha)=T\text{ iff }\vDash_{\mathfrak{A}}\alpha[s],
+  \]
+  where $\mathfrak{A}$ is a sturcture and $s:V\rightarrow|\mathfrak{A}|$.
+\end{reference}
+
+We want to show that this definition, when extended to $\bar{v}$, is closed under $\mathcal{E}_{\neg}$ and $\mathcal{E}_{\rightarrow}$, and this is trivial by definition. Thus we have
+\begin{align*}
+              & \ \Gamma \text{ tautologically implies }\varphi                                                                                       \\\Leftrightarrow & \text{ every truth assignment for prime formulas in }                                        \Gamma;\varphi\text{ that satisfies every number of }\\&\ \Gamma\text{ also satisfies }\varphi \\
+  \Rightarrow & \text{ for every structure $\mathfrak{A}$ and every function $s:V\rightarrow|\mathfrak{A}|$ such that $\mathfrak{A}$ satisfies every} \\&\text{ number of $\Gamma$ with $s$, $\mathfrak{A}$ also satisfies $\varphi$ with $s$}\\\Leftrightarrow&\ \Gamma\vDash\varphi.
+\end{align*}
+The converse of $\Rightarrow$ does not hold, because cases exist where a logical implication is not a tautological one. An example could be $\forall x\ A x\vDash A b$.
+
+\begin{reference}{Thm}{t24b}
+  (24B) $\Gamma\vdash \varphi$ iff $\Gamma\cup \Lambda$ tautologically implies $\varphi$.
+\end{reference}
+
+\begin{proof}[Proof Sketch]
+  For $(\Rightarrow)$ we use induction on $\varphi$. For $(\Leftarrow)$ we use \ref{c17a}.
+\end{proof}
+
+The above proof is related to Exercise \ref{E.1.7.6} and \ref{E.1.7.7}. We are using sentential compactness for a possibly uncountable language.
+
+\subsection*{Deductions and Metatheorems}
+
+\begin{reference}{Thm}{generalizationt}
+  \textbf{Generalization Theorem}\quad If $\Gamma\vdash \varphi$ and $x$ do not occur free in any formula in $\Gamma$, then $\Gamma\vdash\forall x\ \varphi$.
+\end{reference}
+
+\begin{proof}
+  It suffices (by the \ref{inductionp1}) to show that the set $\{\varphi|\Gamma\vdash\forall x\ \varphi\}$ includes $\Gamma\cup \Lambda$ and is closed under modus ponens.
+
+  Case 1: $\varphi\in \Lambda$. We have $\Gamma\vdash\forall x\ \varphi$. Thus $\Lambda\subseteq\{\varphi|\Gamma\vdash\forall x\ \varphi\}$.\newline
+  Case 2: $\varphi\in \Gamma$. We have by axiom group 4 (\ref{axioms}) that $\Gamma\vdash\forall x\ \varphi$. Thus $\Gamma\subseteq\{\varphi|\Gamma\vdash\forall x\ \varphi\}$.\newline
+  Case 3: $\varphi$ is obtained by modus ponens from $\psi$ and $\psi\rightarrow \varphi$. We have by inductive hypothesis and axiom group 3 (\ref{axioms}) that $\Gamma\vdash\forall x\ \varphi$. Thus $\{\varphi|\Gamma\vdash\forall x\ \varphi\}$ is closed under modus ponens.
+\end{proof}
+
+\begin{reference}{Eg}{generalizationtex}
+  $\forall x\forall y\ \alpha\vdash\forall y\forall x\ \alpha$.
+\end{reference}
+
+\begin{proof}[Proof Sketch]
+  We use axiom group 2 (\ref{axioms}) and then \ref{generalizationt}. Note that a variable is always substitutable for itself.
+\end{proof}
+
+\begin{reference}{Lem}{l24c}
+  \textbf{Rule T}\quad (24C) If $\Gamma\vdash \alpha_1,\dots,\Gamma\vdash \alpha_n$ and $\{\alpha_1,\dots,\alpha_n\}$ tautologically implies $\beta$, then $\Gamma\vdash \beta$.
+\end{reference}
+
+\begin{proof}
+  We have a tautology $\alpha_1\rightarrow\cdots\rightarrow \alpha_n\rightarrow \beta$, and by axiom group 1 (\ref{axioms}) and modus ponens (applied $n$ times) we have $\Gamma\vdash \beta$.
+\end{proof}
+
+\begin{reference}{Thm}{deductiont}
+  \textbf{Deduction Theorem}\quad If $\Gamma;\gamma\vdash \varphi$, then $\Gamma\vdash(\gamma\rightarrow \varphi).$
+\end{reference}
+
+\begin{proof}
+  By \ref{t24b} and Exercise \ref{E.1.2.4}(a) we have that
+  \begin{align*}
+    \Gamma;\gamma\vdash \varphi\Leftrightarrow\  & \Gamma\cup \Lambda;\varphi\text{ tautologically implies }\varphi \\\Leftrightarrow\ &\Gamma\cup \Lambda\text{ tautologically implies }(\gamma\rightarrow \varphi)\\\Leftrightarrow\ &\Gamma\vdash(\gamma\rightarrow \varphi).\qedhere
+  \end{align*}
+\end{proof}
+
+\begin{proof}[Second Proof]
+  Alternatively, to avoid usage of sentential compactness, we can show by induction that for every theorem $\varphi$ of $\Gamma;\gamma$ the formula $(\gamma\rightarrow \varphi)$ is a theorem of $\Gamma$.
+
+  Case 1: $\varphi=\gamma$. We have by axiom group 1 (\ref{axioms}) $\Gamma\vdash(\gamma\rightarrow \varphi)$.\newline
+  Case 2: $\varphi\in \Gamma\cup \Lambda$. Thus $\Gamma\vdash \varphi$. And $\varphi$ tautologically implies $(\gamma\rightarrow \varphi)$, whence by \ref{l24c} we have $\Gamma\vdash(\gamma\rightarrow \varphi)$.\newline
+  Case 3: $\varphi$ is obtained by modus ponens from $\psi$ and $\psi\rightarrow \varphi$. By the inductive hypothesis, $\Gamma\vdash(\gamma\rightarrow \psi)$ and $\Gamma\vdash(\gamma\rightarrow(\psi\rightarrow \varphi))$. And the set $\{\gamma\rightarrow \psi, \gamma\rightarrow(\psi\rightarrow \varphi)\}$ tautologically implies $\gamma\rightarrow \varphi$. Thus by \ref{l24c}, $\Gamma\vdash(\gamma\rightarrow \varphi)$.
+\end{proof}
+
+When proving by induction, to decide the inductive hypothesis is to find a trait that is described by the theorem to prove.
+
+\begin{reference}{Cor}{c24d}
+  \textbf{Contraposition}\quad (24D) $\Gamma;\varphi\vdash\neg \psi \Leftrightarrow \Gamma;\psi\vdash\neg \varphi$.
+\end{reference}
+
+\begin{reference}{Defn}{consistency}
+  Say that a set of formulas is \textit{inconsistent} iff for some $\beta$, both $\beta$ and $\neg \beta$ are the theorems of the set. (In this event, any formula $\alpha$ is a theorem of the set, since $\beta\rightarrow\neg \beta\rightarrow \alpha$ is a tautology.) Say that a set of formulas is \textit{consistent} if it is not inconsistent.
+\end{reference}
+
+\begin{reference}{Cor}{raa}
+  \textbf{Reductio ad Absurdum, RAA}\quad (24E) If $\Gamma;\varphi$ is inconsistent, then $\Gamma\vdash\neg \varphi$.
+\end{reference}
+
+\begin{proof}
+  Say that $\Gamma;\varphi\vdash \beta$ and $\Gamma;\varphi\vdash\neg \beta$, then we have by \ref{deductiont} that $\Gamma\vdash(\varphi\rightarrow \beta)$ and $\Gamma\vdash(\varphi\rightarrow \neg\beta)$. Thus we have by \ref{l24c} $\Gamma\vdash\neg \varphi$.
+\end{proof}
+
+Reductio ad Absurdum essentially states that to show that $\varphi$ is deducible from $\Gamma$, it suffices to show that $\Gamma;\neg\varphi$ is inconsistent.
+
+\subsection*{Strategy}
+
+\begin{reference}{Thm}{t24f}
+  \textbf{Generalization on Constants}\quad (24F) Assume that $\Gamma\vdash \varphi$ and that $c$ is a constant symbol that does not occur in $\Gamma$. Then there is a variable $y$ (which does not occur in $\varphi$) such that $\Gamma\vdash\forall y\ \varphi_y^c.$ Furthermore, there is a deduction of $\forall y\ \varphi_y^c$ from $\Gamma$ in which $c$ does not occur.
+\end{reference}
+
+\begin{proof}
+  Let $\langle \alpha_0,\dots,\alpha_n\rangle$ be a deduction of $\varphi$ from $\Gamma$. (Thus $\alpha_n=\varphi$.) Let $y$ be the first variable that does not occur in any of the $a_i$'s. We claim that
+  \begin{align}
+    \langle (\alpha_0)_y^c,\dots,(\alpha_n)_y^c\rangle\tag{*}
+  \end{align}
+  is a deduction from $\Gamma$ of $\varphi_y^c$. So we must check that each $(\alpha_k)_y^c$ is in $\Gamma\cup \Lambda$ or is obtained from earlier formulas by modus ponens.
+
+  Case 1: $\alpha_k\in \Gamma$. Then $c$ does not occur in $\alpha_k$. So $(\alpha_k)_y^c=\alpha_k$, which is in $\Gamma$.\newline
+  Case 2: $\alpha_k\in \Lambda$. Then $(\alpha_k)_y^c\in \Lambda$ (trivially).\newline
+  Case 3: $\alpha_k$ is obtained by MP from $\alpha_i$ and $\alpha_j=(\alpha_i\rightarrow \alpha_k)$ for $i,j$ less than $k.$ Then $(\alpha_j)_y^c=((\alpha_i)_y^c\rightarrow(\alpha_k)_y^c)$ by \ref{subsec:substitution}. Thus we have $(\alpha_k)_y^c$ by MP.
+
+  Let $\Phi$ be the finite subset of $\Gamma$ that is used in (*). Thus (*) is a deduction of $\varphi_y^c$ from $\Phi$, and $y$ does not occur in $\Phi$. So by \ref{generalizationt} $\Phi\vdash\forall y\ \varphi_y^c$. This is \textit{the} deduction of $\forall y\ \varphi_y^c$ in which $c$ does not occur.
+\end{proof}
+
+\begin{reference}{Lem}{re-replacementl}
+  \textbf{Re-replacement Lemma}\quad If $y$ does not occur in $\varphi$, then $x$ is substitutable (\ref{substitutability}) for $y$ in $\varphi_y^x$ and $(\varphi_y^x)_x^y=\varphi$.
+\end{reference}
+
+\begin{proof}
+  We use induction on $\varphi$.
+
+  Case 1: For atomic $\varphi=P\ t_1,\dots,t_n$, by \ref{subsec:substitution} we have that $x$ is substitutable for $y$ in $\varphi_y^x$ and that
+  \[
+    (\varphi_y^x)_x^y = ((P\ t_1,\dots,t_n)_y^x)_x^y = P\ ((t_1)_y^x)_x^y,\dots,((t_n)_y^x)_x^y=\varphi.
+  \]
+  Case 2: Given the inductive hypothesis, the inductive step holds by definition for formula building operations $\mathcal{E}_{\neg}$, $\mathcal{E}_{\rightarrow}$ and $\mathcal{Q}_i$, where $v_i\neq x$ and $v_i\neq y$ (since $y$ does not occur in $\varphi$).\newline
+  Case 3: $\varphi=\forall x\ \psi$. Then $(\forall x\ \psi)_y^x=\forall x\ \psi$, in which $y$ does not occur (free, and thus $x$ is substitable.) Therefore $(\varphi_x^y)_y^x=((\forall x\ \psi)_y^x)_x^y=(\forall x\ \psi)_y^x=\forall x\ \psi=\varphi$.
+\end{proof}
+
+\begin{reference}{Cor}{c24g}
+  (24G) Assume that $\Gamma\vdash \varphi_c^x$, where the constant symbol $c$ does not occur in $\Gamma$ or in $\varphi$. Then $\Gamma\vdash\forall x\ \varphi$, and there is a deduction of $\forall x\ \varphi$ from $\Gamma$ in which $c$ does not occur.
+\end{reference}
+
+\begin{proof}
+  By \ref{t24f} we have a deduction (without $c$) from $\Gamma$ of $\forall y((\varphi_c^x)_y^c)=\forall y\ \varphi_y^x$ (for $c$ does not occur in $\varphi$), where $y$ does not occur in $\varphi_c^x$. By axiom group 2 (\ref{axioms}) and \ref{re-replacementl} we have $\vdash\forall y\ \varphi_y^x\rightarrow \varphi$. We then have $\vdash\forall y\ \varphi_y^x\rightarrow\forall x\ \varphi$ by \ref{deductiont} and \ref{generalizationt}. Thus $\Gamma\vdash\forall x\ \varphi$. (We used the fact that if $\Theta\subseteq \Gamma$ and $\Theta\vdash \varphi$, $\Gamma\vdash \varphi$.)
+\end{proof}
+
+\begin{reference}{Cor}{c24h}
+  \textbf{Rule EI}\quad (24H) Assume that the constant symbol $c$ does not occur in $\varphi,\psi$ or $\Gamma$, and that $\Gamma;\varphi_c^x\vdash \psi$. Then $\Gamma;\exists x\ \varphi\vdash \psi$ and there is a deduction of $\psi$ from $\Gamma;\exists x\ \varphi$ in which $c$ does not occur. (``EI'' stands for ``existential instantiation''.)
+\end{reference}
+
+\begin{proof}
+  By contraposition we have $\Gamma;\neg \psi\vdash\neg \varphi_c^x$. By the preceding corollary we obtain $\Gamma;\neg \psi\vdash\forall x\ \neg \varphi$. We use contraposition again.
+\end{proof}
+
+\subsection*{Alphabetic Variants}
+
+\begin{reference}{Thm}{t24i}
+  \textbf{Existence of Alphabetic Variants}\quad (24I) Let $\varphi$ be a formula, $t$ a term, and $x$ a variable. Then we can find a formula $\varphi'$ (which differs from $\varphi$ only in the choice of quantified variables) such that (a) $\varphi\vdash \varphi'$ and $\varphi'\vdash \varphi$ and (b) $t$ is substitutable for $x$ in $\varphi'$.
+\end{reference}
+
+\begin{proof}
+  We consider fixed $t$ and $x$ and construct $\varphi'$ by recursion on $\varphi$. For atomic $\varphi$ we take $\varphi'=\varphi$, and then $(\neg \varphi)'=(\neg \varphi')$,$(\varphi\rightarrow \psi)'=(\varphi'\rightarrow \psi')$. We define $(\forall y\ \varphi)'=\forall z(\varphi')_z^y,$ where $z$ is a variable that does not occur in $\varphi'$ or $t$ or $x$. By inductive hypothesis we see that (b) holds. To see that $\forall y\ \varphi\vdash\forall z(\varphi')_z^y$, consider a sequence $\langle \forall y\ \varphi, \forall y\ \varphi', (\varphi')_z^y, \forall z(\varphi')_z^y\rangle$, where each formula (except the first one) can be obtained from former ones. To see the converse, consider $\langle\forall z(\varphi')_z^y, ((\varphi')_z^y)_y^z, \varphi',\varphi,\forall y\ \varphi\rangle$. This is very similar to part of the proof of \ref{c24g}.
+\end{proof}
+
+This theorem essentially states that we can \textit{in effect always} perform substitution.
+
+\subsection*{Equality}
+
+Assuming $=$ in our language, we want to show that the relation defined by $v_1=v_2$ is reflexive, symmetric, and transitive (i.e., is an equivalence relation) and that equality is compatible with the predicate and function symbols. The relevant facts are listed as follows. ($P$ and $f$ are both $2$-place. Similarly for $n$-place predicate symbols and function symbols.)
+
+\begin{reference}{Rmk}{equalityf}
+  \textbf{Facts about Equality}
+  \begin{align*}
+     & \vdash\forall x\ x=x;\tag{Eq.1}                                                                                                 \\
+     & \vdash\forall x\forall y(x=y\rightarrow y=x);\tag{Eq.2}                                                                         \\
+     & \vdash\forall x\forall y\forall z(x=y\rightarrow y=z\rightarrow x=z);\tag{Eq.3}                                                 \\
+     & \vdash\forall x_1\forall x_2\forall y_1\forall y_2(x_1=y_1\rightarrow x_2=y_2\rightarrow Px_1x_2\rightarrow Py_1y_2);\tag{Eq.4} \\
+     & \vdash\forall x_1\forall x_2\forall y_1\forall y_2(x_1=y_1\rightarrow x_2=y_2\rightarrow fx_1x_2\rightarrow fy_1y_2).\tag{Eq.5}
+  \end{align*}
+  Proofs can be found on page 122, 127 and 128 of the book.
+\end{reference}
+
+\subsection*{Final Comments}\label{subsec:final}
+
+Here we discuss roughly the reasons for our choices of axioms (\ref{axioms}). Axiom goup 1 is included to handel sentential connective symbols and axiom group 2 reflects the intended meaning of the quantifier symbol. And in order to be able to prove the \ref{generalizationt} we added axiom groups 3 and 4 and arranged for generalizations of axioms to be axioms. Axiom groups 5 and 6 are included to prove the properties we want from equality.
+
+By \ref{l25a} every logical axiom is a valid formula. \textit{All} valid formulas are not used as logical axioms, for that (a) we need a class $\Lambda$ with a finitary, \textit{syntatical} definition (instead of a \textit{semantical} one) to prove certain things and that (b) we perfer a decidable $\Lambda$, which is not the case for the set of validities. Cf. \ref{enumerabilityt}.
+
+The author intend to present in this chapter not just a deductive calculus, but also facts of its development. The discussion is carried out at a meta level, which can be employed in any correct mathematical reasoning. I personally believe the use of ``If \_\_, then\_\_.'' instead of $\rightarrow$ is to separate the levels of reasoning. We are actually operating a machine (in this case, the object language or a description of some first-order language) according to our reasoning.
+
+\subsection*{Exercises}
+
+\begin{exercise}{E.2.4.1}
+  For a term $u$, let $u_t^x$ be the expression obtained from u by replacing the variable $x$ by the term $t$. Restate this definition without using any form of the word “replace” or its synonyms.
+\end{exercise}
+
+See \ref{substiterm}.
+
+\setcounter{exercise}{2}
+
+\begin{exercise}{E.2.4.3}
+  Question to fill in.
+\end{exercise}
+
+See \ref{truchassignmentonprimeformulas}.
+
+\setcounter{exercise}{8}
+
+\begin{exercise}{E.2.4.9}
+  (\textit{Re-replacement})\begin{enumerate}[label=(\alph*)]
+    \item Show by two examples that $(\varphi_y^x)_x^y$ is not in general equal to $\varphi$, where the first shows that $x$ may occur in $(\varphi_y^x)_x^y$ at a place where it does not occur in $\varphi$ and the second shows that $x$ may occur in a $\varphi$ at a place where it does not occur in $(\varphi_y^x)_x^y$.
+    \item Prove \ref{re-replacementl}.\qedhere
+  \end{enumerate}
+\end{exercise}
+
+\begin{enumerate}[label=(\alph*)]
+  \item $\varphi=P\ y$ ($y$ occurs free in $\varphi$) and $\forall y\ P\ x$ (not substitutable).
+  \item See \ref{re-replacementl}.
+\end{enumerate}
+
+\begin{exercise}{E.2.4.10}
+  Question to fill in.
+\end{exercise}
+
+This is immediate by \ref{t24i}.
+
+\section{Soundness and Completeness Theorems}\label{sec:2.5}
+
+A desirable and significant fact is that \textit{some} deductive calculus is sound and complete. In this section we state that our chosen one qualifies.
+
+The proof of \ref{soundnesst} proceeds via \ref{l25a}, whose proof, in turn, depends on \ref{substitutionl}.
+
+\begin{reference}{Lem}{substitutionl}
+  \textbf{Substitution Lemma}\quad If the term $t$ is substitutable for the variable $x$ in the wff $\varphi$ then $\vDash_{\mathfrak{A}}\varphi_t^x[s]\Leftrightarrow\ \vDash_{\mathfrak{A}}\varphi[s(x|\bar{s}(t))].$
+\end{reference}
+
+\begin{proof}
+  We first state the fact that for any term $u,\overline{s}(u_t^x)=\overline{s(x|\overline{s}(t))}(u).$ (This can be proved by induction on $u$.) Then we use induction on $\varphi$. Consider fixed $\mathfrak{A}$ and $s$.
+
+  Case 1: $\varphi=P\ t_1,\dots,t_n.$ We have that
+  \begin{align*}
+    \vDash_{\mathfrak{A}}\varphi_t^x[s]\Leftrightarrow & \ \langle \overline{s}((t_1)_t^x),\dots,\overline{s}((t_n)_t^x)\rangle\in P^{\mathfrak{A}} \\ \Leftrightarrow& \ \langle\overline{s(x|\overline{s}(t))}(t_1),\dots,\overline{s(x|\overline{s}(t))}(t_n)\rangle\in P^{\mathfrak{A}}\\ \Leftrightarrow& \ \vDash_{\mathfrak{A}}\varphi[s(x|\overline{s}(t))].
+  \end{align*}
+  Case 2: $\varphi=\neg \psi$ or $\varphi=\psi\rightarrow \theta$. The inductive step follows from the induction hypotheses for $\psi$ and $\theta$.\newline
+  Case 3: $\varphi=\forall y\ \psi$, and $x$ does not occur free in $\varphi$. Then $s$ and $s(x|\bar{s}(t))$ agree on all variables that occur free in $\varphi$. Also $\varphi_t^x=\varphi$. By \ref{t22a} the conclusion is immediate.(I tried to state something similar but way more cumbersome when trying to prove this case.)\newline
+  Case 4: $\varphi=\forall y\ \psi$, where $y\neq x$ and $y$ does not occur in $t$. For every $d\in|\mathfrak{A}|$ we have
+  \[
+    \vDash_{\mathfrak{A}}(\forall y\ \psi)_t^x[s]\Leftrightarrow\ \vDash_{\mathfrak{A}}\psi_t^x[s(y|d)]\Leftrightarrow\ \vDash_{\mathfrak{A}}\psi[s(y|d)(x|\overline{s(y|d)}(t))]\Leftrightarrow\ \vDash_{\mathfrak{A}}\forall y\ \psi[s(x|\overline{s}(t))].
+  \]
+  This holds exactly for that $y\neq x$ and $y$ does not occur in $t$.
+\end{proof}
+
+\begin{reference}{Lem}{l25a}
+  (25A) Every logical axiom (\ref{axioms}) is valid.
+\end{reference}
+
+\begin{proof}
+  By Exercise \ref{E.2.2.6} any generalization of a valid formula is valid. Therefore it suffices to examine various axiom groups.
+
+  \textit{Axiom group} 1: From \ref{truchassignmentonprimeformulas} we have that if $\emptyset$ tautologically implies $\alpha,\emptyset\vDash \alpha$.\newline
+  \textit{Axiom group} 2: Immediate given \ref{substitutionl}.\newline
+  \textit{Axiom group} 3: See Exercise \ref{E.2.2.3}.\newline
+  \textit{Axiom group} 4: See Exercise \ref{E.2.2.4}.\newline
+  \textit{Axiom group} 5: Trivial.\newline
+  \textit{Axiom group} 6: For an example see Exercise \ref{E.2.2.5}. We can use induction on terms and rest of the proof is trivial.
+\end{proof}
+
+\begin{reference}{Thm}{soundnesst}
+  \textbf{Soundness Theorem}\quad $\Gamma\vdash \varphi\Rightarrow \Gamma\vDash \varphi.$
+\end{reference}
+
+\begin{proof}
+  We use induction on $\varphi$. By Exercise \ref{E.1.7.6} this is trivial.
+\end{proof}
+
+\begin{reference}{Cor}{c25c}
+  (25C) If $\vdash(\varphi \leftrightarrow \psi)$, then $\varphi$ and $\psi$ are logically equivalent.
+\end{reference}
+
+\begin{reference}{Cor}{c25d}
+  (25D) If $\varphi'$ is an alphabetic variant of $\varphi$ by \ref{t24i}, then $\varphi$ and $\varphi'$ are logically equivalent.
+\end{reference}
+
+Define $\Gamma$ to be \textit{satisfiable} iff there is some $\mathfrak{A}$ and $s$ such that $\mathfrak{A}$ satisfies every member of $\Gamma$ with $s$.
+
+\begin{reference}{Cor}{c25e}
+  (25E) If $\Gamma$ is satisfiable then it is consistent (\ref{consistency}).
+\end{reference}
+
+\begin{proof}[Second Proof of \ref{soundnesst}]
+  \[
+    \Gamma\vdash \varphi\Leftrightarrow \Gamma;\neg \varphi\text{ is inconsistent}\Rightarrow \Gamma;\neg \varphi\text{ is not satisfiable}\Leftrightarrow \Gamma\vDash \varphi.\qedhere
+  \]
+\end{proof}
+This proof states that \ref{c25e} is equivalent to \ref{soundnesst}. Note that ``unsatisfiable'', like ``inconsistent'', is indeed a very strong assertion.
+
+\begin{reference}{Thm}{completenesst}
+  \textbf{Completeness Theorem}\quad(a) If $\Gamma\vDash \varphi$, then $\Gamma\vdash \varphi$. (b) Any consistent set of formulas is satisfiable.\qedhere
+\end{reference}
+
+\begin{proof}[Proof Sketch]
+  This is a proof for a countable language with equality symbol. By Exercise \ref{E.2.5.2} it suffices to prove part (b). Similar to the proof of \ref{compactnesst}, we begin with a consistent set $\Gamma$ and extend it to a set $\Delta$ of formulas for which (i) $\Gamma\subseteq \Delta$. (ii) $\Delta$ is consistent and is maximal in the sense that for any formula $\alpha$, either $\alpha\in \Delta$ or $(\neg \alpha)\in \Delta$. (iii) For any formula $\varphi$ and variable $x$, there is a constant $c$ such that $(\neg\forall x\ \varphi\rightarrow\neg \varphi_c^x)\in \Delta.$ Then we form a structure $\mathfrak{A}$ in which members of $\Gamma$ not contain equality symbol can be satisfied. Finally, we change $\mathfrak{A}$ to accomodate formulas containing the equality symbol.
+
+  Let $\Gamma$ be a consistent set of wffs in a countable language.
+
+  Step 1: Expand the language by adding a countably infinite set of new constant symbols. Then $\Gamma$ remains consistent as a set of wffs in the new language. By contradiction and \ref{t24f} this is valid.
+
+  Step 2: For each wff $\varphi$ in the new language and each variable $x$, we add to $\Gamma$ the wff
+  \[
+    \neg\forall x\ \varphi\rightarrow\neg \varphi_c^x,
+  \]
+  where $c$ is one of the new constant symbols. The idea is that $c$ volunteers to name a counterexample to $\varphi$, if there is any. We can do this in such a way that $\Gamma$ together with the set $\Theta$ of all the added wffs is still consistent. This feels very valid, because the newly added constant symbols do not seem to carry inconsistency. For a proof see page 136.
+  e
+  Step 3: Now we extend $\Gamma\cup\Theta$ to a consistent set $\Delta$ which is maximal in the sense that for any wff $\varphi$ either $\varphi\in \Delta$ or $(\neg \varphi)\in \Delta$. Let $\Lambda$ be the set of logical axioms for the expanded language. Since $\Gamma\cup\Theta$ is consistent, by \ref{t24b} there is no formula $\beta$ such that $\Gamma\cup\Theta\cup \Lambda$ tautologically implies both $\beta$ and $\neg \beta$. Hence there is a truth assignment $v$ for the set of all prime formulas that satisfies $\Gamma\cup\Theta\cup \Lambda$. Let $\Delta=\{\varphi|\bar{v}(\varphi)=T\}.$ Clearly $\Delta$ qualifies. Also we have that $\Delta$ is deductively closed, that is, $\Delta\vdash \varphi\Rightarrow \varphi\in \Delta$ (by \ref{t24b} or maximality and consistency). Cf. \ref{compactnesst}.
+
+  Step 4: We make structure $\mathfrak{A}$, replacing the equality symbol temporarily with a new two-place predicate symbol $E$.
+  \begin{enumerate}[label=(\alph*)]
+    \item $|\mathfrak{A}|$ is the set of all terms of the new language.
+    \item $\langle u,t\rangle\in E^{\mathfrak{A}}\quad\text{iff}\quad =ut\in \Delta$.
+    \item For each $n$-place predicate symbol $P$, $\langle t_1,\dots,t_n\rangle\in P^{\mathfrak{A}}\quad\text{iff}\quad Pt_1\cdots t_n\in\Delta$.
+    \item For each $n$-place function symbol $f$, $f^{\mathfrak{A}}(t_1,\dots,t_n)=ft_1\cdots t_n$.
+  \end{enumerate}
+  The constant symbols are treated as $0$-place functions. Define also $s:V\rightarrow|\mathfrak{A}|$ identity on $V$. It then follows that for any term $t$, $\bar{s}(t)=t$. For any wff $\varphi$, let $\varphi^*$ be the result of replacing the equality symbol in $\varphi$ by $E$. Then $\vDash_{\mathfrak{A}}\varphi^*[s]\ \text{iff}\ \varphi\in \Delta.$
+
+  We can prove this by induction, where the quantification case is not immediately trivial: To show that $\vDash_{\mathfrak{A}}\forall x\ \varphi^*[s]\Leftrightarrow(\forall x\ \varphi)\in \Delta$, first show that ($\Rightarrow$) holds. By \ref{substitutionl} and IH we have that $\varphi_c^x\in \Delta$ We have in $\Delta$ that $\neg\forall x\ \varphi\rightarrow\neg \varphi_c^x$, which gives us $(\forall x\ \varphi)\in \Delta$ contrapositively. To intuitively understand this, $c$ was chosen to be a counterexample to $\varphi$, but now $\varphi_c^x$ holds, lest $\varphi$. The converse can be proven very much the same, except that we have to deal with the case where $t$ is not substituble for $x$ in $\varphi$. By \ref{c25d} this is repairable.
+
+  Step 5: We need to deal with the equality symbol in the language. For example, if $\Gamma$ contains sentence $c=d$, then we need a structure $\mathfrak{B}$ in which $c^{\mathfrak{B}}=d^{\mathfrak{B}}.$ We obtain $\mathfrak{B}$ as the quotient structure $\mathfrak{A}/E$ of $\mathfrak{A}$ modulo $E^{\mathfrak{A}}$. For the full definition see page 140. Let $h:|\mathfrak{A}|\rightarrow|\mathfrak{A}/E|$ be the natural map $h(t)=[t]$. Then we have for any $\varphi$: $\varphi\in \Delta \Leftrightarrow\ \vDash_{\mathfrak{A}}\varphi^*[s]\Leftrightarrow\ \vDash_{\mathfrak{A}/E}\varphi^*[h\circ s]\Leftrightarrow\ \vDash_{\mathfrak{A}/E}\varphi[h\circ s]$, because $E^{\mathfrak{A}/E}$ is the equality relation on $|\mathfrak{A}/E|$. That is, $\mathfrak{A}/E$ satisfies every member of $\Delta$ with $h\circ s$. The validity of this step is that by \ref{equalityf} $E^{\mathfrak{A}}$ is a \textit{congruence relation} for $\mathfrak{A}$.
+
+  Step 6: Restrict the structure $\mathfrak{A}/E$ to the original language. This restriction of $\mathfrak{A}/E$ satisfies every member of $\Gamma$ with $h\circ s$.
+\end{proof}
+
+%  TODO: uncountable version.
+
+\begin{reference}{Thm}{compactnesstfol}
+  \textbf{Compactness Theorem}\quad(a) If $\Gamma\vDash \varphi$ then for some finite $\Gamma_0\subseteq \Gamma$ we have $\Gamma_0\vDash \varphi$. (b) If every finite subset $\Gamma_0$ of $\Gamma$ is satisfiable, then $\Gamma$ is satisfiable.
+\end{reference}
+
+\begin{proof}
+  These are trivial, given \ref{completenesst} and \ref{soundnesst}. (a) and (b) are indeed equivalent. Cf. Exercise \ref{E.1.7.3}.
+\end{proof}
+
+% TODO: proof by ultraproduct constuction.
+
+\begin{reference}{*Thm}{enumerabilityt}
+  \textbf{Enumerability Theorem}\quad For a reasonable language, the set of valid wffs can be effectively enumerated (\ref{effectivelyenumerable}).
+\end{reference}
+
+% TODO: Cf. sec 3.4. item 20 for a precise version.
+
+By a reasonable language we mean one whose set of parameters can be effectively enumerated and such that the sets of predicate symbols and function symbols are decidable. It has to be countable. We actually ask it to be ``communicatable'', indicating a finite alphabet. Actually, when we want to analysis an expression or string $\varepsilon$, we are \textit{already} assuming it to be finite and from a countable language, for there are only countably many things eligible to be given by one person to another.
+
+\begin{proof}
+  We have that $\Lambda$ is decidable. By \ref{t17g} and \ref{t24b} we are done.
+\end{proof}
+
+\begin{proof}[Second Proof]
+  We can actually enumerate all validities by enumerating all finite sequences of wffs and check if each is a deduction.
+\end{proof}
+
+\begin{reference}{*Cor}{c25f}
+  (25F) Let $\Gamma$ be a decidable set of formulas in a reasonable language. The set of theorems (or $\{\varphi|\Gamma\vDash \varphi\}$) of $\Gamma$ is effectively enumerable.
+\end{reference}
+
+This is indeed powerful. We are stating that the theorems of a system with decidable axioms is effectively enumerable.
+
+\begin{reference}{*Cor}{c25g}
+  (25G) Let $\Gamma$ be a decidable set of formulas in a reasonable language, and for any sentence $\sigma$ either $\Gamma\vDash \sigma$ or $\Gamma\vDash\neg \sigma$. Then the set of sentences implied by $\Gamma$ is decidable.
+\end{reference}
+
+\begin{proof}[Proof Idea]
+  If $\Gamma$ is inconsistent, then the set of all sentences is decidable. Otherwise cf. \ref{t17f}.
+\end{proof}
+
+The set of sentences implied by $\Gamma$ is decidable, yet we do not have a fixed procedure for it.
+
+% TODO: For almost all languages the set of validities is not decidable. (Church's Theorem, sec 3.5.)
+
+\subsection*{Exercises}
+
+\setcounter{exercise}{1}
+
+\begin{exercise}{E.2.5.2}
+  Prove the equivalence of parts (a) and (b) of the \ref{completenesst}.
+\end{exercise}
+
+\begin{proof}
+  (a)$\Rightarrow$(b): We prove this contrapositively.
+  \[
+    \Gamma;\varphi\text{ is unsatisfiable}\Leftrightarrow\Gamma\vDash\neg \varphi\Rightarrow \Gamma\vdash \neg\varphi \Leftrightarrow \Gamma;\varphi\text{ is inconsistent}.
+  \]
+
+  (b)$\Rightarrow$(a): By \ref{raa} we have that
+  \[
+    \Gamma\vDash \varphi\Leftrightarrow \Gamma;\neg \varphi\text{ is unsatisfiable}\Rightarrow \Gamma;\neg \varphi\text{ is not consistent}\Leftrightarrow \Gamma\vdash \varphi.\qedhere
+  \]
+\end{proof}
+
+\setcounter{exercise}{3}
+
+\begin{exercise}{E.2.5.4}
+  Let $\Gamma=\{\neg\forall v_1 P v_1, Pv_2, Pv_3,\dots\}.$ Is $\Gamma$ consistent? Is $\Gamma$ satisfiable?
+\end{exercise}
+
+It is consistent and satisfiable. Define $P^{\mathfrak{A}}=\{v_2,v_3,\dots\}$ and $s:V\rightarrow|\mathfrak{A}|$ as identity, it follows that for all $\gamma\in \Gamma$, $\vDash_{\mathfrak{A}}\gamma[s]$.
+
+\begin{exercise}{E.2.5.5}
+  Show that an infinite map (of countries) can be colored with four colors iff every finite submap of it can be.
+\end{exercise}
+
+\begin{proof}
+  We prove only ($\Leftarrow$). Let $\mathcal{C}$ denote the set of countries on the map. Consider a first-order language $L$ with no equality, no function symbols except the countable infinite set of constants $C=\{c_1,\dots,c_n,\dots\}$ and five $1$-place predicate symbols $C_1,C_2,C_3,C_4,V$. Use arbitrary injective $f:\mathcal{C}\rightarrow C$. $C_1x$ denotes ``if $x$ is a country on the map, then it is colored $\mathbf{C_1}$'' and so forth, where $\mathbf{C_1,C_2,C_3,C_4}$ are distinct colors. $Px$ denotes ``if $x$ is a country on the map, then its coloring is \textit{valid}''. Let $\alpha=\forall x ((C_1x\vee C_2x\vee C_3x\vee C_4x)\wedge (\bigwedge_{P\neq Q}\neg(Px\wedge Qx)))$, where $P,Q\in\{C_1,C_2,C_3,C_4\}$, and $\beta=\forall x\ Vx$. Consider a \textit{coloring} $\Sigma=\{C_jc_i|j\in\{1,2,3,4\}, i\in\mathbb{Z}_{>0}\}$. We have that for every finite subset $\Sigma_0$ of $\Sigma$, $\Sigma_0\cup\{\alpha,\beta\}$ is satisfiable. It follows that every finite subset $\Gamma_0$ of $\Gamma=\Sigma\cup\{\alpha,\beta\}$ is satisfiable. By \ref{compactnesstfol} we are done.
+\end{proof}
+
+\textit{Comment.} In fact $\alpha$ is not necessary if one finds it reasonable to color one country with two colors and have the validness of the coloring of a country defined accordingly. We are essentially trying to abstract the problem to an extent where it is in its simplest form that can be solved taking advantage of \ref{compactnesstfol}. By common sense, given a map (a set of countries and some topological relations on it, for example, a set of vetices and a set of edges) and a coloring (a set of formulas like $\Sigma$), we can easily (through an effective procedure) find a structure $\mathfrak{A}$ that safisfies every member of the coloring and tell if it is valid w.r.t. some country (that is, to define $V^{\mathfrak{A}}$), and predicate $V$ is an abstraction of that procedure. This actually requires the set of vertices and the set of edges to be decidable, for otherwise our predicate $V$ is not well defined.
+
+\section{Models of Theories}
+
+\subsection*{Finite Models}
+
+A sentence is \textit{finitely valid} if it is true in every finite structure. For example, the negation of one saying that $<$ is an ordering with no largest element.
+
+\begin{reference}{Thm}{t26a}
+  (26A) If a set $\Sigma$ of sentences has arbitrarily large finite models, then it has an infinite model.
+\end{reference}
+
+This straightforward fact can be proved as follows.
+
+\begin{proof}
+  For each integer $k\geq 2$ we can find a sentence $\lambda_k$ that translates, "There are at least $k$ things." For example $\lambda_2=\exists v_1\exists v_2v_1\neq v_2$. Consider the set $\Sigma\cup\{\lambda_2,\lambda_3,\dots\}.$ By hypothesis any finite subset of it has a model. So by compactness the entire set has a model, which clearly must be infinite.
+\end{proof}
+
+For example, it is a priori conceivable that there might be some very subtle equation of group theory that was true in every finite group but false in every infinite group. But by the above theorem, no such equation exists.
+
+\begin{reference}{Cor}{c26b}
+  (26B) The class of all finite structures (for a fixed language) is not $\mathrm{EC}_{\Delta}$ (\ref{ec}). The class of all infinite structures is not EC.
+\end{reference}
+
+\begin{proof}
+  The first sentence follows immediately from \ref{t26a}. If the class of all infinite structures is Mod $\tau$, then the class of all finite structures is Mod $\neg \tau$ . But this class is not even $\mathrm{EC}_{\Delta}$, much less EC.
+\end{proof}
+
+The class of infinite structures is $\mathrm{EC}_{\Delta}$, being Mod $\{\lambda_2,\lambda_3,\dots\}$.
+
+\begin{reference}{Defn}{theory1}
+  For any structure $\mathfrak{A}$, define the \textit{theory} of $\mathfrak{A}$ (written $\mathrm{Th}\mathfrak{A}$) to be the set of all sentences true in $\mathfrak{A}$.
+\end{reference}
+
+\begin{reference}{Rmk}{r26a}
+  Any finite structure $\mathfrak{A}$ is isomorphic to a sturcture with the universe $\{1,2,\dots,n\}$ where $n=\mathrm{card}|\mathfrak{A}|$. The idea here is, where $|\mathfrak{A}|=\{a_1,\dots,a_n\}$, to replace $a_i$ by $i$.
+\end{reference}
+
+\begin{reference}{Rmk}{r26b}
+  A finite structure of the sort in \ref{r26a} can, for a finite language, be specified by a finite string of symbols. So it can be \textit{communicated}.
+\end{reference}
+
+\begin{reference}{*Rmk}{r26c}
+  Given a finite structure $\mathfrak{A}$ for a finite language, with universe $\{1,\dots,n\}$, a wff $\varphi$ and an assignment $s_{\varphi}$ of numbers in this universe to the variables free in $\varphi$, we can effectively decide whether or not $\vDash_{\mathfrak{A}}\varphi[s_{\varphi}]$. The scheme is to just enumerate.
+\end{reference}
+
+\begin{reference}{*Thm}{t26c}
+  (26C) For a finite sturcture $\mathfrak{A}$ in a finite language, $\mathrm{Th}\mathfrak{A}$ is decidable.
+\end{reference}
+
+\begin{proof}
+  By \ref{r26a} and \ref{r26c} this is immediate.
+\end{proof}
+
+\begin{proof}[Second Proof]
+  There is a sentence $\delta_{\mathfrak{A}}$ that specifies $\mathfrak{A}$ up to isomorphism (cf. Exercise \ref{E.2.2.17}). It follows that $\mathrm{Th}\mathfrak{A}=\{\sigma|\delta_{\mathfrak{A}}\vDash \sigma\}.$ (If $\sigma$ is true in $\mathfrak{A}$, then it is true in all isomorphic copies, and hence all models of $\delta_{\mathfrak{A}}$. So $\delta_{\mathfrak{A}}\vDash \sigma$. The other direction is trivial.) Apply \ref{c25g}, noting that for each $\sigma$, either $\vDash_{\mathfrak{A}}$ or $\vDash_{\mathfrak{A}}\neg \sigma$.
+\end{proof}
+
+\begin{reference}{*Rmk}{r26d}
+  The binary relation $\{\langle \sigma,n\rangle|\sigma\text{ has a model of size }n\}$ is decidable, where $\sigma$ is a sentence and $n$ is a positive integer. (There are finitely many structures to check, and we check them according to \ref{t26c}.)
+\end{reference}
+
+The \textit{spectrum} of a sentence $\sigma$ is $\{n|\sigma\text{ has a model of size }n\}$. Cf. Exercise \ref{E.2.2.16}.
+
+\begin{reference}{*Rmk}{r26e}
+  The spectrum of any sentence is a decidable set of positive integers.
+\end{reference}
+
+% TODO: more on E.2.2.16
+
+\begin{reference}{*Thm}{t26d}
+  (26D) For a finite language, $\{\sigma|\sigma\text{ has a finite model}\}$ is effectively enumerable.
+\end{reference}
+
+\begin{proof}
+  By \ref{r26d} we check size $1,2,\dots$. If a model of size $n$ satisfies the given $\sigma$ we are done.
+\end{proof}
+
+\begin{reference}{*Cor}{c26e}
+  (26E) Assume the language is finite, and let $\Phi$ be the set of sentences true in every finite structure. Then its complement, $\overline{\Phi}$, is effectively enumerable.
+\end{reference}
+
+\begin{proof}
+  By \ref{r26d} we just enumerate structures of size $i\in\mathbb{Z}_{>0}$ till $\sigma$ does not have a model of size $n$.
+\end{proof}
+
+\begin{reference}{*Thm}{trakhtenbrot}
+  \textbf{Trakhtenbrot's Theorem}\quad $\Phi$ is not in general decidable or effectively enumerable.
+\end{reference}
+
+Thus the analogue of \ref{enumerabilityt} for finite structures only is false.
+
+\subsection*{Size of Models}
+
+\begin{reference}{Thm}{lowskolemt}
+  \textbf{L\"owenheim-Skolem Theorem}\quad (a) Let $\Gamma$ be a satisfiable set of formulas in a countable language. Then $\Gamma$ is satisfiable in some countable structure. (b) Let $\Sigma$ be a set of sentences in a countable language. If $\Sigma$ has any model, then it has a countable model.
+\end{reference}
+
+\begin{proof}
+  $\Gamma$ is consistent by \ref{c25e}. In the proof of \ref{completenesst} we actually formed a countable structure $\mathfrak{A}/E$ from a consistent set, and that completes the proof.
+\end{proof}
+
+% TODO: A second, more direct proof. Cf. section 4.2 Exercise 1.
+
+\begin{reference}{Eg}{skolemparadox}
+  \textbf{Skolem's paradox}: Let $A_{\mathrm{ST}}$ be a (hopefully consistent) set of axioms for set theory. By \ref{lowskolemt} $A_{\mathrm{ST}}$ has a countable model $\mathfrak{S}$. $\mathfrak{S}$ is would also be a model of the sentence $\sigma:$ ``There are uncountably many sets.'' The puzzling part here is that in $|\mathfrak{S}|$ there is no member (set) that can be interpreted as a bijection between natural numbers (defined by $\mathfrak{S}$) and $|\mathfrak{S}|$ (for this is what $\sigma$ says) but there \textit{exists} one (between $\mathbb{N}$ and $|\mathfrak{S}|$) outside of $|\mathfrak{S}|$, for that $\mathfrak{S}$ is countable. There \textit{is} countably many sets inside $|\mathfrak{S}|$ yet we cannot ``count'' from inside $|\mathfrak{S}|$, so surprisingly, no contradiction arises.
+\end{reference}
+
+\begin{reference}{Cor}{aequivb}
+  For any structure $\mathfrak{A}$ for a countable language, there is a countable model $\mathfrak{B}$ of $\mathrm{Th}\mathfrak{A}$ and if so then $\mathfrak{A}\equiv \mathfrak{B}$ (\ref{elequiv}).
+\end{reference}
+
+\begin{proof}
+  ($\Rightarrow$) $\vDash_{\mathfrak{A}}\sigma\Rightarrow \sigma\in \text{Th}\mathfrak{A}\Rightarrow\ \vDash_{\mathfrak{B}}\sigma$\newline
+  ($\Leftarrow$) $\not\vDash_{\mathfrak{A}}\sigma\Rightarrow\ \vDash_{\mathfrak{A}}\neg \sigma\Rightarrow (\neg \sigma)\in\text{Th}\mathfrak{A}\Rightarrow\ \vDash_{\mathfrak{B}}\neg \sigma\Rightarrow\ \not\vDash_{\mathfrak{B}}\sigma$.
+\end{proof}
+
+The real field $(\mathbb{R};0,1,+,\cdot)$ is an uncountable structure for a finite language. And Tarski showed the field of algebraic real numbers is a countable structure satisfying exactly the same sentences.
+
+\begin{reference}{Eg}{requiv}
+  Consider the structure $\mathfrak{R}=(\mathbb{N};0,S,<,+,\cdot).$ We claim that there is a countable structure $\mathfrak{M}_0$ such that $\mathfrak{M}_0\equiv \mathfrak{R}$ but $\mathfrak{M}_0\not\cong \mathfrak{R}$ (\ref{homoiso}).
+\end{reference}
+
+\begin{proof}
+  Expand the language by adding a new constant symbol $c$. Let
+  \[
+    \Sigma=\{0<c,\mathrm{S}0<c,\mathrm{SS}0<c,\dots\}.
+  \]
+  Consider a finite subset of $\Sigma\cup \mathrm{Th}\mathfrak{R}$. That subset is true in $\mathfrak{R}_k=(\mathbb{N};0,S,<,+,\cdot,k)$ (where $k=c^{\mathfrak{R}}$) for some large $k$. So by \ref{compactnesstfol} $\Sigma\cup \mathrm{Th}\mathfrak{R}$ has a model. By \ref{lowskolemt} $\Sigma\cup \mathrm{Th}\mathfrak{R}$ has a countable model
+  \[
+    \mathfrak{M}=(|\mathfrak{M}|;0^{\mathfrak{M}},\mathrm{S}^{\mathfrak{M}}, <^{\mathfrak{M}}, +^{\mathfrak{M}}, \cdot^{\mathfrak{M}}, c^{\mathfrak{M}}).
+  \]
+  Let $\mathfrak{M}_0$ be the restriction of $\mathfrak{M}$ to the original language:
+  \[
+    \mathfrak{M}_0=(|\mathfrak{M}|;0^{\mathfrak{M}},\mathrm{S}^{\mathfrak{M}}, <^{\mathfrak{M}}, +^{\mathfrak{M}}, \cdot^{\mathfrak{M}}).
+  \]
+  By \ref{aequivb} $\mathfrak{M}_0\equiv \mathfrak{R}$. Also note that $c^{\mathfrak{M}}\in|\mathfrak{M}|$. Suppose there is a homomorphism $h$ of $\mathfrak{M}_0$ into $\mathfrak{R}$, then $\forall n\in \mathbb{N}\ \langle n,h(c^{\mathfrak{M}})\rangle\in <^\mathfrak{R}$, but $h(c^{\mathfrak{M}})\in \mathbb{N}$, hence contradiction.
+\end{proof}
+
+\textit{Comment}. We are effectively adding $\infty$ into the universe. But we cannot \textit{define} it. Suppose formula $\varphi$ defines $\{c^{\mathfrak{M}}\}$ (using free variable $v$) then $\vDash_{\mathfrak{M}_0}\exists v \varphi$ but $\not\vDash_{\mathfrak{R}}\exists v \varphi$, hence $\mathfrak{R}\not\equiv \mathfrak{M}_0$ and contradiction. Similarly $\mathbb{N}$ is not definable in $\mathfrak{M}$ (Consider wff $\exists x(\forall v\ \varphi\to v<x)$.)
+
+% TODO: Discussion on uncountable languages. Page 153.
+
+\begin{reference}{Thm}{lst}
+  \textbf{LST Theorem}\quad Let $\Gamma$ be a set of formulas in a language of cardinality $\lambda$ and assume that $\Gamma$ is satisfiable in some infinite structure. Then for every cardinal $\kappa\geq \lambda$, there is a structure of cardinality $\kappa$ in which $\Gamma$ is satisfiable.
+\end{reference}
+
+% TODO: proof.
+
+\begin{reference}{Cor}{c26f}
+  (26F) (a) Let $\Sigma$ be a set of sentences in a countable language. If $\Sigma$ has some infinite model, then $\Sigma$ has models of every infinite cardinality. (b) Let $\mathfrak{A}$ be an infinite structure for a countable language. Then for any infinite cardinal $\lambda$, there is a structure $\mathfrak{B}$ of cardinality $\lambda$ such that $\mathfrak{B}\equiv \mathfrak{A}$.
+\end{reference}
+
+\begin{reference}{Defn}{categorical}
+  Call a set $\Sigma$ of sentences \textit{categorical} iff any two models of $\Sigma$ are isomorphic.
+\end{reference}
+
+\ref{c26f} implies that if $\Sigma$ has any infinite models, then it is not categorical. This is indicative of a limitation in the expressiveness of first-order languages.
+
+% TODO: More on this.
+
+\subsection*{Theories}
+
+\begin{reference}{Defn}{theory}
+  $T$ is a \textit{theory} iff $T$ is a set of sentences such that for any sentence $\sigma$ of the language, $T\vDash \sigma\Rightarrow \sigma\in T$.
+\end{reference}
+
+There is always a smallest theory, consisting of the valid sentences of the language. There is also the theory consisting of all the sentences of the language; it is the only unsatisfiable theory.
+
+\begin{reference}{Defn}{theoryofk}
+  For a class $\mathcal{K}$ of structures (for the language), define the \textit{theory} of $\mathcal{K}$ (written $\mathrm{Th}\mathcal{K}$) by the equation
+  \[
+    \mathrm{Th}\mathcal{K}=\{\sigma|\sigma\text{ is true in every member of }\mathcal{K}\}.\qedhere
+  \]
+\end{reference}
+
+\ref{theory1} is a special case where $\mathcal{K}=\{\mathfrak{A}\}.$
+
+\begin{reference}{Thm}{t26g}
+  (26G) $\mathrm{Th}\mathcal{K}$ is indeed a theory.
+\end{reference}
+
+We have that $\mathcal{K}\subseteq \mathrm{Mod\ Th}\mathcal{K}$. Consider $(\mathbb{R};<_R)\in \mathrm{Mod\ Th}(\mathbb{Q};<_Q)$ (\ref{isomorphismex}). Actually the examples need not be elementarily equivalent. Consider $\vDash_{\mathfrak{A}}\alpha\wedge \beta\wedge\neg \gamma$, $\vDash_{\mathfrak{B}}\alpha\wedge\neg\beta\wedge\gamma$ and $\vDash_{\mathfrak{C}}\alpha\wedge\neg\beta\wedge\neg\gamma$. They are pairwisely neg elementarily equivalent, but $\mathfrak{C}\in \mathrm{Mod\ Th}\{\mathfrak{A},\mathfrak{B}\}$.
+
+\begin{reference}{Defn}{consequences}
+  The set of \textit{consequences} of $\Sigma$ is $\mathrm{Cn}\Sigma=\{\sigma|\Sigma\vDash \sigma\}=\mathrm{Th\ Mod}\Sigma$.
+\end{reference}
+
+For example, set theory is the set of consequences of a certain set of sentences known as axioms for set theory. A set $T$ of sentences is a theory iff $T=\mathrm{Cn}T$.
+
+\begin{reference}{Defn}{complete}
+  A theory $T$ is \textit{complete} iff for every sentence $\sigma$, either $\sigma\in T$ or $(\neg \sigma)\in T$.
+\end{reference}
+
+For example, $\mathrm{Th}\{\mathfrak{A}\}$ is a complete theory.
+
+\begin{reference}{Rmk}{completebyelequiv}
+  A theory $T$ is complete iff any two models of $T$ are elementarily equivalent.
+\end{reference}
+
+So the theory of fields is not complete, since the sentences $1+1=0$ and $\exists x\ x\cdot x=1+1$ are true in some fields but false in others. Cf. \ref{t26j}.
+
+\begin{reference}{Defn}{axiomatizable}
+  A theory $T$ is \textit{axiomatizable} iff there is a decidable set $\Sigma$ of sentences such that $T=\mathrm{Cn}\Sigma$ and \textit{finitely axiomatizable} iff $\Sigma$ is finite. In the latter case we have $T=\mathrm{Cn}\{\sigma\}$ (or $\mathrm{Cn}\sigma$) where $\sigma$ is the conjunction of the finitely many members of $\Sigma$.
+\end{reference}
+
+For example, the theory of fields is finitely axiomatizable. For the class $\mathcal{F}$ of fields is $\mathrm{Mod}\Phi$, where $\Phi$ is the finite set of field axioms (item 4 of \ref{defineclassex}). And the theory of fields is $\mathrm{Cn}\Phi$.
+
+\begin{reference}{Thm}{t26h}
+  If $\mathrm{Cn}\Sigma$ is finitely axiomatizable, then there is a finite $\Sigma_0\subseteq \Sigma$ such that $\mathrm{Cn}\Sigma_0=\mathrm{Cn}\Sigma$.
+\end{reference}
+
+\begin{proof}
+  We have $\mathrm{Cn}\Sigma=\mathrm{Cn}\tau$ for some sentence $\tau$ and $\Sigma\vDash \tau$. By \ref{compactnesstfol} there is some finite $\Sigma_0\subseteq \Sigma$ such that $\Sigma_0\vDash \tau$ and $\mathrm{Cn}\tau\subseteq\mathrm{Cn}\Sigma_0 \subseteq \mathrm{Cn}\Sigma$, whence equality holds.
+\end{proof}
+
+The theory of fields of characteristic 0 is axiomatizable, being $\mathrm{Cn}\Phi_0$, where $\Phi_0$ consists of the (finitely many) field axioms together with the infinitely many sentences:
+\begin{align*}
+  1+1   & \neq 0, \\
+  1+1+1 & \neq 0, \\
+        & \cdots
+\end{align*}
+Suppose that this theory is finitely axiomatizable. By \ref{t26h} it is $\mathrm{Cn}\Phi_0'$, where $\Phi_0'$ is some finite subset of $\Phi_0$. But it would be true in some field of a \textit{large} characteristic, hence contradiction.
+
+By \ref{c25f} and \ref{c25g} we have:
+
+\begin{reference}{*Cor}{c26i}
+  (26I) In a reasonable language, (a) an axiomatizable theory is effectively enumerable and (b) a complete axiomatizable theory is decidable.
+\end{reference}
+
+\begin{reference}{Defn}{kcategorical}
+  Say that a theory $T$ is $\kappa$-\textit{categorical} iff all models of $T$ having cardinality $\kappa$ are isomorphic.
+\end{reference}
+
+\begin{reference}{Thm}{lvtest}
+  \textbf{Łoś--Vaught Test (1954)}\quad Let $T$ be a theory in a countable language. Assume that $T$ has no finite models. If $T$ is $\kappa$-categorical for some infinite cardinal $\kappa$, then $T$ is complete.
+\end{reference}
+
+\begin{proof}
+  Consider any two models $\mathfrak{A}$ and $\mathfrak{B}$ of $T$. By \ref{c26f} there exists structures $\mathfrak{A}'\equiv \mathfrak{A}$ and $\mathfrak{B}'\equiv \mathfrak{B}$ having cardinality $\kappa$. And we have that $\mathfrak{A}'\cong \mathfrak{B}'$, thus $\mathfrak{A}\equiv \mathfrak{B}$. By \ref{completebyelequiv} we are done.
+\end{proof}
+
+\textit{Comment.} If $T$ is a theory in a language of cardinality $\lambda$, then we must demand that $\lambda\leq \kappa$.
+
+\begin{reference}{Thm}{t26j}
+  (26J) (a) The theory of algebraically closed fields of characteristic 0 is complete. (b) The theory of the complex field $\mathfrak{C}=(\mathbb{C};0,1,+,\cdot)$ is decidable.
+\end{reference}
+
+\begin{proof}
+  (a) Let $\mathcal{A}$ be the class of algebraically closed fields of characteristic 0. Then $\mathcal{A}=\mathrm{Mod}(\Phi_0\cup \Gamma)$, where $\Phi_0$ consists as before of the axioms for fields of characteristic 0, and $\Gamma$ consists of the sentences
+  \begin{align*}
+     & \forall a\forall b\forall c(a\neq 0\to \exists x\ a\cdot x\cdot x+b\cdot x+c=0),                                  \\
+     & \forall a\forall b\forall c\forall d(a\neq 0\to \exists x\ a\cdot x\cdot x\cdot x+b\cdot x\cdot x+c\cdot x+ d=0), \\
+     & \cdots
+  \end{align*}
+  We have that $\mathrm{Mod\ Th}\mathcal{A}=\mathrm{Mod\ Cn}(\Phi_0\cup \Gamma)=\mathrm{Mod}(\Phi_0\cup \Gamma)=\mathcal{A}$, which are all infinite. By \ref{lvtest} it suffices to show that $\mathrm{Th}\mathcal{A}$ is categorical in any uncountable cardinality (this is actually more than what is needed to show), which is a known result of algebra. (b) The set $\Phi_0\cup \Gamma$ is decidable and $\mathrm{Th}\mathcal{A}=\mathrm{Cn}(\Phi_0\cup \Gamma)$, so this theory is axiomatizable. By part (b) of \ref{c26i} it is decidable. We have that $\mathfrak{C}\in \mathcal{A}$, whence $\mathrm{Th}\mathcal{A}\subseteq \mathrm{Th}\mathfrak{C}$. By (a) $\mathrm{Th}\mathcal{A}$ is complete. By \ref{E.2.6.2} we are done.
+\end{proof}
+
+% TODO: proof sketch of the result of algebra.
+
+The theory of the real field $(\mathbb{R};0,1,+,\cdot)$ is also decidable (due to Tarski), but it is not categorical in any infinite cardinality, so \ref{lvtest} cannot be applied.
+
+Consider a language with equality and parameters $\forall$ and $<$. Let $\delta$ be the conjunction of the following sentences:
+\begin{enumerate}
+  \item Ordering axioms (trichotomy and transitivity):
+        \begin{align*}
+           & \forall x\forall y(x<y\vee x=y\vee y<x),        \\
+           & \forall x\forall y(x<y\to y\not <x),            \\
+           & \forall x\forall y\forall z(x<y\to y<z\to x<z).
+        \end{align*}
+  \item Density: $\forall x\forall y(x<y\to\exists z(x<z<y))$.
+  \item No endpoints: $\forall x\exists y\exists z(y<x<z)$.
+\end{enumerate}
+The dense linear orderings without endpoints are, by definition, the structures for this language that are models of $\delta$.
+
+\begin{reference}{Thm}{cantor}
+  \textbf{Cantor}\quad Any countable model of $\delta$ is isomorphic to $(\mathbb{Q},<_Q)$.
+\end{reference}
+
+\begin{proof}
+  Let $\mathfrak{A}$ and $\mathfrak{B}$ be such structures. Fix enumerations $|\mathfrak{A}|=\{a_0,a_1,\dots\}$ and $|\mathfrak{B}|=\{b_0,b_1,\dots\}$. We construct an isomorphism $h$ in stages. Let $A_i=B_i=h_i=\emptyset$ for $i\leq0$ (we will use notation $h_i\subseteq|\mathfrak{A}|\times|\mathfrak{B}|$). At stage $2n$ let $h_{2n}=h_{2n-1}\cup\{\langle a_n,b_j\rangle\}$, where $j$ is the least index such that $h_{2n}$ preserves $<$ when restricted to $A_n$ (by density and no endpoints this is valid.) Also let $A_n=A_{n-1}\cup\{a_n\}$ and $B_n=B_{n-1}\cup\{b_j\}$. At stage $2n+1$ do the counterpart for $h_{2n+1}$ and $A_n$. Let $h=\bigcup_0^{\infty}h_i$. Then $h$ is indeed a one-to-one homomorphism, so $\mathfrak{A}$ and $\mathfrak{B}$ are isomorphic, and we are done.
+\end{proof}
+
+\textit{Comment.} This is the classical Cantor back-and-forth proof. Note that we used no endpoints implicitly, for that without it it would be possible that an endpoint is mapped to a non-endpoint, whence we may fail to find an ``extended'' mapping that preserves $<$. By this theorem we have that $\mathrm{Cn}\delta$ is $\aleph_0$-categorical, thus by \ref{lvtest} $\mathrm{Cn}\delta$ is complete. Hence by \ref{completebyelequiv} any two models of $\delta$ are elementarily equivalent; in paricular, $(\mathbb{Q};<_Q)\equiv(\mathbb{R};<_R)$. By \ref{c26i} we can also conclude these sturctures have decidable theories.
+
+\subsection*{Prenex Normal Form}
+
+\begin{reference}{Defn}{prenex}
+  Define a \textit{prenex} formula to be one of the form (for some $n\geq0$) $Q_1x_1\cdots Q_nx_n \alpha$ where $Q_i$ is $\forall$ or $\exists$ and $\alpha$ is quantifier-free.
+\end{reference}
+
+\begin{reference}{Thm}{prenexthm}
+  \textbf{Prenex Normal Form Theorem}\quad For any formula, we can find a logically equivalent prenex formula.
+\end{reference}
+
+This seems very trivial. For proof see page 160 of the book.
+
+\subsection*{Retrospectus}
+
+The interest symbolic logic holds for mathematicians is largely due to the accuracy with which it mirrors mathematical deductions. First-order logic, in particular, is well suited for formalizing mathematics, though it is less applicable to everyday discourse. Certain fragments of first-order logic, such as Horn clauses, are of particular interest to computer scientists, as they can express computation and even form the basis of Turing-complete models. (This paragraph has been kindly revised by \texttt{GPT-4o}.)
+
+\subsection*{Exercises}
+
+\setcounter{exercise}{1}
+
+\begin{exercise}{E.2.6.2}
+  Let $T_1$ and $T_2$ be theories (in the same language) such that (i) $T_1\subseteq T_2$, (ii) $T_1$ is complete, and (iii) $T_2$ is satisfiable. Show that $T_1=T_2$.
+\end{exercise}
+
+Say that $T_2$ is true in $\mathfrak{A}$. Obviously both $T_1$ and $T_2$ are $\mathrm{Th}\mathfrak{A}$, so we are done.
+
+\setcounter{exercise}{3}
+
+\begin{exercise}{E.2.6.4}
+  Prove \ref{cantor}.
+\end{exercise}
+
+See \ref{cantor}.
+
+\setcounter{exercise}{5}
+
+\begin{exercise}{E.2.6.6}
+  Prove the converse to part (a) of \ref{c26i}.
+\end{exercise}
+
+\textcolor{red}{to do}
+
+% TODO: 2.7
+
+% TODO: 2.8

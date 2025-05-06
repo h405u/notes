@@ -1,0 +1,91 @@
+\chapter{The Church-Turing Thesis}
+
+\begin{reference}{Defn}{turingmachine}
+  (3.3) A \textbf{\textit{Turing Machine}} (TM) is a 7-tuple $(Q,\Sigma,\Gamma,\delta,q_0,q_{accept},q_{reject})$ where
+  \begin{enumerate}
+    \item $\Sigma$ is the input alphabet not containing the \textbf{\textit{blank symbol}} $\sqcup$,
+    \item $\Gamma$ is the tape alphabet, where $\sqcup\in \Gamma$ and $\Sigma\in \Gamma$,
+    \item $\delta: Q\times \Gamma\to Q\times \Gamma\times\{\mathrm{L,R}\}$ is the transition function,
+    \item $q_{accept}\neq q_{reject}$.
+  \end{enumerate}
+  On input $w$ a TM $M$ may halt (enter $q_{accept}$ or $q_{reject}$) or run forever (``loop''). $M$ \textbf{\textit{accepts}} $w$ by entering $q_{accept}$ and \textbf{\textit{rejects}} $w$ by entering $q_{reject}$ \textit{or} looping.
+\end{reference}
+
+\begin{reference}{Defn}{turingrecognizable}
+  (3.5) The collection of strings $M$ accepts is the \textbf{\textit{language}} $M$, or the \textbf{\textit{language}} recognized by $M$ (written $L(M)$). Call a language \textbf{\textit{Turing-recognizable}} (or \textbf{\textit{recursively enumerable}}) if some TM recognizes it.
+\end{reference}
+
+\begin{reference}{Defn}{turingdecidable}
+  (3.6) TM $M$ is a \textbf{\textit{decider}} if $M$ halts on all inputs. Say that $M$ decides $A$ if $A=L(M)$ and $M$ is a decider. Call a language \textbf{\textit{Turing-decidable}} or simply \textbf{\textit{decidable}} (or \textbf{\textit{recursive}}) if some TM decides it.
+\end{reference}
+
+\begin{reference}{Thm}{multitapetm}
+  (3.13) Every multitape Turing machine has an equivalent single-tape Turing machine.
+\end{reference}
+
+\begin{proof}[Proof Idea]
+  Suppose we have a multi-tape TM $M$ and a single-tape TM $S$. $S$ can simulate $M$ by storing the contents of multiple tapes on a single tape in "blocks" and record head positions with dotted symbols. To simulate each of $M$'s steps, $S$ can (a) scan entire tape to find dotted symbols, (b) scan again to update according to $M$'s $\delta$ and (c) shift to add room as needed. Finally, $S$ accepts/rejects if $M$ does.
+\end{proof}
+
+\begin{reference}{Defn}{ntm}
+  A \textbf{\textit{Nondeterministic}} TM (NTM) is similar to a TM except for its transition function $\delta:Q\times \Gamma\to \mathcal{P}(Q\times \Gamma\times\{\mathrm{L,R}\}).$
+\end{reference}
+
+\begin{reference}{Thm}{ntmeq}
+  (3.16) Every nondeterministic Turing machine has an equivalent deterministic Turing machine.
+\end{reference}
+
+\begin{proof}[Proof Idea]
+  Suppose we have an NTM $N$ and a TM $M$. $M$ can simulate $N$ by storing each thread's tape in a separate "block" on its tape. $M$ also need to store the head location, and the state for each thread, in the block. If a thread forks, then $M$ copies the block. If a thread accepts then $M$ accepts.
+\end{proof}
+
+\begin{reference}{Defn}{tenumerator}
+  An \textbf{\textit{enumerator}} is a TM with a printer. It starts on a blank tape and can print strings $w_1,w_2,w_3,\dots$, possibly forever. For enumerator $E$ say $L(E)=\{w|E\text{ prints }w\}$.
+\end{reference}
+
+\begin{reference}{Thm}{enumeratoreq}
+  (3.21) $A$ is T-recognizable iff $A=L(E)$ for some enumerator $E$.
+\end{reference}
+
+\begin{proof}[Proof Idea]
+  ($\Leftarrow$) Simulate $E$ with TM $M$. For input $w$, whenever $E$ prints $x$, test if $x=w$. Accept or continue accordingly.\newline
+  ($\Rightarrow$) Simulate TM $M$ with $E$ on \textit{each} possible input $w_i$. Let $E$ print accordingly whenever $M$ accepts. We can do this in a ``time-sharing'' scheme, for example let $M$ go through 1 transitions on input $w_1$, then 2 transitions on input $w_1$ and $w_2$ respectively, then 3 transitions on input $w_1, w_2$ and $w_3$ respectively and so forth. When switching the input that $M$ is currently working on, keep track of the state and the place of the head on the tape and the input together on a block of the tape.
+\end{proof}
+
+\begin{reference}{Note}{churchturingthesis}
+  The definition of \textbf{\textit{algorithms}} came in the 1936 papers of Alonzo Church and Alan Turing. Church used a notational system called the $\lambda$-calculus to define algorithms. Turing did it with his “machines”. These two definitions were shown to be equivalent. This equivalence relation (in some sense) between the informal notion of algorithm and the precise definition (TM) has come to be called the \textbf{\textit{Church–Turing thesis}}. Note that it is about the equivalence between the intuitive and the formal, thus \textit{not} provable. Instead it’s a philosophical postulate.
+\end{reference}
+
+\begin{reference}{Note}{10thproblem}
+  David Hilbert's tenth problem was to devise an algorithm that tests whether a polynomial has an integral root (\textit{Diophantine eqations}). The set of such polynomials is easily recognizable but was proved to be not decidable in 1970.
+\end{reference}
+
+\begin{reference}{Note}{notationtm}
+  If $O$ is some object, write $\langle O\rangle$ to be an encoding of that object into a string. (For example $\langle M\rangle$, where $M$ is a TM. $\langle O_1,\dots,O_k\rangle$ is similarly defined.) Furthermore we will use high-level English descriptions of algorithms when we describe TMs, knowing that we could (in principle) convert those descriptions into states, transition function, etc.
+\end{reference}
+
+\section*{Exercises and Problems}
+
+\setcounter{exercise}{11}
+
+\begin{exercise}{3.12}
+  Question to fill in.
+\end{exercise}
+
+\textcolor{red}{to do}
+
+\setcounter{exercise}{13}
+
+\begin{exercise}{3.14}
+  A \textbf{\textit{queue automaton}} is like a push-down automaton except that the stack is replaced by a queue. A queue is a tape allowing symbols to be written only on the left-hand end and read only at the right-hand end. Each write operation (we’ll call it a push) adds a symbol to the left-hand end of the queue and each read operation (we’ll call it a pull) reads and removes a symbol at the right-hand end. As with a PDA, the input is placed on a separate read-only input tape, and the head on the input tape can move only from left to right. The input tape contains a cell with a blank symbol following the input, so that the end of the input can be detected. A queue automaton accepts its input by entering a special accept state at any time. Show that a language can be recognized by a deterministic queue automaton iff the language is Turing-recognizable.
+\end{exercise}
+
+\textcolor{red}{to do}
+
+\setcounter{exercise}{17}
+
+\begin{exercise}{3.18}
+  Show that a language is decidable iff some enumerator enumerates the language in the standard string order.
+\end{exercise}
+
+\textcolor{red}{to do}
