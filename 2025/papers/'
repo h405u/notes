@@ -1,0 +1,27 @@
+\paper{Welcome to the Era of Experience}{silver2025welcome}
+
+In key domains such as mathematics, coding, and science, the knowledge extracted from human data is rapidly approaching a limit.
+And a sketch chronology of dominant AI paradigms is presented where era of \textit{experience} is to arrive after era of \textit{simulation} (RL) and \textit{human data} (LLM).
+
+\subsec{The Era of Experience}
+
+Agents will inhabit streams of experience, rather than short snippets of interaction. This will allow them to take actions to achieve future goals, and to continuously adapt over time to new patterns of behaviour.
+
+Their actions and observations will be richly grounded in the environment, rather than interacting via human dialogue alone.
+
+Their rewards will be grounded in their experience of the environment, rather than coming from human prejudgement. Relying on human prejudgement usually leads to an impenetrable ceiling on the agent’s performance: the agent cannot discover better strategies that are underappreciated by the human rater.
+
+They will plan and/or reason about experience, rather than reasoning solely in human terms. It is highly unlikely that human language provides the optimal instance of a universal computer. More efficient mechanisms of thought surely exist, using non-human languages that may for example utilise symbolic, distributed, continuous, or differentiable computations. An agent trained to imitate human thoughts or even to match human expert answers may inherit fallacious methods of thought deeply embedded within that data, such as flawed assumptions or inherent biases (``an echo chamber of existing human knowledge''). Progressing beyond each method of thought required interaction with the real world: making hypotheses, running experiments, observing results, and updating principles accordingly.
+
+\subsec{RL}
+
+Early RL research yielded a suite of powerful concepts and algorithms. Concepts like options and inter/intra-option learning facilitated temporal abstraction, enabling agents to reason over longer timescales and break down complex tasks into manageable sub-goals \parencite{sutton1999between}.
+
+RLHF side-stepped the need for value functions by invoking human experts in place of machine-estimated values, strong priors from human data reduced the reliance on exploration, and reasoning in human-centric terms lessened the need for world models and temporal abstraction.
+
+The era of experience presents an opportunity to revisit and improve classic RL concepts. This era will bring new ways to think about reward functions that are flexibly grounded in observational data. It will revisit value functions and methods to estimate them from long streams with as yet incomplete sequences. It will bring principled yet practical methods for real-world exploration that discover new behaviours that are radically different from human priors. Novel approaches to world models will be developed that capture the complexities of grounded interactions.New methods for temporal abstraction will allow agents to reason, in terms of experience, over ever-longer time horizons.
+
+\subsec{Consequences}
+
+\medskip
+\textit{May 6}

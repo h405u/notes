@@ -24,6 +24,20 @@
 }
 \makeatother
 
+\newcommand{\paper}[2]{
+  \clearpage
+  \refstepcounter{section}
+  \section*{#1}\label{#2}
+  \addcontentsline{toc}{section}{#1}
+ \textbf{\cite{#2}}
+}
+
+\newcommand{\subsec}[1]{
+  \refstepcounter{subsection}
+  \subsection*{#1}
+  \addcontentsline{toc}{subsection}{#1}
+}
+
 \overfullrule=5pt
 
 \title{\Huge Trivial Notes 2025}
@@ -34,8 +48,9 @@
 
 \maketitle
 \clearpage
+\tableofcontents
 
-\input{silver2025welcome.tex}
+\input{papers/silver2025welcome.tex}
 
 \clearpage
 \printbibliography
