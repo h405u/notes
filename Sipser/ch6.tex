@@ -1,12 +1,114 @@
 \chapter{Advanced Topics in Computability Theory}
 
+\begin{reference}{Lem}{printw}
+  (6.1) There is a computable function $q:w\mapsto\langle P_w\rangle$, where $w\in \Sigma^*$ and $P_w$ is a TM that prints out $w$ and then halts.
+\end{reference}
+
+\begin{reference}{Rmk}{self}
+  We describe in spirit and not formally a TM $SELF$, that halts with $\langle SELF\rangle$ on the tape. $SELF$ will be the combination of two TMs $A$ and $B$. $A=P_{\langle B\rangle}$. And $B$ on input $\langle M\rangle$ computes $q(\langle M\rangle)$, combines the result with $\langle M\rangle$ to make a complete TM, and finally prints the description of it and halt.
+\end{reference}
+
+An English implementation would be:
+\begin{align*}
+             & \texttt{Print out two copies of the following, the second one in quotes:}  \\
+  \texttt{"} & \texttt{Print out two copies of the following, the second one in quotes:”}
+\end{align*}
+The second line is $A$ and the first $B$. $A$ provides a description of $B$. $B$ knows what itself (the instructions, not a string in quotes) is upon that description and computes $A$ that will generate that description. Finally $B$ prints them together. Consider that $B$ would be fixed when deciding $A$, adding quotes to whatever it is.
+
+\begin{reference}{Thm}{recursiont}
+  \textbf{Recursion Theorem}\quad Let TM $T$ compute $t:\Sigma^*\times \Sigma^*\to \Sigma^*$. Then there is a TM $R$ that computes $r:\Sigma^*\to \Sigma^*$, where for all $w\in \Sigma^*$, $r(w)=t(\langle R\rangle, w).$
+\end{reference}
+
+\begin{proof}[Proof Idea]
+  Similar to \ref{self}, we desicribe without formality a TM $R$ which is the combination of three TMs $A,B$ and $T$, where $T$ is given. $A=P_{\langle BT\rangle}$. $B$ on input $\langle M\rangle$ computes $q(\langle M\rangle)$ and combines the result with $\langle B\rangle$ and $\langle T\rangle$ into a single TM. Finally $T$ acts however it was intended to.
+\end{proof}
+
+Take \ref{recursiont} in the following fashion: consider a TM $T$ that computes $t(\langle M\rangle,w)$ (indicating, if $\langle M\rangle$ is the description of a TM, then compute within it and $w$ and otherwise just print error) then there magically exists an $R$ that computes $r(w)=t(\langle R\rangle,w)$. That means if we want to construct a TM that computes upon $w$ and some TM $M$, $M$ can be exactly the TM we are to construct!
+
+\begin{proof}[Second Proof of \ref{atm}]
+  Assume that $H$ decides $A_{\mathrm{TM}}$. Construct TM
+  \begin{align*}
+    B=\text{``} & \text{On input }\langle w\rangle                        \\
+                & \text{1. Obtain via \ref{recursiont} }\langle B\rangle. \\
+                & \text{2. Simulate }H\text{ on }\langle B,w\rangle.      \\
+                & \text{3. Do the opposite of what }H\text{says.''}
+  \end{align*}
+  Thus $H$ fails to decide $A_{\mathrm{TM}}$. Hence contradiction and we are done.
+\end{proof}
+
+\begin{reference}{Thm}{mintm}
+  (6.7) $MIN_{\mathrm{TM}}=\{\langle M\rangle|M\text{ is a minimal TM under some encoding}\}$ is not recognizable.
+\end{reference}
+
+\begin{proof}
+  Assume that $E$ enumerates $MIN_{\mathrm{TM}}$. Construct TM
+  \begin{align*}
+    C=\text{``} & \text{On input }\langle w\rangle                                             \\
+                & \text{1. Obtain via \ref{recursiont} }\langle C\rangle.                      \\
+                & \text{2. Run }E\text{ until some TM }D\text{ appears that is longer than }C. \\
+                & \text{3. Simulate }D\text{ on input }w\text{.''}
+  \end{align*}
+  Hence contradiction and we are done.
+\end{proof}
+
+\textit{Comment.} $MIN_{\mathrm{TM}}$ is very special, in that any infinite subset of it is not recognizable.
+
+\begin{reference}{Thm}{fixed}
+  Let $t:\Sigma^*\to \Sigma^*$ be a computable function. Then there is a TM $F$ such that $t(\langle F\rangle)$ describes a TM equivalent to $F$.
+\end{reference}
+
+\begin{proof}
+  Construct
+  \begin{align*}
+    F=\text{``} & \text{On input }\langle w\rangle                                                  \\
+                & \text{1. Obtain via \ref{recursiont} }\langle F\rangle.                           \\
+                & \text{2. Compute }t(\langle F\rangle)\text{ to obtain the description of a TM }G. \\
+                & \text{3. Simulate }G\text{ on input }w\text{.''}
+  \end{align*}
+  Thus $G$ will be equivalent to $F$.
+\end{proof}
+
+\textit{Comment.} $F$ is a fixed point w.r.t. $t$.
+
+\begin{reference}{Thm}{godel1st}
+  \textbf{Gödel's First Incompleteness Theorem}\quad In any reasonable formal system, some true statements are not provable.
+\end{reference}
+
+\begin{proof}[Proof Idea]
+  Suppose otherwise. If we can always prove (that is, to decidably check the truthfulness of something) $\langle M,w\rangle\in \overline{A_{TM}}$ when it is true, then $\overline{A_{\mathrm{TM}}}$ is recognizable, and hence contradiction.
+\end{proof}
+
+\textit{Comment.} To prove is essentially the same as to compute. There are things we can not recognize, then sure enough facts exists that we can not verify.
+
+Consider the statement ``This statement is unprovable''. It has to be true, thus unprovable.
+
+\begin{reference}{Eg}{unprovable}
+  Let $\phi$ be the statement $\langle R,0\rangle\in \overline{A_{\mathrm{TM}}}$ where $R$ is the following TM:
+  \begin{align*}
+    R=\text{``} & \text{On any input}                                                                      \\
+                & \text{1. Obtain via \ref{recursiont} }\langle R\rangle\text{ and use it to obtain }\phi. \\
+                & \text{2. Enumerate all proofs and accept if one is found for }\phi.
+  \end{align*}
+  A proof or the falsity of $\phi$ each leads to a contradiction. Thus we have an example statement that is true but without proof.
+\end{reference}
+
 \section*{Exercises and Problems}
 
 \begin{exercise}{6.1}
-  Give an example in the spirit of the recursion theorem of a program in a real programming language (or a reasonable approximation thereof ) that prints itself out.
+  Give an example in the spirit of the recursion theorem of a program in a real programming language that prints itself out.
 \end{exercise}
 
-\textcolor{red}{to do}
+\begin{lstlisting}[caption=A piece of C that prints itself.]
+#include <stdio.h>
+char *program = "#include <stdio.h>%cchar *program = %c%s%c;%cint main()%c{%c        printf(program, 10, 34, program, 34, 10, 10, 10, 10, 10, 10);%c        return 0;%c}%c";
+int main()
+{
+        printf(program, 10, 34, program, 34, 10, 10, 10, 10, 10, 10);
+        return 0;
+}
+\end{lstlisting}
+
+10 is the ASCII code for \texttt{NEWLINE} and 34 for \texttt{"}. To relate to \ref{self}, consider that $A$ is the string \texttt{*program}. $B$, the ``printer'', upon seeing a string, combines it with what ever will generate it. So the first \texttt{program} in line 5 is what $B$ sees, and the second is what generates the string. The combination is done in a nested fashion.
 
 \setcounter{exercise}{10}
 

@@ -3,6 +3,8 @@
 \usepackage{parskip}
 \usepackage{amsmath, amssymb, amsthm, stmaryrd}
 \usepackage{graphicx}
+\usepackage{listings}
+\usepackage{xcolor}
 \usepackage[centering, includeheadfoot, width=6in, height=9in]{geometry}
 \usepackage{enumitem}
 \usepackage{xparse}
@@ -61,6 +63,27 @@
 \makeatother
 
 \overfullrule=5pt
+
+\lstset{
+  language=C,
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{blue},
+  commentstyle=\color{gray}\itshape,
+  stringstyle=\color{red},
+  numbers=left,
+  numberstyle=\tiny,
+  stepnumber=1,
+  numbersep=10pt,
+  backgroundcolor=\color{white},
+  showspaces=false,
+  showstringspaces=false,
+  showtabs=false,
+  frame=single,
+  tabsize=4,
+  captionpos=b,
+  breaklines=true,
+  breakatwhitespace=false,
+}
 
 \title{Notes on Theory of Computation\footnote{Actually notes on \href{https://ocw.mit.edu/courses/18-404j-theory-of-computation-fall-2020/}{MIT OCW 18.404J}, but indexed according to Sipser's \emph{Introduction to the Theory of Computation} (3\textsuperscript{rd} ed).}}
 \author{Hao Su}

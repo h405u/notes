@@ -708,16 +708,17 @@ Similarly, say that a function $f$ is \textit{effectively computable} (or simply
   \[
     \varepsilon_1,\varepsilon_2,\varepsilon_3,\dots
   \]
-  Then any scheme that spends infinite time testing each $\varepsilon_i$ qualifies. A working one that avoids duplication is:
-  Suppose $T$ is a fixed period of time. Spend $\frac{T}{2^i}$ testing $\varepsilon_i$ in each iteration that takes $T$. If ``yes'' is produced upon $\varepsilon_j$, output $\varepsilon_j$ on the list and wait the rest of $\frac{T}{2^j}$. In the following iterations, skip $\varepsilon_j$ and spend $\frac{T}{2^{(i-1)}}$ testing $\varepsilon_i$ for $i>j$. The list's order is fixed due to the determinism of our procedure.
+  Then any scheme that spends infinite effort testing each $\varepsilon_i$ qualifies. For example, one step on the testing of $\varepsilon_1$; two steps on the testing of $\varepsilon_1$ and $\varepsilon_2$ each; three steps on the testing of $\varepsilon_1$, $\varepsilon_2$ and $\varepsilon_3$ each, and so forth. Print $\varepsilon_j$ if ``yes'' is produced upon it.
 \end{proof}
+
+\textit{Comment.} The following scheme is not very desirable, for (1) time is not well defined (nothing is well defined currently, but \textit{step} is actually better than \textit{time}: it indicates that the procedure \textit{actually} proceeds) and (2) when dividing up time (or even count of steps), it is not obvious that \textit{all} procedures \textit{will} proceed. Suppose $T$ is a fixed period of time. Spend $\frac{T}{2^i}$ testing $\varepsilon_i$ in each iteration that takes $T$. If ``yes'' is produced upon $\varepsilon_j$, output $\varepsilon_j$ on the list and wait the rest of $\frac{T}{2^j}$. In the following iterations, skip $\varepsilon_j$ and spend $\frac{T}{2^{(i-1)}}$ testing $\varepsilon_i$ for $i>j$. The list's order is fixed due to the determinism of our procedure.
 
 \begin{reference}{*Thm}{t17f}
   (17F) A set of expressions is decidable iff both it and its complement (in a larger decidable set) are effectively enumerable.
 \end{reference}
 
 \begin{proof}
-  Suppose $T$ is a fixed period of time, $\Sigma$ a set of expressions and $\alpha$ the expression we would like to decide. We are essentially given two effective procedures. It should make an effective procedure that decides whether or not $\alpha\in \Sigma$ to spend $\frac{T}{2}$ testing $\alpha$ according to each procedure in each iteration that takes $T$.
+  Suppose $T$ is a fixed period of time, $\Sigma$ a set of expressions and $\alpha$ the expression we would like to decide. We are essentially given two effective procedures. To make an effective procedure that decides whether or not $\alpha\in \Sigma$, we excute both procedures alternately.
 \end{proof}
 
 \begin{reference}{*Thm}{t17g}
@@ -770,6 +771,7 @@ The choice of $\alpha$ is arbitrary, thus we have \ref{compactnesst} stated cont
 \end{exercise}
 
 %  TODO: Refer to modus ponens in chapter 2.
+
 $\mathrm{\langle S,\neg S\wedge R, (\neg S\wedge R)\rightarrow(S\rightarrow R), S\rightarrow R, R, R\rightarrow P, P\rangle.}$
 
 \begin{exercise}{E.1.7.6}

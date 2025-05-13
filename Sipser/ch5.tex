@@ -1,6 +1,207 @@
 \chapter{Reducibility}
 
+\begin{reference}{Thm}{halt}
+  (5.1) $H_{\mathrm{TM}}=\{\langle M,w\rangle|M\text{ halts on input }w\}$ is undecidable.
+\end{reference}
+
+\begin{proof}
+  Assume that $R$ decides $H_{\mathrm{TM}}$. Construct TM
+  \begin{align*}
+    S=\text{``} & \text{On input }\langle M,w\rangle                                                                \\
+                & \text{1. Simulate }R\text{ on input }\langle M,w\rangle.\text{ If }M\text{ does not halt reject}. \\
+                & \text{2. Simulate }M\text{ on }w.                                                                 \\
+                & \text{3. Accept if }M\text{ accepts and reject if }M\text{ rejects."}
+  \end{align*}
+  Then $S$ decides $A_{\mathrm{TM}}$. Hence contradiction.
+\end{proof}
+
+\textit{Comment.} This proof uses the \textit{reducibility} method. If we have two statements $A$ and $B$, then $A$ is reducible to $B$ means that to show $A$, it \textit{suffices} to show $B$. Thus here $A_{\mathrm{TM}}$ is reducible to $H_{\mathrm{TM}}$.
+
+% TODO: example 3 in lecture 9 19:46 pusher reducible to E_cfg (convert push states to accept states)
+
+\begin{reference}{Thm}{etm}
+  (5.2) $E_{\mathrm{TM}}=\{\langle M\rangle|M\text{ is a TM and }L(M)=\emptyset\}$ is undecidable.
+\end{reference}
+
+\begin{proof}
+  Assume that $R$ decides $E_{\mathrm{TM}}$ and let $W$ decide $\{w\}$. Construct TM
+  \begin{align*}
+    S=\text{``} & \text{On input }\langle M,w\rangle                                                               \\
+                & \text{1. Construct TM }M_w\text{ that accepts }k\text{ iff both }M\text{ and }W\text{ accept }k, \\
+                & \quad\text{ where }W\text{ is a decider for }\{w\}.                                              \\
+                & \text{2. Simulate }R\text{ on input }\langle M_w\rangle.                                         \\
+                & \text{3. Accept if }R\text{ rejects and reject if }R\text{ accepts."}
+  \end{align*}
+  Then $S$ decides $A_{\mathrm{TM}}$. Hence contradiction.
+\end{proof}
+
+\textit{Comment.} We are reducing $A_{\mathrm{TM}}$ to $E_{\mathrm{TM}}$. Note that $M_w$ works like $M$ except that it always rejecets $x\neq w$.
+
+\begin{reference}{Defn}{computablef}
+  (5.17) A function $f:\Sigma^*\to \Sigma^*$ is a \textbf{\textit{computable function}} if some Turing machine $M$, on every input $w$, \textit{halts} with $f(w)$ on its tape.
+\end{reference}
+
+\begin{reference}{Defn}{mappingr}
+  (5.20) $A$ is \textbf{\textit{mapping reducible}} to $B$, written $A\leq_m B$, if there is a computable function $f$ where $w\in A \Leftrightarrow f(w)\in B$. $f$ is then called a \textbf{\textit{reduction}} from $A$ to $B$.
+\end{reference}
+
+\begin{reference}{Thm}{mapdecrec}
+  (5.22, 5.28) If $A\leq_m B$ and $B$ is decidable (or recognizable), then $A$ is decidable (or recognizable).
+\end{reference}
+
+Its proof is omitted as trivial. And the following is its contraposition.
+
+\begin{reference}{Cor}{mapun}
+  (5.23, 5.29) If $A\leq_m B$ and $A$ is undecidable (or unrecognizable), then $B$ is undecidable (or unrecognizable).
+\end{reference}
+
+Mapping reducibility is useful to prove unrecognizability (often reducing $\overline{A_{\mathrm{TM}}}$), while ``reducibility to a decider'' is useful to prove undecidability (often reducing $A_{\mathrm{TM}})$.
+
+\begin{reference}{Eg}{mappingeg}
+  In \ref{etm}, we essentially constructed $f:\langle M,w\rangle\mapsto\langle M_w\rangle$, where $\langle M,w\rangle\in A_{\mathrm{TM}}\Leftrightarrow\langle M_w\rangle\in \overline{E_{\mathrm{TM}}}$. Thus $A_{\mathrm{TM}}\leq_m \overline{E_{\mathrm{TM}}}$ and $\overline{A_{\mathrm{TM}}}\leq_m E_{\mathrm{TM}}$. By \ref{mapun} $E_{\mathrm{TM}}$ is unrecognizable.
+\end{reference}
+
+\begin{reference}{Thm}{eqtm}
+  (5.30) Let
+  \[
+    EQ_{\mathrm{TM}}=\{\langle M_1,M_2\rangle|M_1\text{ and }M_2\text{ are TMs and }L(M_1)=L(M_2)\}.
+  \]
+  Then both $EQ_{\mathrm{TM}}$ and $\overline{EQ_{\mathrm{TM}}}$ is unrecognizable.
+\end{reference}
+
+\begin{proof}
+  Let $T_{M,w}$ be a TM that simulates $M$ on $w$, $T_{rej}$ a TM that always rejects and $T_{acc}$ a TM that always accepts. Construct $f_1:\langle M,w\rangle\mapsto\langle T_{M,w},T_{rej}\rangle$. It follows that $\overline{A_{\mathrm{TM}}}\leq_m EQ_{\mathrm{TM}}$. Similarly, $f_2:\langle M,w\rangle\mapsto\langle T_{M,w},T_{acc}\rangle$ shows that $\overline{A_{\mathrm{TM}}}\leq_m \overline{EQ_{\mathrm{TM}}}$, and we are done.
+\end{proof}
+
+\begin{reference}{Defn}{config}
+  A \textbf{\textit{configuration}} of a TM is a snapshot of a TM at some time, written triple $(q,p,t)$, with $q,p$ and $t$ representing the current state, the head position and the tape contents respectively.
+\end{reference}
+
+Encode configuration $(q,p,t)$ as the string $t_1qt_2$ where $t = t_1t_2$ and the head position is on the first symbol of $t_2$.
+
+\begin{reference}{Defn}{computationhis}
+  An (accepting) \textbf{\textit{computation history}} for TM $M$ on input $w$ is a sequence of configurations $C_1,C_2,\dots C_{acc}$ that $M$ enters until it accepts.
+\end{reference}
+
+Encode a computation history as the string $C_1\# C_2\# \cdots\# C_{acc}$, where each $C_i$ is encoded as a string.
+
+\begin{reference}{Defn}{lba}
+  (5.6) A \textbf{\textit{linearly bounded automaton}} (LBA) is a 1-tape TM that cannot move its head off the input portion of the tape.
+\end{reference}
+
+\begin{reference}{Thm}{lbadecidable}
+  (5.9) $A_{\mathrm{LBA}}=\{\langle B,w\rangle|\text{ LBA }B\text{ accepts }w\}$ is decidable.
+\end{reference}
+
+\begin{proof}[Proof Idea]
+  For inputs of length $n$, an LBA can have only $|Q|\times n\times|\Gamma|^n$ different configuration. Therefore, if an LBA runs for longer, it must repeat some configuration and will never halt. So for a decider for $A_{\mathrm{LBA}}$, just simulate it for this many steps.
+\end{proof}
+
+\begin{reference}{Thm}{elba}
+  (5.10) $E_{\mathrm{LBA}}=\{\langle M\rangle|M\text{ is an LBA where }L(M)=\emptyset\}$ is undecidable.
+\end{reference}
+
+\begin{proof}
+  Assume TM $R$ decides $E_{\mathrm{LBA}}$. Construct TM
+  \begin{align*}
+    S=\text{``} & \text{On input }\langle M,w\rangle                                          \\
+                & \text{1. Construct LBA }B_{M,w}\text{ that accepts its input }x\text{ iff } \\
+                & \quad x\text{ is an accepting computation history for }M\text{ on }w.       \\
+                & \text{2. Simulate }R\text{ on input }\langle B_{M,w}\rangle.                \\
+                & \text{3. Accept if }R\text{ rejects and reject if }R\text{ accepts."}
+  \end{align*}
+  Then $S$ decides $A_{\mathrm{TM}}$. Hence contradiction.
+\end{proof}
+
+\textit{Comment.} It is not immediately staightforward that $B_{M,w}$ is \textit{capable} of doing that. But note that it obviously takes \textit{finite} memory to check if a string is an accepting computation history for $M$ on $w$, for that after confirming that a configuration is valid, whatever is before that configuration \textit{does not} matter. So we may even add however much need finite memory to the right of the tape as input (in the form of $\sqcup$'s) to make sure our $B_{M,w}$ is able to do that.
+
+\begin{reference}{Thm}{pcp}
+  (5.15) An instance of the \emph{Post Correspondence Problem} (PCP) consists of a finite collection of dominos
+  \[
+    P = \left\{ \left[ \frac{t_1}{b_1} \right], \left[ \frac{t_2}{b_2} \right], \dots, \left[ \frac{t_k}{b_k} \right] \right\},
+  \]
+  where each $t_i, b_i$ are strings over some alphabet $\Sigma$. A \emph{match} is a nonempty sequence of indices (repetitions permitted) $i_1, i_2, \dots, i_\ell$ such that
+  \[
+    t_{i_1} t_{i_2} \cdots t_{i_\ell} = b_{i_1} b_{i_2} \cdots b_{i_\ell}.
+  \]
+  Then $PCP=\{\langle P\rangle|P\text{ is an instance of PCP with a match.}\}$ is undecidable.
+\end{reference}
+
+\begin{proof}
+  Assume TM $R$ decides $PCP$. Construct TM
+  \begin{align*}
+    S=\text{``} & \text{On input }\langle M,w\rangle                                           \\
+                & \text{1. Construct PCP instance }P_{M,w}\text{ where a match corresponds to} \\
+                & \quad\text{ a computation history for }M\text{ on }w.                        \\
+                & \text{2. Simulate }R\text{ on input }\langle P_{M,w}\rangle.                 \\
+                & \text{3. Accept if }R\text{ accepts and reject if }R\text{ rejects."}
+  \end{align*}
+  Then $S$ decides $A_{\mathrm{TM}}$. Hence contradiction.
+
+  Now we construct $P_{M,w}$, where \textit{the only} match is a computation history for $M$ on $w$.
+  \begin{enumerate}
+    \item Assume for simplicity that the match starts with a starting domino:
+          \[
+            \left[ \frac{u_1}{v_1} \right] = \left[ \frac{\#}{\#q_0 w_1 w_2 \cdots w_n \#} \right]
+          \]
+    \item Transition dominos: For each transition \( \delta(q, a) = (r, b, R) \) (handle left moves similarly), include:
+          \[
+            \left[ \frac{q a}{b r} \right]
+          \]
+          along with identity dominos and blank-handling dominos:
+          \[
+            \left[ \frac{a}{a} \right], \quad \left[ \frac{\#}{\#} \right], \quad \left[ \frac{\#}{\sqcup\#} \right]
+          \]
+    \item Accepting dominos: To terminate a valid computation history:
+          \[
+            \left[ \frac{aq_{\text{accept}}}{q_{\text{accept}}} \right], \quad
+            \left[ \frac{q_{\text{accept}} a}{q_{\text{accept}}} \right], \quad
+            \left[ \frac{q_{\text{accept}} \# \#}{\#} \right]\qedhere
+          \]
+  \end{enumerate}
+\end{proof}
+
+\textit{Comment.} Believe it or not, we are \textit{forcing} the match to make a computation history. To resolve the assumption we can convert the strings a little bit to force starting using the first domino. See page 233 for this technical detail. Note that $PCP$ is recognizable, for that the sequences of dominos is countable.
+
+The proof of \ref{10thproblem} was by showing that $A_{\mathrm{TM}}$ is reducible to
+\[
+  D=\{\langle p\rangle|\text{ polynomial }p(x_1,x_2,\dots,x_k)=0\text{ has an integer root}\}.
+\]
+Similar to \ref{pcp}, on input $\langle M,w\rangle$, we construct a polynomial with several variables, where to get an integer root of that polynomial, one of the variables has to be assigned some encoding of a computation history of the TM of $M$ on $w$, and the other are to help to decode that encoding.
+
+\begin{reference}{Thm}{allcfg}
+  $ALL_{\mathrm{CFG}}=\{\langle G\rangle|G\text{ is a CFG and }L(G)=\Sigma^*\}$ is undecidable.
+\end{reference}
+
+\begin{proof}
+  Assume TM $R$ decides $ALL_{\mathrm{CFG}}$. Construct TM
+  \begin{align*}
+    S=\text{``} & \text{On input }\langle M,w\rangle                                                 \\
+                & \text{1. Construct PDA }B_{M,w}\text{ that accepts its input }x\text{ iff }        \\
+                & \quad x\text{ is \textit{not} an accepting computation history for }M\text{ on }w. \\
+                & \text{2. Simulate }R\text{ on input }\langle B_{M,w}\rangle.                       \\
+                & \text{3. Accept if }R\text{ rejects and reject if }R\text{ accepts."}
+  \end{align*}
+  Then $S$ decides $A_{\mathrm{TM}}$. Hence contradiction.
+
+  $B_{M,w}$ is constructed so that it \textit{nondeterministically} pushes some $C_i$ and pop to compare with $C_{i+1}$ (with $M$ in its mind) and accepts if some step is invalid, or the input starts wrongly or the ending configuration is not accepting. We reverse the even-indexed $C_i$ to facilitate the comparing using stack.
+\end{proof}
+
+\textit{Comment.} Similarly $ALL_{\mathrm{LBA}}$ is undecidable. Note that PDAs are not capable of checking if strings are computation histories, which resonates with \ref{ecfg}.
+
+The computation history method is useful for showing the undecidability of problems involving testing for the existence of some object.
+
 \section*{Exercises and Problems}
+
+\begin{exercise}{5.1}
+  Show that
+  \[
+    EQ_{\mathrm{CFG}}=\{\langle G,H\rangle|G,H\text{ are CFGs and }L(G)=L(H)\}
+  \]
+  is undecidable.
+\end{exercise}
+
+\textcolor{red}{to do}
 
 \setcounter{exercise}{20}
 
@@ -14,21 +215,25 @@
   Show that $A$ is T-recognizable iff $A\leq_mA_{\mathrm{TM}}$.
 \end{exercise}
 
-\textcolor{red}{to do}
+($\Leftarrow$) This is trivial by \ref{mapdecrec}.\newline
+($\Rightarrow$) Say that $L(R)=A$, then $f:w\mapsto\langle R,w\rangle$, where $w\in A$ shows that $A\leq_m A_{\mathrm{TM}}$.
 
 \begin{exercise}{5.23}
   Show that $A$ is decidable iff $A\leq_m0^*1^*$.
 \end{exercise}
 
-\textcolor{red}{to do}
+($\Leftarrow$) $0^*1^*$ is decidable, so this is trivial.\newline
+($\Rightarrow$) This is also trivial in a sense: Say that $R$ decides $A$. We modify $R$ so that it leaves 01 on the tape if accepts and otherwise 10.
 
 \setcounter{exercise}{24}
 
 \begin{exercise}{5.25}
-  Give an example of an undecidable language $B$, where $B\leq_m \overline{B}$. Is it possible that $B$ is a T–recognizable language?
+  Give an example of an undecidable language $B$, where $B\leq_m \overline{B}$. Is it possible that $B$ is a recognizable language?
 \end{exercise}
 
 \textcolor{red}{to do}
+
+No. In that case both $B$ and $\overline{B}$ would both be recognizable, thus both decidable.
 
 \begin{exercise}{5.26}
   Question to fill in.

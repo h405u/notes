@@ -1,5 +1,7 @@
 \chapter{Decidability}
 
+\section{Decidable Languages}
+
 \begin{reference}{Thm}{adfa}
   (4.1) $A_{\mathrm{DFA}}=\{\langle B, w\rangle|B\text{ is a DFA that accepts }w\}$ is decidable.
 \end{reference}
@@ -37,8 +39,10 @@
 \end{reference}
 
 \begin{proof}[Proof Idea]
-  By \ref{cnfthm} and \ref{2.26} this is trivial. So $A_{\mathrm{PDA}}$ is also decidable. Note that this is not easy to prove on its own, since PDAs may not halt.
+  By \ref{cnfthm} and \ref{2.26} this is trivial.
 \end{proof}
+
+\textit{Comment.} So $A_{\mathrm{PDA}}$ is also decidable. Note that this is not easy to prove on its own, since PDAs may not halt.
 
 \begin{reference}{Thm}{ecfg}
   (4.8) $E_{\mathrm{CFG}}=\{\langle G\rangle|G\text{ is a CFG and }L(G)=\emptyset\}$ is decidable.
@@ -56,28 +60,93 @@
   It follows immediately from \ref{acfg}. Note that we know it is decidable, without knowing \textit{how} to decide it.
 \end{proof}
 
-\begin{reference}{Thm}{eqcfg}
-  $EQ_{\mathrm{CFG}}=\{\langle G,H\rangle|G,H\text{ are CFGs and }L(G)=L(H)\}$ is undecidable.
+\section{Undecidability}
+
+\begin{reference}{Thm}{runc}
+  $\mathbb{R}$ is uncountable.
 \end{reference}
 
-\begin{reference}{Thm}{atm}
-  (4.11) $A_{\mathrm{TM}}=\{\langle M,w\rangle|M\text{ is a TM that accepts }w\}$ is undecidable.
+\begin{proof}
+  We prove by contradiction and via diagonization. Say that each real number is assigned an index $i\in \mathbb{N}$. Then $r\in \mathbb{R}$ in its decimal representation that differs from the $n$th number in the $n$th digit for any $n\in \mathbb{N}$ is not $i$th number for any $i$. Hence $r\notin \mathbb{R}$ and contradiction.
+\end{proof}
+
+\begin{reference}{Cor}{lunc}
+  The set of all languages over $\Sigma$ is not countable.
+\end{reference}
+
+\begin{proof}
+  $\Sigma^*$ is countable. We can assign each language an infinite \textit{binary} decimal, with each digit of it representing if a string is present in the language.
+\end{proof}
+
+Observe that the set $\mathcal{M}$ of all turing machines is countable. So some languages are not recognizable, a fortiori decidable.
+
+\begin{reference}{Note}{1stproblem}
+  David Hilbert's first problem asked if there is a set of intermediate size between $\mathbb{N}$ and $\mathbb{R}$. Gödel and Cohen showed that we cannot answer this question by using the standard axioms of mathematics. We are even not sure if ``infinite sets'' has mathematical ``reality''.
 \end{reference}
 
 \begin{reference}{Rmk}{atmreco}
   $A_{\mathrm{TM}}$ is recognizable.
 \end{reference}
 
-We can prove it by simulating. Note that we do not ask the simulator TM to reject if $M$ rejects by looping (one should prove that this can be carried out effectively, but shows that it cannot) and instead we say nothing about the looping condition, for that if $M$ rejects by looping, our simulator will as well. This simulator is of great historical importance, as the \textit{first} machine described (due to Alan Turing) to operate based on a stored program, and it later came to be known as the Von Neumann architecture.
+We can prove it by simulating. Note that we do not ask the simulator TM to reject if $M$ rejects by looping (one should prove that this can be carried out effectively, but \ref{halt} shows that it cannot, for that we can not tell if a TM is looping on some input) and instead we say nothing about the looping condition, for that if $M$ rejects by looping, our simulator will as well. This simulator is of great historical importance, as the \textit{first} machine described (due to Alan Turing) to operate based on a stored program, and it later came to be known as the Von Neumann architecture.
 
-% TODO: Refer to the halting problem.
+\begin{reference}{Thm}{atm}
+  (4.11) $A_{\mathrm{TM}}=\{\langle M,w\rangle|M\text{ is a TM that accepts }w\}$ is undecidable.
+\end{reference}
+
+\begin{proof}
+  Assume some TM $H$ decides $A_{\mathrm{TM}}$. We use $H$ to construct TM
+  \begin{align*}
+    D=\text{``} & \text{On input }\langle M\rangle                                        \\
+                & \text{1. Simulate }H\text{ on input }\langle M,\langle M\rangle\rangle. \\
+                & \text{2. Accept if }H\text{ rejects and reject if }H\text{ accepts."}
+  \end{align*}
+  Then $D$ accepts $\langle D\rangle$ iff $D$ does not accept $\langle D\rangle$. Hence contradiction.
+\end{proof}
+
+\textit{Comment.} Surprisingly $\langle M,\langle M\rangle\rangle$ is of some real world applications, for example self-hosting languages whose compilers can be written in themselves. Check the following figure to see that this proof uses \textit{diagonalization}. To employ it we essentially attempt to show contradiction by constructing some item (by countability) that differs from all items of its type by some \textit{decidable} process.
+\begin{figure}[H]
+  \[
+    \begin{array}{c|cccccc}
+      \text{TMs} & \langle M_1 \rangle         & \langle M_2 \rangle         & \langle M_3 \rangle         & \langle M_4 \rangle         & \cdots & \langle D \rangle   \\
+      \hline
+      M_1        & \textcolor{red}{\text{acc}} & \text{rej}                  & \text{acc}                  & \text{acc}                  & \cdots & \text{acc}          \\
+      M_2        & \text{rej}                  & \textcolor{red}{\text{rej}} & \text{rej}                  & \text{rej}                  & \cdots & \text{rej}          \\
+      M_3        & \text{acc}                  & \text{acc}                  & \textcolor{red}{\text{acc}} & \text{acc}                  & \cdots & \text{acc}          \\
+      M_4        & \text{rej}                  & \text{rej}                  & \text{acc}                  & \textcolor{red}{\text{acc}} & \cdots & \text{rej}          \\
+      \vdots     & \vdots                      & \vdots                      & \vdots                      & \vdots                      & \ddots & \vdots              \\
+      D          & \textcolor{red}{\text{rej}} & \textcolor{red}{\text{acc}} & \textcolor{red}{\text{rej}} & \textcolor{red}{\text{rej}} & \cdots & \textcolor{blue}{?}
+    \end{array}
+  \]
+  \caption{Undecidability hinges on diagonalization.}
+\end{figure}
+
+% TODO: elaborate on self-hosting languages, especially in its merits and implications (sufficient expressiveness, etc.) Better state the commonalities between this example and R being uncountable: what does the 'uncountability' of R correspond to in this proof? Show that we cannot use the enumeration of all strings (instead of $\langle M_i\rangle$) for losing decidability (of some sort).
+
+\begin{reference}{Thm}{corecodec}
+  A language is decidable iff both it and its complement are Turing-recognizable.
+\end{reference}
+
+\begin{proof}
+  We construct a decider by simulating both TMs in parallel (alternately).
+\end{proof}
+
+\begin{reference}{Cor}{unreco}
+  $\overline{A_{\mathrm{TM}}}$ is unrecognizable.
+\end{reference}
+
+\textit{Comment.} \ref{corecodec} can be stated more generally: Let $D$ and $L$ be two languages, and $L$ a decidable one. Then $D\cap L$ is decidable iff both it and $\overline{D}\cap L$ is recognizable.
 
 \section*{Exercises and Problems}
 
 \setcounter{exercise}{13}
 
 \begin{exercise}{4.14}
-  Question to fill in.
+  Show that
+  \[
+    \{\langle G\rangle|G\text{ is a CFG over }\{0,1\}\text{ and }1^*\cap L(G)\neq\emptyset\}
+  \]
+  is decidable.
 \end{exercise}
 
 \textcolor{red}{to do (hard!)}
@@ -104,8 +173,11 @@ We can prove it by simulating. Note that we do not ask the simulator TM to rejec
 
 \setcounter{exercise}{26}
 
-\begin{exercise}{4.26}
-  Question to fill in.
+\begin{exercise}{4.27}
+  Show that
+  \[
+    E=\{\langle M\rangle|M\text{ is a DFA that accepts some string with more 1s than 0s}\}
+  \] is decidable.
 \end{exercise}
 
 \textcolor{red}{to do}
