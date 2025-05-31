@@ -1,0 +1,332 @@
+\section{Models of Theories}
+
+\subsection*{Finite Models}
+
+A sentence is \textit{finitely valid} if it is true in every finite structure. For example, the negation of one saying that $<$ is an ordering with no largest element.
+
+\begin{reference}{Thm}{t26a}
+  (26A) If a set $\Sigma$ of sentences has arbitrarily large finite models, then it has an infinite model.
+\end{reference}
+
+This straightforward fact can be proved as follows.
+
+\begin{proof}
+  For each integer $k\geq 2$ we can find a sentence $\lambda_k$ that translates, "There are at least $k$ things." For example $\lambda_2=\exists v_1\exists v_2v_1\neq v_2$. Consider the set $\Sigma\cup\{\lambda_2,\lambda_3,\dots\}.$ By hypothesis any finite subset of it has a model. So by compactness the entire set has a model, which clearly must be infinite.
+\end{proof}
+
+For example, it is a priori conceivable that there might be some very subtle equation of group theory that was true in every finite group but false in every infinite group. But by the above theorem, no such equation exists.
+
+\begin{reference}{Cor}{c26b}
+  (26B) The class of all finite structures (for a fixed language) is not $\mathrm{EC}_{\Delta}$ (\ref{ec}). The class of all infinite structures is not EC.
+\end{reference}
+
+\begin{proof}
+  The first sentence follows immediately from \ref{t26a}. If the class of all infinite structures is Mod $\tau$, then the class of all finite structures is Mod $\neg \tau$ . But this class is not even $\mathrm{EC}_{\Delta}$, much less EC.
+\end{proof}
+
+The class of infinite structures is $\mathrm{EC}_{\Delta}$, being Mod $\{\lambda_2,\lambda_3,\dots\}$.
+
+\begin{reference}{Defn}{theory1}
+  For any structure $\mathfrak{A}$, define the \textit{theory} of $\mathfrak{A}$ (written $\mathrm{Th}\mathfrak{A}$) to be the set of all sentences true in $\mathfrak{A}$.
+\end{reference}
+
+\begin{reference}{Rmk}{r26a}
+  Any finite structure $\mathfrak{A}$ is isomorphic to a sturcture with the universe $\{1,2,\dots,n\}$ where $n=\mathrm{card}|\mathfrak{A}|$. The idea here is, where $|\mathfrak{A}|=\{a_1,\dots,a_n\}$, to replace $a_i$ by $i$.
+\end{reference}
+
+\begin{reference}{Rmk}{r26b}
+  A finite structure of the sort in \ref{r26a} can, for a finite language, be specified by a finite string of symbols. So it can be \textit{communicated}.
+\end{reference}
+
+\begin{reference}{*Rmk}{r26c}
+  Given a finite structure $\mathfrak{A}$ for a finite language, with universe $\{1,\dots,n\}$, a wff $\varphi$ and an assignment $s_{\varphi}$ of numbers in this universe to the variables free in $\varphi$, we can effectively decide whether or not $\vDash_{\mathfrak{A}}\varphi[s_{\varphi}]$. The scheme is to just enumerate.
+\end{reference}
+
+\begin{reference}{*Thm}{t26c}
+  (26C) For a finite sturcture $\mathfrak{A}$ in a finite language, $\mathrm{Th}\mathfrak{A}$ is decidable.
+\end{reference}
+
+\begin{proof}
+  By \ref{r26a} and \ref{r26c} this is immediate.
+\end{proof}
+
+\begin{proof}[Second Proof]
+  There is a sentence $\delta_{\mathfrak{A}}$ that specifies $\mathfrak{A}$ up to isomorphism (cf. Exercise \ref{E.2.2.17}). It follows that $\mathrm{Th}\mathfrak{A}=\{\sigma|\delta_{\mathfrak{A}}\vDash \sigma\}.$ (If $\sigma$ is true in $\mathfrak{A}$, then it is true in all isomorphic copies, and hence all models of $\delta_{\mathfrak{A}}$. So $\delta_{\mathfrak{A}}\vDash \sigma$. The other direction is trivial.) Apply \ref{c25g}, noting that for each $\sigma$, either $\vDash_{\mathfrak{A}}$ or $\vDash_{\mathfrak{A}}\neg \sigma$.
+\end{proof}
+
+\begin{reference}{*Rmk}{r26d}
+  The binary relation $\{\langle \sigma,n\rangle|\sigma\text{ has a model of size }n\}$ is decidable, where $\sigma$ is a sentence and $n$ is a positive integer. (There are finitely many structures to check, and we check them according to \ref{t26c}.)
+\end{reference}
+
+The \textit{spectrum} of a sentence $\sigma$ is $\{n|\sigma\text{ has a model of size }n\}$. Cf. Exercise \ref{E.2.2.16}.
+
+\begin{reference}{*Rmk}{r26e}
+  The spectrum of any sentence is a decidable set of positive integers.
+\end{reference}
+
+% TODO: more on E.2.2.16
+
+\begin{reference}{*Thm}{t26d}
+  (26D) For a finite language, $\{\sigma|\sigma\text{ has a finite model}\}$ is effectively enumerable.
+\end{reference}
+
+\begin{proof}
+  By \ref{r26d} we check size $1,2,\dots$. If a model of size $n$ satisfies the given $\sigma$ we are done.
+\end{proof}
+
+\begin{reference}{*Cor}{c26e}
+  (26E) Assume the language is finite, and let $\Phi$ be the set of sentences true in every finite structure. Then its complement, $\overline{\Phi}$, is effectively enumerable.
+\end{reference}
+
+\begin{proof}
+  By \ref{r26d} we just enumerate structures of size $i\in\mathbb{Z}_{>0}$ till $\sigma$ does not have a model of size $n$.
+\end{proof}
+
+\begin{reference}{*Thm}{trakhtenbrot}
+  \textbf{Trakhtenbrot's Theorem}\quad $\Phi$ is not in general decidable or effectively enumerable.
+\end{reference}
+
+Thus the analogue of \ref{enumerabilityt} for finite structures only is false.
+
+\subsection*{Size of Models}
+
+\begin{reference}{Thm}{lowskolemt}
+  \textbf{L\"owenheim-Skolem Theorem}\quad (a) Let $\Gamma$ be a satisfiable set of formulas in a countable language. Then $\Gamma$ is satisfiable in some countable structure. (b) Let $\Sigma$ be a set of sentences in a countable language. If $\Sigma$ has any model, then it has a countable model.
+\end{reference}
+
+\begin{proof}
+  $\Gamma$ is consistent by \ref{c25e}. In the proof of \ref{completenesst} we actually formed a countable structure $\mathfrak{A}/E$ from a consistent set, and that completes the proof.
+\end{proof}
+
+% TODO: A second, more direct proof. Cf. section 4.2 Exercise 1.
+
+\begin{reference}{Eg}{skolemparadox}
+  \textbf{Skolem's paradox}: Let $A_{\mathrm{ST}}$ be a (hopefully consistent) set of axioms for set theory. By \ref{lowskolemt} $A_{\mathrm{ST}}$ has a countable model $\mathfrak{S}$. $\mathfrak{S}$ is would also be a model of the sentence $\sigma:$ ``There are uncountably many sets.'' The puzzling part here is that in $|\mathfrak{S}|$ there is no member (set) that can be interpreted as a bijection between natural numbers (defined by $\mathfrak{S}$) and $|\mathfrak{S}|$ (for this is what $\sigma$ says) but there \textit{exists} one (between $\mathbb{N}$ and $|\mathfrak{S}|$) outside of $|\mathfrak{S}|$, for that $\mathfrak{S}$ is countable. There \textit{is} countably many sets inside $|\mathfrak{S}|$ yet we cannot ``count'' from inside $|\mathfrak{S}|$, so surprisingly, no contradiction arises.
+\end{reference}
+
+\begin{reference}{Cor}{aequivb}
+  For any structure $\mathfrak{A}$ for a countable language, there is a countable model $\mathfrak{B}$ of $\mathrm{Th}\mathfrak{A}$ and if so then $\mathfrak{A}\equiv \mathfrak{B}$ (\ref{elequiv}).
+\end{reference}
+
+\begin{proof}
+  ($\Rightarrow$) $\vDash_{\mathfrak{A}}\sigma\Rightarrow \sigma\in \text{Th}\mathfrak{A}\Rightarrow\ \vDash_{\mathfrak{B}}\sigma$\newline
+  ($\Leftarrow$) $\not\vDash_{\mathfrak{A}}\sigma\Rightarrow\ \vDash_{\mathfrak{A}}\neg \sigma\Rightarrow (\neg \sigma)\in\text{Th}\mathfrak{A}\Rightarrow\ \vDash_{\mathfrak{B}}\neg \sigma\Rightarrow\ \not\vDash_{\mathfrak{B}}\sigma$.
+\end{proof}
+
+The real field $(\mathbb{R};0,1,+,\cdot)$ is an uncountable structure for a finite language. And Tarski showed the field of algebraic real numbers is a countable structure satisfying exactly the same sentences.
+
+\begin{reference}{Eg}{requiv}
+  Consider the structure $\mathfrak{N}=(\mathbb{N};0,S,<,+,\cdot).$ We claim that there is a countable structure $\mathfrak{M}_0$ such that $\mathfrak{M}_0\equiv \mathfrak{N}$ but $\mathfrak{M}_0\not\cong \mathfrak{N}$ (\ref{homoiso}).
+\end{reference}
+
+\begin{proof}
+  Expand the language by adding a new constant symbol $c$. Let
+  \[
+    \Sigma=\{0<c,\mathrm{S}0<c,\mathrm{SS}0<c,\dots\}.
+  \]
+  Consider a finite subset of $\Sigma\cup \mathrm{Th}\mathfrak{N}$. That subset is true in $\mathfrak{N}_k=(\mathbb{N};0,S,<,+,\cdot,k)$ (where $k=c^{\mathfrak{N}_k}$) for some large $k$. So by \ref{compactnesstfol} $\Sigma\cup \mathrm{Th}\mathfrak{N}$ has a model. By \ref{lowskolemt} $\Sigma\cup \mathrm{Th}\mathfrak{N}$ has a countable model
+  \[
+    \mathfrak{M}=(|\mathfrak{M}|;0^{\mathfrak{M}},\mathrm{S}^{\mathfrak{M}}, <^{\mathfrak{M}}, +^{\mathfrak{M}}, \cdot^{\mathfrak{M}}, c^{\mathfrak{M}}).
+  \]
+  Let $\mathfrak{M}_0$ be the restriction of $\mathfrak{M}$ to the original language:
+  \[
+    \mathfrak{M}_0=(|\mathfrak{M}|;0^{\mathfrak{M}},\mathrm{S}^{\mathfrak{M}}, <^{\mathfrak{M}}, +^{\mathfrak{M}}, \cdot^{\mathfrak{M}}).
+  \]
+  By \ref{aequivb} $\mathfrak{M}_0\equiv \mathfrak{N}$. Also note that $c^{\mathfrak{M}}\in|\mathfrak{M}|$. Suppose that there is a homomorphism $h$ of $\mathfrak{M}_0$ into $\mathfrak{N}$, then $\forall n\in \mathbb{N}\ \langle n,h(c^{\mathfrak{M}})\rangle\in <^\mathfrak{N}$, but $h(c^{\mathfrak{M}})\in \mathbb{N}$, hence contradiction.
+\end{proof}
+
+\textit{Comment.}
+The construction does \emph{not} add a single new point ``$\infty$’’; it produces an infinite tail of elements greater than every standard numeral.
+A key observation is that \emph{no first-order formula} can define the set of standard naturals inside the resulting model.
+(If $\psi(x)$ picked out precisely the standard elements, then $\mathfrak N\models\forall x\,\psi(x)$ would force $\mathfrak M\models\forall x\,\psi(x)$, contradicting the assumption.)
+On the other hand, a \emph{single} non-standard element \emph{can} be parameter-free definable; this does not violate $\mathfrak M_0\equiv\mathfrak N$ because the same formula will simply pick out a different singleton in $\mathfrak N$.
+(Note that a finite formula can \textit{not} say ``$x$ is bigger than every standard natural''.)
+
+% TODO: Elabroate on how to pick up a nonstandard element.
+
+% TODO: Discussion on uncountable languages. Page 153.
+
+\begin{reference}{Thm}{lst}
+  \textbf{LST Theorem}\quad Let $\Gamma$ be a set of formulas in a language of cardinality $\lambda$ and assume that $\Gamma$ is satisfiable in some infinite structure. Then for every cardinal $\kappa\geq \lambda$, there is a structure of cardinality $\kappa$ in which $\Gamma$ is satisfiable.
+\end{reference}
+
+% TODO: proof.
+
+\begin{reference}{Cor}{c26f}
+  (26F) (a) Let $\Sigma$ be a set of sentences in a countable language. If $\Sigma$ has some infinite model, then $\Sigma$ has models of every infinite cardinality. (b) Let $\mathfrak{A}$ be an infinite structure for a countable language. Then for any infinite cardinal $\lambda$, there is a structure $\mathfrak{B}$ of cardinality $\lambda$ such that $\mathfrak{B}\equiv \mathfrak{A}$.
+\end{reference}
+
+\begin{reference}{Defn}{categorical}
+  Call a set $\Sigma$ of sentences \textit{categorical} iff any two models of $\Sigma$ are isomorphic.
+\end{reference}
+
+\ref{c26f} implies that if $\Sigma$ has any infinite models, then it is not categorical. This is indicative of a limitation in the expressiveness of first-order languages.
+
+% TODO: More on this.
+
+\subsection*{Theories}
+
+\begin{reference}{Defn}{theory}
+  $T$ is a \textit{theory} iff $T$ is a set of sentences such that for any sentence $\sigma$ of the language, $T\vDash \sigma\Rightarrow \sigma\in T$.
+\end{reference}
+
+There is always a smallest theory, consisting of the valid sentences of the language. There is also the theory consisting of all the sentences of the language; it is the only unsatisfiable theory.
+
+\begin{reference}{Defn}{theoryofk}
+  For a class $\mathcal{K}$ of structures (for the language), define the \textit{theory} of $\mathcal{K}$ (written $\mathrm{Th}\mathcal{K}$) by the equation
+  \[
+    \mathrm{Th}\mathcal{K}=\{\sigma|\sigma\text{ is true in every member of }\mathcal{K}\}.\qedhere
+  \]
+\end{reference}
+
+\ref{theory1} is a special case where $\mathcal{K}=\{\mathfrak{A}\}.$
+
+\begin{reference}{Thm}{t26g}
+  (26G) $\mathrm{Th}\mathcal{K}$ is indeed a theory.
+\end{reference}
+
+We have that $\mathcal{K}\subseteq \mathrm{Mod\ Th}\mathcal{K}$. Consider $(\mathbb{R};<_R)\in \mathrm{Mod\ Th}(\mathbb{Q};<_Q)$ (\ref{isomorphismex}). Actually the examples need not be elementarily equivalent. Consider $\vDash_{\mathfrak{A}}\alpha\wedge \beta\wedge\neg \gamma$, $\vDash_{\mathfrak{B}}\alpha\wedge\neg\beta\wedge\gamma$ and $\vDash_{\mathfrak{C}}\alpha\wedge\neg\beta\wedge\neg\gamma$. They are not pairwise elementarily equivalent, but $\mathfrak{C}\in \mathrm{Mod\ Th}\{\mathfrak{A},\mathfrak{B}\}$.
+
+\begin{reference}{Defn}{consequences}
+  The set of \textit{consequences} of $\Sigma$ is $\mathrm{Cn}\Sigma=\{\sigma|\Sigma\vDash \sigma\}=\mathrm{Th\ Mod}\Sigma$.
+\end{reference}
+
+For example, set theory is the set of consequences of a certain set of sentences known as axioms for set theory. A set $T$ of sentences is a theory iff $T=\mathrm{Cn}T$.
+
+\begin{reference}{Defn}{complete}
+  A theory $T$ is \textit{complete} iff for every sentence $\sigma$, either $\sigma\in T$ or $(\neg \sigma)\in T$.
+\end{reference}
+
+For example, $\mathrm{Th}\{\mathfrak{A}\}$ is a complete theory.
+
+\begin{reference}{Rmk}{completebyelequiv}
+  A theory $T$ is complete iff any two models of $T$ are elementarily equivalent.
+\end{reference}
+
+So the theory of fields is not complete, since the sentences $1+1=0$ and $\exists x\ x\cdot x=1+1$ are true in some fields but false in others. Cf. \ref{t26j}.
+
+\begin{reference}{Defn}{axiomatizable}
+  A theory $T$ is \textit{axiomatizable} iff there is a decidable set $\Sigma$ of sentences such that $T=\mathrm{Cn}\Sigma$ and \textit{finitely axiomatizable} iff $\Sigma$ is finite. In the latter case we have $T=\mathrm{Cn}\{\sigma\}$ (or $\mathrm{Cn}\sigma$) where $\sigma$ is the conjunction of the finitely many members of $\Sigma$.
+\end{reference}
+
+For example, the theory of fields is finitely axiomatizable. For the class $\mathcal{F}$ of fields is $\mathrm{Mod}\Phi$, where $\Phi$ is the finite set of field axioms (item 4 of \ref{defineclassex}). And the theory of fields is $\mathrm{Cn}\Phi$.
+
+\begin{reference}{Thm}{t26h}
+  If $\mathrm{Cn}\Sigma$ is finitely axiomatizable, then there is a finite $\Sigma_0\subseteq \Sigma$ such that $\mathrm{Cn}\Sigma_0=\mathrm{Cn}\Sigma$.
+\end{reference}
+
+\begin{proof}
+  We have $\mathrm{Cn}\Sigma=\mathrm{Cn}\tau$ for some sentence $\tau$ and $\Sigma\vDash \tau$. By \ref{compactnesstfol} there is some finite $\Sigma_0\subseteq \Sigma$ such that $\Sigma_0\vDash \tau$ and $\mathrm{Cn}\tau\subseteq\mathrm{Cn}\Sigma_0 \subseteq \mathrm{Cn}\Sigma$, whence equality holds.
+\end{proof}
+
+The theory of fields of characteristic 0 is axiomatizable, being $\mathrm{Cn}\Phi_0$, where $\Phi_0$ consists of the (finitely many) field axioms together with the infinitely many sentences:
+\begin{align*}
+  1+1   & \neq 0, \\
+  1+1+1 & \neq 0, \\
+        & \cdots
+\end{align*}
+Suppose that this theory is finitely axiomatizable. By \ref{t26h} it is $\mathrm{Cn}\Phi_0'$, where $\Phi_0'$ is some finite subset of $\Phi_0$. But it would be true in some field of a \textit{large} characteristic, hence contradiction.
+
+By \ref{c25f} and \ref{c25g} we have:
+
+\begin{reference}{*Cor}{c26i}
+  (26I) In a reasonable language, (a) an axiomatizable theory is effectively enumerable and (b) a complete axiomatizable theory is decidable.
+\end{reference}
+
+\begin{reference}{Defn}{kcategorical}
+  Say that a theory $T$ is $\kappa$-\textit{categorical} iff all models of $T$ having cardinality $\kappa$ are isomorphic.
+\end{reference}
+
+\begin{reference}{Thm}{lvtest}
+  \textbf{Łoś--Vaught Test (1954)}\quad Let $T$ be a theory in a countable language. Assume that $T$ has no finite models. If $T$ is $\kappa$-categorical for some infinite cardinal $\kappa$, then $T$ is complete.
+\end{reference}
+
+\begin{proof}
+  Consider any two models $\mathfrak{A}$ and $\mathfrak{B}$ of $T$. By \ref{c26f} there exists structures $\mathfrak{A}'\equiv \mathfrak{A}$ and $\mathfrak{B}'\equiv \mathfrak{B}$ having cardinality $\kappa$. And we have that $\mathfrak{A}'\cong \mathfrak{B}'$, thus $\mathfrak{A}\equiv \mathfrak{B}$. By \ref{completebyelequiv} we are done.
+\end{proof}
+
+\textit{Comment.} If $T$ is a theory in a language of cardinality $\lambda$, then we must demand that $\lambda\leq \kappa$.
+
+\begin{reference}{Thm}{t26j}
+  (26J) (a) The theory of algebraically closed fields of characteristic 0 is complete. (b) The theory of the complex field $\mathfrak{C}=(\mathbb{C};0,1,+,\cdot)$ is decidable.
+\end{reference}
+
+\begin{proof}
+  (a) Let $\mathcal{A}$ be the class of algebraically closed fields of characteristic 0. Then $\mathcal{A}=\mathrm{Mod}(\Phi_0\cup \Gamma)$, where $\Phi_0$ consists as before of the axioms for fields of characteristic 0, and $\Gamma$ consists of the sentences
+  \begin{align*}
+     & \forall a\forall b\forall c(a\neq 0\to \exists x\ a\cdot x\cdot x+b\cdot x+c=0),                                  \\
+     & \forall a\forall b\forall c\forall d(a\neq 0\to \exists x\ a\cdot x\cdot x\cdot x+b\cdot x\cdot x+c\cdot x+ d=0), \\
+     & \cdots
+  \end{align*}
+  We have that $\mathrm{Mod\ Th}\mathcal{A}=\mathrm{Mod\ Cn}(\Phi_0\cup \Gamma)=\mathrm{Mod}(\Phi_0\cup \Gamma)=\mathcal{A}$, which are all infinite. By \ref{lvtest} it suffices to show that $\mathrm{Th}\mathcal{A}$ is categorical in any uncountable cardinality (this is actually more than what is needed to show), which is a known result of algebra. (b) The set $\Phi_0\cup \Gamma$ is decidable and $\mathrm{Th}\mathcal{A}=\mathrm{Cn}(\Phi_0\cup \Gamma)$, so this theory is axiomatizable. By part (b) of \ref{c26i} it is decidable. We have that $\mathfrak{C}\in \mathcal{A}$, whence $\mathrm{Th}\mathcal{A}\subseteq \mathrm{Th}\mathfrak{C}$. By (a) $\mathrm{Th}\mathcal{A}$ is complete. By \ref{E.2.6.2} we are done.
+\end{proof}
+
+% TODO: proof sketch of the result of algebra.
+
+The theory of the real field $(\mathbb{R};0,1,+,\cdot)$ is also decidable (due to Tarski), but it is not categorical in any infinite cardinality, so \ref{lvtest} cannot be applied.
+
+Consider a language with equality and parameters $\forall$ and $<$. Let $\delta$ be the conjunction of the following sentences:
+\begin{enumerate}
+  \item Ordering axioms (trichotomy and transitivity):
+        \begin{align*}
+           & \forall x\forall y(x<y\vee x=y\vee y<x),        \\
+           & \forall x\forall y(x<y\to y\not <x),            \\
+           & \forall x\forall y\forall z(x<y\to y<z\to x<z).
+        \end{align*}
+  \item Density: $\forall x\forall y(x<y\to\exists z(x<z<y))$.
+  \item No endpoints: $\forall x\exists y\exists z(y<x<z)$.
+\end{enumerate}
+The dense linear orderings without endpoints are, by definition, the structures for this language that are models of $\delta$.
+
+\begin{reference}{Thm}{cantor}
+  \textbf{Cantor}\quad Any countable model of $\delta$ is isomorphic to $(\mathbb{Q},<_Q)$.
+\end{reference}
+
+\begin{proof}
+  Let $\mathfrak{A}$ and $\mathfrak{B}$ be such structures. Fix enumerations $|\mathfrak{A}|=\{a_0,a_1,\dots\}$ and $|\mathfrak{B}|=\{b_0,b_1,\dots\}$. We construct an isomorphism $h$ in stages. Let $A_i=B_i=h_i=\emptyset$ for $i\leq0$ (we will use notation $h_i\subseteq|\mathfrak{A}|\times|\mathfrak{B}|$). At stage $2n$ let $h_{2n}=h_{2n-1}\cup\{\langle a_n,b_j\rangle\}$, where $j$ is the least index such that $h_{2n}$ preserves $<$ when restricted to $A_n$ (by density and no endpoints this is valid.) Also let $A_n=A_{n-1}\cup\{a_n\}$ and $B_n=B_{n-1}\cup\{b_j\}$. At stage $2n+1$ do the counterpart for $h_{2n+1}$ and $A_n$. Let $h=\bigcup_0^{\infty}h_i$. Then $h$ is indeed a one-to-one homomorphism, so $\mathfrak{A}$ and $\mathfrak{B}$ are isomorphic, and we are done.
+\end{proof}
+
+\textit{Comment.} This is the classical Cantor back-and-forth proof. Note that we used no endpoints implicitly, for that without it it would be possible that an endpoint is mapped to a non-endpoint, whence we may fail to find an ``extended'' mapping that preserves $<$. By this theorem we have that $\mathrm{Cn}\delta$ is $\aleph_0$-categorical, thus by \ref{lvtest} $\mathrm{Cn}\delta$ is complete. Hence by \ref{completebyelequiv} any two models of $\delta$ are elementarily equivalent; in paricular, $(\mathbb{Q};<_Q)\equiv(\mathbb{R};<_R)$. By \ref{c26i} we can also conclude these sturctures have decidable theories.
+
+\subsection*{Prenex Normal Form}
+
+\begin{reference}{Defn}{prenex}
+  Define a \textit{prenex} formula to be one of the form (for some $n\geq0$) $Q_1x_1\cdots Q_nx_n \alpha$ where $Q_i$ is $\forall$ or $\exists$ and $\alpha$ is quantifier-free.
+\end{reference}
+
+\begin{reference}{Thm}{prenexthm}
+  \textbf{Prenex Normal Form Theorem}\quad For any formula, we can find a logically equivalent prenex formula.
+\end{reference}
+
+This seems very trivial. For proof see page 160 of the book.
+
+\subsection*{Retrospectus}
+
+The interest symbolic logic holds for mathematicians is largely due to the accuracy with which it mirrors mathematical deductions. First-order logic, in particular, is well suited for formalizing mathematics, though it is less applicable to everyday discourse. Certain fragments of first-order logic, such as Horn clauses, are of particular interest to computer scientists, as they can express computation and even form the basis of Turing-complete models. (This paragraph has been kindly revised by \texttt{GPT-4o}.)
+
+\subsection*{Exercises}
+
+\setcounter{exercise}{1}
+
+\begin{exercise}{E.2.6.2}
+  Let $T_1$ and $T_2$ be theories (in the same language) such that (i) $T_1\subseteq T_2$, (ii) $T_1$ is complete, and (iii) $T_2$ is satisfiable. Show that $T_1=T_2$.
+\end{exercise}
+
+Say that $T_2$ is true in $\mathfrak{A}$. Obviously both $T_1$ and $T_2$ are $\mathrm{Th}\mathfrak{A}$, so we are done.
+
+\setcounter{exercise}{3}
+
+\begin{exercise}{E.2.6.4}
+  Prove \ref{cantor}.
+\end{exercise}
+
+See \ref{cantor}.
+
+\setcounter{exercise}{5}
+
+\begin{exercise}{E.2.6.6}
+  Prove the converse to part (a) of \ref{c26i}.
+\end{exercise}
+
+\textcolor{red}{to do}
+

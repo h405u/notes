@@ -163,11 +163,7 @@ Encode a computation history as the string $C_1\# C_2\# \cdots\# C_{acc}$, where
 
 \textit{Comment.} Believe it or not, we are \textit{forcing} the match to make a computation history. To resolve the assumption we can convert the strings a little bit to force starting using the first domino. See page 233 for this technical detail. Note that $PCP$ is recognizable, for that the sequences of dominos is countable.
 
-The proof of \ref{10thproblem} was by showing that $A_{\mathrm{TM}}$ is reducible to
-\[
-  D=\{\langle p\rangle|\text{ polynomial }p(x_1,x_2,\dots,x_k)=0\text{ has an integer root}\}.
-\]
-Similar to \ref{pcp}, on input $\langle M,w\rangle$, we construct a polynomial with several variables, where to get an integer root of that polynomial, one of the variables has to be assigned some encoding of a computation history of the TM of $M$ on $w$, and the other are to help to decode that encoding.
+The proof showing the undecidablity of \ref{10thproblem} reduced $A_{\mathrm{TM}}$ to $D$. Similar to \ref{pcp}, on input $\langle M,w\rangle$, we construct a polynomial with several variables, where to get an integer root of that polynomial, one of the variables has to be assigned some encoding of a computation history of the TM of $M$ on $w$, and the other are to help to decode that encoding.
 
 \begin{reference}{Thm}{allcfg}
   $ALL_{\mathrm{CFG}}=\{\langle G\rangle|G\text{ is a CFG and }L(G)=\Sigma^*\}$ is undecidable.

@@ -1,0 +1,233 @@
+\section{Soundness and Completeness Theorems}\label{sec:2.5}
+
+A desirable and significant fact is that \textit{some} deductive calculus is sound and complete. In this section we state that our chosen one qualifies.
+
+The proof of \ref{soundnesst} proceeds via \ref{l25a}, whose proof, in turn, depends on \ref{substitutionl}.
+
+\begin{reference}{Lem}{substitutionl}
+  \textbf{Substitution Lemma}\quad If the term $t$ is substitutable for the variable $x$ in the wff $\varphi$ then $\vDash_{\mathfrak{A}}\varphi_t^x[s]\Leftrightarrow\ \vDash_{\mathfrak{A}}\varphi[s(x|\bar{s}(t))].$
+\end{reference}
+
+\begin{proof}
+  We first state the fact that for any term $u,\overline{s}(u_t^x)=\overline{s(x|\overline{s}(t))}(u).$ (This can be proved by induction on $u$.) Then we use induction on $\varphi$. Consider fixed $\mathfrak{A}$ and $s$.
+
+  Case 1: $\varphi=P\ t_1,\dots,t_n.$ We have that
+  \begin{align*}
+    \vDash_{\mathfrak{A}}\varphi_t^x[s]\Leftrightarrow & \ \langle \overline{s}((t_1)_t^x),\dots,\overline{s}((t_n)_t^x)\rangle\in P^{\mathfrak{A}} \\ \Leftrightarrow& \ \langle\overline{s(x|\overline{s}(t))}(t_1),\dots,\overline{s(x|\overline{s}(t))}(t_n)\rangle\in P^{\mathfrak{A}}\\ \Leftrightarrow& \ \vDash_{\mathfrak{A}}\varphi[s(x|\overline{s}(t))].
+  \end{align*}
+  Case 2: $\varphi=\neg \psi$ or $\varphi=\psi\rightarrow \theta$. The inductive step follows from the induction hypotheses for $\psi$ and $\theta$.\newline
+  Case 3: $\varphi=\forall y\ \psi$, and $x$ does not occur free in $\varphi$. Then $s$ and $s(x|\bar{s}(t))$ agree on all variables that occur free in $\varphi$. Also $\varphi_t^x=\varphi$. By \ref{t22a} the conclusion is immediate.(I tried to state something similar but way more cumbersome when trying to prove this case.)\newline
+  Case 4: $\varphi=\forall y\ \psi$, where $y\neq x$ and $y$ does not occur in $t$. For every $d\in|\mathfrak{A}|$ we have
+  \[
+    \vDash_{\mathfrak{A}}(\forall y\ \psi)_t^x[s]\Leftrightarrow\ \vDash_{\mathfrak{A}}\psi_t^x[s(y|d)]\Leftrightarrow\ \vDash_{\mathfrak{A}}\psi[s(y|d)(x|\overline{s(y|d)}(t))]\Leftrightarrow\ \vDash_{\mathfrak{A}}\forall y\ \psi[s(x|\overline{s}(t))].
+  \]
+  This holds exactly for that $y\neq x$ and $y$ does not occur in $t$.
+\end{proof}
+
+\begin{reference}{Lem}{l25a}
+  (25A) Every logical axiom (\ref{axioms}) is valid.
+\end{reference}
+
+\begin{proof}
+  By Exercise \ref{E.2.2.6} any generalization of a valid formula is valid. Therefore it suffices to examine various axiom groups.
+
+  \textit{Axiom group} 1: From \ref{truchassignmentonprimeformulas} we have that if $\emptyset$ tautologically implies $\alpha,\emptyset\vDash \alpha$.\newline
+  \textit{Axiom group} 2: Immediate given \ref{substitutionl}.\newline
+  \textit{Axiom group} 3: See Exercise \ref{E.2.2.3}.\newline
+  \textit{Axiom group} 4: See Exercise \ref{E.2.2.4}.\newline
+  \textit{Axiom group} 5: Trivial.\newline
+  \textit{Axiom group} 6: For an example see Exercise \ref{E.2.2.5}. We can use induction on terms and rest of the proof is trivial.
+\end{proof}
+
+\begin{reference}{Thm}{soundnesst}
+  \textbf{Soundness Theorem}\quad $\Gamma\vdash \varphi\Rightarrow \Gamma\vDash \varphi.$
+\end{reference}
+
+\begin{proof}
+  We use induction on $\varphi$. By Exercise \ref{E.1.7.6} this is trivial.
+\end{proof}
+
+\begin{reference}{Cor}{c25c}
+  (25C) If $\vdash(\varphi \leftrightarrow \psi)$, then $\varphi$ and $\psi$ are logically equivalent.
+\end{reference}
+
+\begin{reference}{Cor}{c25d}
+  (25D) If $\varphi'$ is an alphabetic variant of $\varphi$ by \ref{t24i}, then $\varphi$ and $\varphi'$ are logically equivalent.
+\end{reference}
+
+Define $\Gamma$ to be \textit{satisfiable} iff there is some $\mathfrak{A}$ and $s$ such that $\mathfrak{A}$ satisfies every member of $\Gamma$ with $s$.
+
+\begin{reference}{Cor}{c25e}
+  (25E) If $\Gamma$ is satisfiable then it is consistent (\ref{consistency}).
+\end{reference}
+
+\begin{proof}[Second Proof of \ref{soundnesst}]
+  \[
+    \Gamma\vdash \varphi\Leftrightarrow \Gamma;\neg \varphi\text{ is inconsistent}\Rightarrow \Gamma;\neg \varphi\text{ is not satisfiable}\Leftrightarrow \Gamma\vDash \varphi.\qedhere
+  \]
+\end{proof}
+This proof states that \ref{c25e} is equivalent to \ref{soundnesst}. Note that ``unsatisfiable'', like ``inconsistent'', is indeed a very strong assertion.
+
+\begin{reference}{Thm}{completenesst}
+  \textbf{Completeness Theorem}\quad(a) If $\Gamma\vDash \varphi$, then $\Gamma\vdash \varphi$. (b) Any consistent set of formulas is satisfiable.\qedhere
+\end{reference}
+
+\begin{proof}[Proof Sketch]
+  This is a proof for a countable language with equality symbol. By Exercise \ref{E.2.5.2} it suffices to prove part (b). Similar to the proof of \ref{compactnesst}, we begin with a consistent set $\Gamma$ and extend it to a set $\Delta$ of formulas for which (i) $\Gamma\subseteq \Delta$. (ii) $\Delta$ is consistent and is maximal in the sense that for any formula $\alpha$, either $\alpha\in \Delta$ or $(\neg \alpha)\in \Delta$. (iii) For any formula $\varphi$ and variable $x$, there is a constant $c$ such that $(\neg\forall x\ \varphi\rightarrow\neg \varphi_c^x)\in \Delta.$ Then we form a structure $\mathfrak{A}$ in which members of $\Gamma$ not containing equality symbol can be satisfied. Finally, we change $\mathfrak{A}$ to accomodate formulas containing the equality symbol.
+
+  Let $\Gamma$ be a consistent set of wffs in a countable language.
+
+  Step 1: Expand the language by adding a countably infinite set of new constant symbols. Then $\Gamma$ remains consistent as a set of wffs in the new language. By contradiction and \ref{t24f} this is valid.
+
+  Step 2: For each wff $\varphi$ in the new language and each variable $x$, we add to $\Gamma$ the wff
+  \[
+    \neg\forall x\ \varphi\rightarrow\neg \varphi_c^x,
+  \]
+  where $c$ is one of the new constant symbols. The idea is that $c$ volunteers to name a counterexample to $\varphi$, if there is any. We can do this in such a way that $\Gamma$ together with the set $\Theta$ of all the added wffs is still consistent. This feels very valid, because the newly added constant symbols do not seem to carry inconsistency. For a proof see page 136.
+
+  Step 3: Now we extend $\Gamma\cup\Theta$ to a consistent set $\Delta$ which is maximal in the sense that for any wff $\varphi$ either $\varphi\in \Delta$ or $(\neg \varphi)\in \Delta$. Let $\Lambda$ be the set of logical axioms for the expanded language. Since $\Gamma\cup\Theta$ is consistent, by \ref{t24b} there is no formula $\beta$ such that $\Gamma\cup\Theta\cup \Lambda$ tautologically implies both $\beta$ and $\neg \beta$. Hence there is a truth assignment $v$ for the set of all prime formulas that satisfies $\Gamma\cup\Theta\cup \Lambda$. Let $\Delta=\{\varphi|\bar{v}(\varphi)=T\}.$ Clearly $\Delta$ qualifies. Also we have that $\Delta$ is deductively closed, that is, $\Delta\vdash \varphi\Rightarrow \varphi\in \Delta$ (by \ref{t24b} or maximality and consistency). Cf. \ref{compactnesst}.
+
+  Step 4: We make structure $\mathfrak{A}$, replacing the equality symbol temporarily with a new two-place predicate symbol $E$.
+  \begin{enumerate}[label=(\alph*)]
+    \item $|\mathfrak{A}|$ is the set of all terms of the new language.
+    \item $\langle u,t\rangle\in E^{\mathfrak{A}}\quad\text{iff}\quad =ut\in \Delta$.
+    \item For each $n$-place predicate symbol $P$, $\langle t_1,\dots,t_n\rangle\in P^{\mathfrak{A}}\quad\text{iff}\quad Pt_1\cdots t_n\in\Delta$.
+    \item For each $n$-place function symbol $f$, $f^{\mathfrak{A}}(t_1,\dots,t_n)=ft_1\cdots t_n$.
+  \end{enumerate}
+  The constant symbols are treated as $0$-place functions. Define also $s:V\rightarrow|\mathfrak{A}|$ identity on $V$. It then follows that for any term $t$, $\bar{s}(t)=t$. For any wff $\varphi$, let $\varphi^*$ be the result of replacing the equality symbol in $\varphi$ by $E$. Then $\vDash_{\mathfrak{A}}\varphi^*[s]\ \text{iff}\ \varphi\in \Delta.$
+
+  We can prove this by induction, where the quantification case is not immediately trivial: To show that $\vDash_{\mathfrak{A}}\forall x\ \varphi^*[s]\Leftrightarrow(\forall x\ \varphi)\in \Delta$, first show that ($\Rightarrow$) holds. By \ref{substitutionl} and IH we have that $\varphi_c^x\in \Delta$ We have in $\Delta$ that $\neg\forall x\ \varphi\rightarrow\neg \varphi_c^x$, which gives us $(\forall x\ \varphi)\in \Delta$ contrapositively. To intuitively understand this, $c$ was chosen to be a counterexample to $\varphi$, but now $\varphi_c^x$ holds, lest $\varphi$. The converse can be proven very much the same, except that we have to deal with the case where $t$ is not substituble for $x$ in $\varphi$. By \ref{c25d} this is repairable.
+
+  Step 5: We need to deal with the equality symbol in the language. For example, if $\Gamma$ contains sentence $c=d$, then we need a structure $\mathfrak{B}$ in which $c^{\mathfrak{B}}=d^{\mathfrak{B}}.$ We obtain $\mathfrak{B}$ as the quotient structure $\mathfrak{A}/E$ of $\mathfrak{A}$ modulo $E^{\mathfrak{A}}$. For the full definition see page 140. Let $h:|\mathfrak{A}|\rightarrow|\mathfrak{A}/E|$ be the natural map $h(t)=[t]$. Then we have for any $\varphi$: $\varphi\in \Delta \Leftrightarrow\ \vDash_{\mathfrak{A}}\varphi^*[s]\Leftrightarrow\ \vDash_{\mathfrak{A}/E}\varphi^*[h\circ s]\Leftrightarrow\ \vDash_{\mathfrak{A}/E}\varphi[h\circ s]$, because $E^{\mathfrak{A}/E}$ is the equality relation on $|\mathfrak{A}/E|$. That is, $\mathfrak{A}/E$ satisfies every member of $\Delta$ with $h\circ s$. The validity of this step is that by \ref{equalityf} $E^{\mathfrak{A}}$ is a \textit{congruence relation} for $\mathfrak{A}$.
+
+  Step 6: Restrict the structure $\mathfrak{A}/E$ to the original language. This restriction of $\mathfrak{A}/E$ satisfies every member of $\Gamma$ with $h\circ s$.
+\end{proof}
+
+%  TODO: uncountable version.
+
+\begin{reference}{Thm}{compactnesstfol}
+  \textbf{Compactness Theorem}\quad(a) If $\Gamma\vDash \varphi$ then for some finite $\Gamma_0\subseteq \Gamma$ we have $\Gamma_0\vDash \varphi$. (b) If every finite subset $\Gamma_0$ of $\Gamma$ is satisfiable, then $\Gamma$ is satisfiable.
+\end{reference}
+
+\begin{proof}
+  These are trivial, given \ref{completenesst} and \ref{soundnesst}. (a) and (b) are indeed equivalent. Cf. Exercise \ref{E.1.7.3}.
+\end{proof}
+
+% TODO: proof by ultraproduct constuction.
+
+\begin{reference}{*Thm}{enumerabilityt}
+  \textbf{Enumerability Theorem}\quad For a reasonable language, the set of valid wffs can be effectively enumerated (\ref{effectivelyenumerable}).
+\end{reference}
+
+% TODO: Cf. sec 3.4. item 20 for a precise version.
+
+By a reasonable language we mean one whose set of parameters can be effectively enumerated and such that the sets of predicate symbols and function symbols are decidable. It has to be countable. We actually ask it to be ``communicatable'', indicating a finite alphabet. Actually, when we want to analysis an expression or string $\varepsilon$, we are \textit{already} assuming it to be finite and from a countable language, for there are only countably many things eligible to be given by one person to another.
+
+\begin{proof}
+  We have that $\Lambda$ is decidable. By \ref{t17g} and \ref{t24b} we are done.
+\end{proof}
+
+\begin{proof}[Second Proof]
+  We can actually enumerate all validities by enumerating all finite sequences of wffs and check if each is a deduction.
+\end{proof}
+
+\begin{reference}{*Cor}{c25f}
+  (25F) Let $\Gamma$ be a decidable set of formulas in a reasonable language. The set of theorems (or $\{\varphi|\Gamma\vDash \varphi\}$) of $\Gamma$ is effectively enumerable.
+\end{reference}
+
+This is indeed powerful. We are stating that the theorems of a system with decidable axioms is effectively enumerable.
+
+\begin{reference}{*Cor}{c25g}
+  (25G) Let $\Gamma$ be a decidable set of formulas in a reasonable language, and for any sentence $\sigma$ either $\Gamma\vDash \sigma$ or $\Gamma\vDash\neg \sigma$. Then the set of sentences implied by $\Gamma$ is decidable.
+\end{reference}
+
+\begin{proof}[Proof Idea]
+  If $\Gamma$ is inconsistent, then the set of all sentences is decidable. Otherwise cf. \ref{t17f}.
+\end{proof}
+
+The set of sentences implied by $\Gamma$ is decidable, yet we do not have a fixed procedure for it.
+
+% TODO: For almost all languages the set of validities is not decidable. (Church's Theorem, sec 3.5.)
+
+\subsection*{Exercises}
+
+\setcounter{exercise}{1}
+
+\begin{exercise}{E.2.5.2}
+  Prove the equivalence of parts (a) and (b) of the \ref{completenesst}.
+\end{exercise}
+
+\begin{proof}
+  (a)$\Rightarrow$(b): We prove this contrapositively.
+  \[
+    \Gamma;\varphi\text{ is unsatisfiable}\Leftrightarrow\Gamma\vDash\neg \varphi\Rightarrow \Gamma\vdash \neg\varphi \Leftrightarrow \Gamma;\varphi\text{ is inconsistent}.
+  \]
+
+  (b)$\Rightarrow$(a): By \ref{raa} we have that
+  \[
+    \Gamma\vDash \varphi\Leftrightarrow \Gamma;\neg \varphi\text{ is unsatisfiable}\Rightarrow \Gamma;\neg \varphi\text{ is not consistent}\Leftrightarrow \Gamma\vdash \varphi.\qedhere
+  \]
+\end{proof}
+
+\setcounter{exercise}{3}
+
+\begin{exercise}{E.2.5.4}
+  Let $\Gamma=\{\neg\forall v_1 P v_1, Pv_2, Pv_3,\dots\}.$ Is $\Gamma$ consistent? Is $\Gamma$ satisfiable?
+\end{exercise}
+
+It is consistent and satisfiable. Define $P^{\mathfrak{A}}=\{v_2,v_3,\dots\}$ and $s:V\rightarrow|\mathfrak{A}|$ as identity, it follows that for all $\gamma\in \Gamma$, $\vDash_{\mathfrak{A}}\gamma[s]$.
+
+\begin{exercise}{E.2.5.5}
+  Show that an infinite map (of countries) can be colored with four colors iff every finite submap of it can be.
+\end{exercise}
+
+\begin{proof}
+  We prove only ($\Leftarrow$). Let $\mathcal{C}$ denote the set of countries on the map. Consider a first-order language $L$ with no equality, no function symbols except the countable infinite set of constants $C=\{c_1,\dots,c_n,\dots\}$ and five $1$-place predicate symbols $C_1,C_2,C_3,C_4,V$. Use arbitrary injective $f:\mathcal{C}\rightarrow C$. $C_1x$ denotes ``if $x$ is a country on the map, then it is colored $\mathbf{C_1}$'' and so forth, where $\mathbf{C_1,C_2,C_3,C_4}$ are distinct colors. $Px$ denotes ``if $x$ is a country on the map, then its coloring is \textit{valid}''. Let $\alpha=\forall x ((C_1x\vee C_2x\vee C_3x\vee C_4x)\wedge (\bigwedge_{P\neq Q}\neg(Px\wedge Qx)))$, where $P,Q\in\{C_1,C_2,C_3,C_4\}$, and $\beta=\forall x\ Vx$. Consider a \textit{coloring} $\Sigma=\{C_jc_i|j\in\{1,2,3,4\}, i\in\mathbb{Z}_{>0}\}$. We have that for every finite subset $\Sigma_0$ of $\Sigma$, $\Sigma_0\cup\{\alpha,\beta\}$ is satisfiable. It follows that every finite subset $\Gamma_0$ of $\Gamma=\Sigma\cup\{\alpha,\beta\}$ is satisfiable. By \ref{compactnesstfol} we are done.
+\end{proof}
+
+\textit{Comment.} In fact $\alpha$ is not necessary if one finds it reasonable to color one country with two colors and have the validness of the coloring of a country defined accordingly. We are essentially trying to abstract the problem to an extent where it is in its simplest form that can be solved taking advantage of \ref{compactnesstfol}. By common sense, given a map (a set of countries and some topological relations on it, for example, a set of vetices and a set of edges) and a coloring (a set of formulas like $\Sigma$), we can easily (through an effective procedure) find a structure $\mathfrak{A}$ that safisfies every member of the coloring and tell if it is valid w.r.t. some country (that is, to define $V^{\mathfrak{A}}$), and predicate $V$ is an abstraction of that procedure. This actually requires the set of vertices and the set of edges to be decidable, for otherwise our predicate $V$ is not well defined.
+
+\begin{exercise}{E.2.5.6}
+  Let $\Sigma_1$ and $\Sigma_2$ be sets of sentences such that nothing is a model of both $\Sigma_1$ and $\Sigma_2$. Show that there is a sentence $\tau$ such that
+  \[
+    \text{Mod } \Sigma_1 \subseteq \text{Mod } \tau \quad \text{and} \quad \text{Mod } \Sigma_2 \subseteq \text{Mod } \lnot \tau.\qedhere
+  \]
+\end{exercise}
+
+We may suppose $\Sigma_1$ and $\Sigma_2$ are satisfiable (the other cases are ommitted as trivial). $\Sigma_1\cup \Sigma_2$ is not satisfiable, thus not finitely satisfiable. Say that a finite subset $\Sigma_0$ is inconsistent. Let $\alpha$ be the conjunction of $\Sigma_0\cap \Sigma_1$. Clearly $\Sigma_1\vdash \alpha$ and $\Sigma_2\vdash \neg \alpha$, and we are done.
+
+\textit{Comment.} This can be stated: Disjoint $\text{EC}_\Delta$ classes can be separated by an EC class.
+
+\begin{exercise}{E.2.5.7}
+  For each of the following sentences, either show there is a deduction or give a counter-model (i.e., a structure in which it is false.)
+  \begin{enumerate}[label=(\alph*)]
+    \item $\forall x (Qx \rightarrow \forall y \, Qy)$
+    \item $(\exists x \, Px \rightarrow \forall y \, Qy) \rightarrow \forall z (Pz \rightarrow Qz)$
+    \item $\forall z (Pz \rightarrow Qz) \rightarrow (\exists x \, Px \rightarrow \forall y \, Qy)$
+    \item $\neg \exists y \, \forall x (Pxy \leftrightarrow \neg Pxx)$\qedhere
+  \end{enumerate}
+\end{exercise}
+
+\textcolor{red}{to do}
+
+\begin{exercise}{E.2.5.8}
+  Assume the language (with equality) has just the parameters $\forall$ and $P$, where $P$ is a two-place predicate symbol. Let $\mathfrak{A}$ be the structure with $|\mathfrak{A}| = \mathbb{Z}$, and with $\langle a, b \rangle \in P^{\mathfrak{A}}$ iff $|a - b| = 1$. Thus $\mathfrak{A}$ looks like an infinite graph:
+  \[
+    \cdots \longleftrightarrow \bullet \longleftrightarrow \bullet \longleftrightarrow \bullet \longleftrightarrow \cdots
+  \]
+  Show that there is an elementarily equivalent structure $\mathfrak{B}$ that is not connected. (Being \emph{connected} means that for every two members of $|\mathfrak{B}|$, there is a path between them. A \emph{path} — of length $n$ — from $a$ to $b$ is a sequence $\langle p_0, p_1, \ldots, p_n \rangle$ with $a = p_0$ and $b = p_n$ and $\langle p_i, p_{i+1} \rangle \in P^{\mathfrak{B}}$ for each $i$.) \textit{Suggestion}: Add constant symbols $c$ and $d$. Write down sentences saying $c$ and $d$ are far apart.
+\end{exercise}
+
+Cf. \ref{requiv}. Expand the language by adding two new constant symbols $c$ and $d$. For each integer $k\geq 0$, we can find a sentence $\lambda_k$ that translates, ``The distance between $c$ and $d$ is \textit{not} $k$.'' For example,
+\begin{align*}
+  \lambda_0 & =\neg c=d                                                \\
+  \lambda_1 & =\forall p_1(Pcp_1\to\neg p_1=d),                        \\
+  \lambda_2 & =\forall p_1\forall p_2(Pcp_1\to Pp_1p_2\to \neg p_2=d).
+\end{align*}
+Let $\Sigma=\{\lambda_0,\lambda_1,\lambda_2,\dots\}.$ Consider a finite subset of $\Sigma\cup \mathrm{Th}\mathfrak{A}$. That subset is true in $\mathfrak{A}_k$ such that $|c^{\mathfrak{A}_k}-d^{\mathfrak{A}_k}|>k$ for some large $k$. So by \ref{compactnesstfol} $\Sigma\cup \mathrm{Th}\mathfrak{A}$ has a model
+\[
+  \mathfrak{B}=(|\mathfrak{B}|;\mathrm{P}^{\mathfrak{B}},=^{\mathfrak{B}},c^{\mathfrak{B}},d^{\mathfrak{B}})
+\]
+Let $\mathfrak{B}_0$ be the restriction of $\mathfrak{B}$ to the original language: $\mathfrak{B}_0=(|\mathfrak{B}|,\mathrm{P}^{\mathfrak{B}},=^{\mathfrak{B}})$. By \ref{aequivb} $\mathfrak{B}_0\equiv \mathfrak{A}$. Note that $c^{\mathfrak{B}}\in|\mathfrak{B}|$ and $d^{\mathfrak{B}}\in|\mathfrak{B}|$, but there is no path between them.
+
+\textit{Comment.} One might ask: every member of the universe should be connected to two unique nodes, then to which nodes is $c^{\mathfrak{B}}$ connected? Well, consider not $c$ and $d$ are located on the single infinite graph that $\mathfrak{A}$ indicates, but that $c$ and $d$ and $\mathbb{Z}$ are on 3 seperate infinite graphs, which together consititute our construction of $|\mathfrak{B}|$. That should make a better (possible) interpretation of what we have been effectively doing. One may feel that $c$ and $d$ are far apart but connected, but that is not the case in $\mathfrak{B}$. All we have is that every finite piece of $\mathfrak{B}_0$ looks like a finite segment of $\mathfrak{A}$.

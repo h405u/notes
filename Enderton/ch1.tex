@@ -217,7 +217,7 @@ Which fork leads to the capital, if you belong to the people who always tell fal
   (\textit{Duality}) Let $\alpha$ be a wff whose only connective symbols are $\wedge,\vee$ and $\neg$. Let $\alpha^*$ be the result of interchanging $\wedge$ and $\vee$ and replacing each sentence symbol by its negation. Show that $\alpha^*$ is tautologically equivalent to $(\neg \alpha)$.
 \end{exercise}
 
-Say $D$ is the set of wffs such that $\overline{v}(\neg\alpha)=\overline{v}(\alpha^*)$, where $\alpha$ is a wff and $\overline{v}$ is any truth assignment for $\alpha$. We can show that $D$ contains all sentence symbols and is closed under $\mathcal{E}_\neg$, $\mathcal{E}_\wedge$ and $\mathcal{E}_\vee$. We can apply substitution (Exercise \ref{E.1.2.8}) in the process.
+Say $D$ is the set of wffs such that $\overline{v}(\neg\alpha)=\overline{v}(\alpha^*)$, where $\alpha$ is a wff and $\overline{v}$ is any truth assignment for $\alpha$. We can show that $D$ contains all sentence symbols and is closed under $\mathcal E_\neg$, $\mathcal{E}_\wedge$ and $\mathcal{E}_\vee$. We can apply substitution (Exercise \ref{E.1.2.8}) in the process.
 
 \begin{exercise}{E.1.2.10}
   Say that a set $\Sigma_1$ of wffs is \textit{equivalent} to a set $\Sigma_2$ of wffs iff for any wff $\alpha$, we have $\Sigma_1\vDash \alpha$ iff $\Sigma_2\vDash \alpha$. A set $\Sigma$ is \textit{independent} iff no member of $\Sigma$ is tautologically implied by the remaining members in $\Sigma$. Show that the following hold.\begin{enumerate}[label=(\alph*)]
@@ -537,9 +537,9 @@ Say a wff $\alpha$ is in \textit{disjunctive normal form} (abbr. DNF), if $\alph
 \]
 where each $\gamma_i$ is a conjunction
 \[
-  \gamma_i=\beta_{i1}\wedge\cdots\wedge \beta{in_i}
+  \gamma_i=\beta_{i1}\wedge\cdots\wedge \beta_{in_i}
 \]
-and each $\beta_{ij}$ is a sentence symbol or the negation of one. DNFs are good in that they explicitly list the truth assignments satisfying them.
+and each $\beta_{ij}$ is a sentence symbol or the negation of one. DNFs are desirable in that they explicitly list the truth assignments satisfying them.
 
 \begin{reference}{Cor}{c15c}
   (15C) For any wff $\varphi$, we can find a tautologically equivalent wff $\alpha$ in disjunctive normal form.
@@ -769,8 +769,6 @@ The choice of $\alpha$ is arbitrary, thus we have \ref{compactnesst} stated cont
 \begin{exercise}{E.1.7.5}
   Where $\Sigma$ is a set of wffs, define a \textit{deduction} from $\Sigma$ to be a finite sequence $\langle \alpha_0,\dots,\alpha_n\rangle$ of wffs such that for each $k\leq n$, either (a) $\alpha_k$ is a tautology, (b) $\alpha_k\in \Sigma$, or (c) for some $i$ and $j$ less than $k$, $\alpha_i$ is $(\alpha_j\rightarrow \alpha_k)$ (\textit{modus ponens}). Give a decution from the set $\{\mathrm{\neg S\vee R, R\rightarrow P, S}\}$, the last component of which is $\mathrm{P}$.
 \end{exercise}
-
-%  TODO: Refer to modus ponens in chapter 2.
 
 $\mathrm{\langle S,\neg S\wedge R, (\neg S\wedge R)\rightarrow(S\rightarrow R), S\rightarrow R, R, R\rightarrow P, P\rangle.}$
 

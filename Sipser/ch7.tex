@@ -1,0 +1,447 @@
+\chapter{Time Complexity}
+
+Computibility theory asks \textit{``Is $A$ decidable?''}, and complexity theory asks \textit{``Is $A$ decidable with restricted resources?''}.
+
+\begin{reference}{Defn}{complexity}
+  (7.1) Let \( M \) be a deterministic TM that halts on all inputs. The \emph{running time} or \emph{time complexity} of \( M \) is the function \( f : \mathbb{N} \rightarrow \mathbb{N} \), where \( f(n) \) is the maximum number (worst case) of steps that \( M \) uses on any input of length \( n \).
+\end{reference}
+
+\begin{reference}{Defn}{bigo}
+  (7.2) $f(n)$ is $O(g(n))$ if $f(n)\leq cg(n)$ for some fixed $c$ independent of $n$.
+\end{reference}
+
+\begin{reference}{Defn}{smallo}
+  (7.5) $f(n)$ is $o(g(n))$ if $f(n)\leq \varepsilon g(n)$ for all $\varepsilon>0$ and large $n$.
+\end{reference}
+
+\begin{reference}{Eg}{akbk}
+  A 1-tape TM $M$ can decide $a^kb^k$ using $O(n^2)$ steps.
+\end{reference}
+
+\begin{proof}[Proof Idea]
+  Check if $w\in a^*b^*$ ($O(n)$). Repeatedly scan the tape, crossing off one $a$ and one $b$ ($O(n^2)$), and reject or accept accordingly.
+\end{proof}
+
+\begin{reference}{Eg}{akbknlogn}
+  A 1-tape TM $M$ can decide $a^kb^k$ using $O(n\log n)$ steps.
+\end{reference}
+
+\begin{proof}[Proof Idea]
+  Repeatedly scan the tape, crossing off every other $a$ and $b$, reject if even/odd parities disagree ($O(\log n)$ iterations $\times O(n)$ steps).
+\end{proof}
+
+\textit{Comment.} We state without proof that a 1-tape TM cannot decide $a^kb^k$ using $o(n\log n)$ steps. And any language decidable (by a 1-tape TM) in $o(n\log n)$ steps is regular. And all regular languages can be decided (by a 1-tape TM) in $O(n)$ steps (this one is easy to prove, for that DFAs decide in $n$ steps.)
+
+\begin{reference}{Defn}{timeclasses}
+  (7.7) Let $t:\mathbb{N}\to \mathbb{N}$ be a function. Define the \emph{time complexity class} $\mathrm{TIME}(t(n))$ to be the collection of all languages decidable by an $O(t(n))$ 1-tape TM.
+\end{reference}
+
+\begin{reference}{Thm}{multime}
+  (7.8) If a multi-tape TM decides $B$ in time $t(n)$, then $B\in \mathrm{TIME}(t^2(n)).$
+\end{reference}
+
+\begin{proof}[Proof Idea]
+  To simulate 1 step of the multi-tape TM $M$'s computation, the 1-tape TM $S$ uses $O(t(n))$ (the available lengths of tapes of $M$ combined) steps. Cf. \ref{multitapetm}.
+\end{proof}
+
+\begin{reference}{Defn*}{polynomiallyequivalent}
+  Two models of computation are \emph{polynomially equivalent} iff each can simulate the other with a polynomial overhead: $t(n)$ time on one model $\to t^k(n)$ time on the simulator model, for some $k$.
+\end{reference}
+
+All reasonable deterministic computational models are polynomially equivalent. For example 1-tape TMs, multi-tape TMs, multi-demensional TMs, random access machines (RAMs), cellular automata, etc. ``Reasonable'' is not to be precisely defined here. We may consider that one step should fail to accomplish ``exponential amount of work".
+
+Computability theory is desirable in a sense that it achieves model independence: it does not matter if you are using TMs or lambda calculus. Consider that obviously a multi-tape TM $M$ can decide $a^kb^k$ using $O(n)$ steps (cf. \ref{akbknlogn}) to realize that complexity theory \textit{is} model dependent. It is model independent though, if we take polynomially equivalence in to consideration. Thus we will keep using 1-tape TMs for our analysis for the sake of simplicity.
+
+\begin{reference}{Defn}{p}
+  (7.12) $\mathrm{P}$ is the class of languages that are decidable in polynomial time on a deterministic 1-tape TM. In other words,
+  \[
+    \mathrm{P}=\bigcup_k \mathrm{TIME}(n^k).\qedhere
+  \]
+\end{reference}
+
+Let $\textit{PATH}=\{\langle G,s,t\rangle|G\text{ is a directed graph with a path from $s$ to $t$}\}.$
+
+\begin{reference}{Thm}{pathinp}
+  (7.14) $\textit{PATH}\in \mathrm{P}$.
+\end{reference}
+
+\begin{proof}[Proof Idea]
+  We use BFS. Cf. \ref{edfa}.
+\end{proof}
+
+That BFS is polynomial is nontrivial. (Or it is?)
+
+\begin{reference}{Defn}{nruntime}
+  (7.9) Let $N$ be a nondeterministic TM that is a decisider. The \emph{running time} of $N$ is the function $f:\mathbb{N}\to \mathbb{N}$, where $f(n)$ is the maximum number of steps that $N$ uses on any branch of its computation on any input of length $n$.
+\end{reference}
+
+\begin{reference}{Defn}{ntime}
+  (7.21) $\mathrm{NTIME}(t(n))$ is the collection of all languages decidable by an $O(t(n))$ nondeterministic TM.
+\end{reference}
+
+\begin{reference}{Defn}{np}
+  (7.22) $\mathrm{NP}$ is the class of languages that are decidable in polynomial time on a nondeterministic TM. In other words,
+  \[
+    \mathrm{NP}=\bigcup_k \mathrm{NTIME}(n^k).\qedhere
+  \]
+\end{reference}
+
+Like $\mathrm{P}$, $\mathrm{NP}$ is independent of the choice of model. And it corresponds roughly to the set of easily verifiable problems. Cf. \ref{npverify}.
+
+A \emph{Hamiltonian path} in a directed graph G is a directed path that goes through each node exactly once. Let
+\begin{align*}
+  \textit{HAMPATH} = \{ \langle G, s, t \rangle \mid & G \text{ is a directed graph}                            \\
+                                                     & \text{with a Hamiltonian path from } s \text{ to } t \}.
+\end{align*}
+
+\begin{reference}{Thm}{hampathnp}
+  $\textit{HAMPATH}\in \mathrm{NP}$.
+\end{reference}
+
+\begin{proof}[Proof Idea]
+  We nondeterministically \textit{guess} a path, i.e., a permutation of the vertices in $G$, and then verify that it is actually a path in $G$.
+\end{proof}
+
+\textit{Comment.} We may as well try all permutations of vertices on a deterministic model, but that will take more than polynomial (or exponential) time. We cannot tell if $\overline{\textit{HAMPATH}}\in \mathrm{NP}$. If $\mathrm{P}=\mathrm{NP}$, then we can easily (i.e., polynomially) decide both $\textit{HAMPATH}$ and $\overline{\textit{HAMPATH}}$, yet we are not sure of that. Also, inverting the ouput of the NTM used in the proof will not work, for that we will have to make sure \textit{every} branch of it rejects, which is a \textit{deterministic} process.
+
+Let \textit{COMPOSITES} be the set of all nonprime integers.
+
+\begin{reference}{Thm}{compositesnp}
+  $\textit{COMPOSITES}\in \mathrm{NP}$.
+\end{reference}
+
+\begin{proof}[Proof Idea]
+  We nondeterministically guess some factor for each number and then verify.
+\end{proof}
+
+\textit{Comment.} Bad encodings may change the game. For example writing number $k$ in unary (as a string $1^k$) will make it exponentially longer. We state without proof that $\textit{COMPOSITES}\in \mathrm{P}$ and $\textit{PRIMES}\in \mathrm{P}$ (these are equivalent.) And the algorithm does not work by factoring (factoring is not known to be solvable in polynomial time.) So it is noteworthy that some method other than searching for a certificate (see below) may turn out to be useful in polynomially deciding things. Cf. \ref{acfgp}.
+
+\begin{reference}{Defn}{verify}
+  (7.18) A \emph{verifier} for a language \( A \) is an algorithm \( V \), where
+  \[
+    A = \{ w \mid V \text{ accepts } \langle w, c \rangle \text{ for some string } c \}.
+  \]
+  A \emph{polynomial time verifier} runs in polynomial time in the length of \( w \). A language \( A \) is \emph{polynomially verifiable} if it has a polynomial time verifier. Here $c$ is called a \emph{certificate}.
+\end{reference}
+
+For example, a certificate for a string in \textit{HAMPATH} could be a Hamiltonian path, a certificate for a composite could be one of its factors. A certificate may not seem \textit{trivial} though (e.g., the certificate for a prime). But as long as we are dealing with some member of NP, the verification should be easy (i.e., polynomial).
+
+\begin{reference}{Thm}{npverify}
+  NP is the class of languages that are polynomially verifiable.
+\end{reference}
+
+\begin{proof}[Proof Idea]
+  ($\Leftarrow$) The NTM can simulate the verifier by guessing the certificate.\newline
+  ($\Rightarrow$) Given the NTM and the certificate, the verifier checkes if the certificate indicates an accepting branch of the NTM.
+\end{proof}
+
+Intuitively,
+\begin{align*}
+  \mathrm{P}  & =\text{ the class of languages for which membership can be decided quickly.}           \\
+  \mathrm{NP} & =\text{ the class of languages for which membership can be \textit{verified} quickly.}
+\end{align*}
+Also, the distinction between P and NP roughly relates to whether searching is needed in the decision.
+
+\begin{reference}{Thm}{acfgnp}
+  $A_{\mathrm{CFG}}\in \mathrm{NP}$.
+\end{reference}
+
+\begin{proof}[Proof Idea]
+  Cf. \ref{acfg}. On input $\langle G,w\rangle$, We first convert $G$ into Chomsky normal form (should be polynomial). Then \textit{nondeterministically} choose a derivation of length $2|w|-1$. Accept if $w$ is derived.
+\end{proof}
+
+\begin{reference}{Thm}{acfgp}
+  $A_{\mathrm{CFG}}\in \mathrm{P}$.
+\end{reference}
+
+\textit{Proof Attempt.}
+We first devise a recursive algorithm $C$ that does something slightly more general.
+\begin{align*}
+  C=\text{``} & \text{On input }\langle G,w,R\rangle                                                          \\
+              & \text{1. For each way to divide }w=xy\text{ and each rule }R\to ST,                           \\
+              & \begin{aligned}
+                  \qquad & \text{a. Use }C\text{ to test }\langle G,x,S\rangle\text{ and }\langle G,y,T\rangle, \\
+                         & \text{b. Accept if both accept,}
+                \end{aligned} \\
+              & \text{2. Reject if no acceptance."}
+\end{align*}
+Then decide \( A_{\text{CFG}} \) by starting from \( G \)'s start variable.
+
+\textit{Comment.} \( C \) is correct, but it takes non-polynomial time. Each recursion makes \( O(n) \) calls and depth is roughly \( \log n \). Observe that $w$ of length $n$ has $O(n^2)$ substrings, therefore there are only $O(n^2)$ (actually possibly more, considering $G$ as input, and some weirdness of 1-tape TM) possible sub-problems to solve. We may use recursion with memory, which is weirdly called \emph{dynamic programming} (DP).
+
+\begin{proof}[Proof Idea]
+  Use $C$ in the attempt, except that we add a step 0: If previously solved $\langle G,w,R\rangle$, answer the same (memoization).
+\end{proof}
+
+\textit{Comment.} $C$ is top-down. We may also do this bottom-up. It is like filling out a table.
+
+Let \textit{SAT} denote all satisfiable boolean formulas.
+
+\begin{reference}{Defn}{preduc}
+  (7.29) $A$ is \emph{polynomial time reducible} to $B$ ($A\leq_p B$) iff $A\leq_m B$ by a reduction function that is computable in polynomial time.
+\end{reference}
+
+\begin{reference}{Thm}{preducab}
+  If $A\leq_pB$ and $B\in \mathrm{P}$ then $A\in \mathrm{P}$.
+\end{reference}
+
+\begin{reference}{Thm}{satpnp}
+  (7.27) $\textit{SAT}\in \mathrm{P}$ iff $\mathrm{P}=\mathrm{NP}$.
+\end{reference}
+
+This result is due to \ref{npcomplete} and \ref{cooklevin}
+
+We basically attempt to show that all members of NP is polynomial time reducible to \textit{SAT}, which is a very similar result to \ref{5.22}.
+
+\begin{reference}{Defn}{conjunctivenf}
+  A \emph{literal} is a Boolean variable or its negation. A \emph{clause} is the disjuction of several literals. A formula is in \emph{conjunctive normal form} (CNF), iff it is the conjunction of several clauses. It is a \emph{3cnf-formula} iff all its clauses have 3 literals.
+\end{reference}
+
+Let $\textit{3SAT}=\{\langle \phi\rangle|\phi\text{ is a satisfiable 3cnf-formula}\}$.
+
+\begin{reference}{Defn}{clique}
+  A \emph{clique} in an undirected graph is a fully connected subgraph. A \emph{$k$-clique} is one containing $k$ nodes.
+\end{reference}
+
+Let $\textit{CLIQUE}=\{\langle G,k\rangle|G\text{ is an undirected graph with a $k$-clique}\}. \textit{CLIQUE}\in \mathrm{NP},$ for that the clique is a certificate.
+
+\begin{reference}{Thm}{3satclique}
+  (7.32) $\textit{3SAT}\leq_p \textit{CLIQUE}$.
+\end{reference}
+
+\begin{proof}[Proof Idea]
+  On input $\langle \phi\rangle$, where $\phi=C_1\wedge C_2\wedge\cdots\wedge C_k$, we construct a corresponding graph $G=(V,E)$. Whenever a literal $l$ occurs in clause $C_i$, add a vertex $v_{i,l}$ to $V$. Connect two distinct vertices $v_{i,l_1}$ and $v_{j,l_2}$ iff $i\neq j$ and the literals they represent are consistent. This reduction is computable in polynomial time. And its correctness is due to the proof of the following claim: $\phi$ is satisfiable iff $G$ has a $k$-clique.
+\end{proof}
+
+\textit{Comment.} The size of clauses (3 here) does not matter here.
+
+\begin{reference}{Defn}{npcomplete}
+  (7.34) A language \( B \) is \emph{NP-complete} iff (1) \( B\in \mathrm{NP} \), and (2) $\forall A\in \mathrm{NP}, A\leq_p B.$
+\end{reference}
+
+If $B$ is NP-complete and $B\in \mathrm{P}$ then $\mathrm{P}=\mathrm{NP}$.
+
+\begin{reference}{Thm}{cooklevin}
+  \textbf{COOK-LEVIN 1971}\quad\textit{SAT} is NP-complete.
+\end{reference}
+
+\begin{proof}[Proof Sketch]
+  We force the wff to simulate the machine, which is just like the construction in \ref{pcp}, so that a satisfying assignment to $\varphi_{M,w}$ is a computation history for $M$ on $w$.
+
+  Take any language $A\in \mathrm{NP}$. Let $N$ be a nondeterministic TM that decides $A$ in $n^k$ time for some constant $k$. A \emph{tableau} for $N$ on $w$ is an $n^k\times n^k$ table whose rows are the configurations of a branch of the computation of $N$ on input $w$. A tableau is \emph{accepting} if any row of the tableau is an accepting configuration. Thus every accepting tableau for $N$ on $w$ corresponds to an accepting computation branch of $N$ on $w$. Each of the $n^{2k}$ entries of a tableau is called a \emph{cell}. The cell in row $i$ and column $j$ is called $cell[i,j]$ and contains a symbol from $C=\Gamma\cup \Sigma$. A $2\times 3$ window in a tableau is \emph{legal} if it does not violate the actions specified by $N$’s transition function.
+
+  For each $i$ and $j$ between 1 and $n^k$ and for each $s\in C$ , we have a variable, $x_{i,j,s}$. If $x_{i,j,s}$ takes on value 1, it means that $cell[i,j]$ contains an $s$. Now we describe $\varphi_{N,w}$, which is satisfiable iff an accepting tableau exists that corresponds to an accepting computation branch of $N$ on $w$, that is, we describe the reduction $f:w\mapsto \varphi_{N,w}$ such that $w\in L(N)$ iff $\langle \varphi_{N,w}\rangle\in \mathit{SAT}$.
+  \begin{align*}
+    \varphi_{N,w}           & =\varphi_{cell}\wedge \varphi_{start}\wedge \varphi_{accept}\wedge \varphi_{move},\text{ where}           \\
+    \varphi_{\text{cell}}   & =
+    \bigwedge_{1 \leq i,j \leq n^k}
+    \left[
+      \left( \bigvee_{s \in C} x_{i,j,s} \right)
+      \land
+    \left( \bigwedge_{\substack{s,t \in C                                                                                               \\ s \ne t}} (\overline{x_{i,j,s}} \lor \overline{x_{i,j,t}}) \right)
+    \right],                                                                                                                            \\
+    \varphi_{\text{start}}  & =
+    \begin{aligned}[t]
+       & x_{1,1,\#} \land x_{1,2,q_0} \land x_{1,3,w_1} \land x_{1,4,w_2} \land \cdots \land x_{1,n+2,w_n} \land \\
+       & x_{1,n+3,\sqcup} \land \cdots \land x_{1,n^k-1,\sqcup} \land x_{1,n^k,\#},
+    \end{aligned}                          \\
+    \varphi_{\text{accept}} & =
+    \bigvee_{1 \leq i,j \leq n^k}x_{i,j,q_{\text{accept}}},                                                                 \text{ and} \\
+    \varphi_{\text{move}}   & =\bigwedge_{1\leq i<n^k,1<j<n^k}\left[
+      \bigvee_{
+        legal(a_1,\dots,a_6)
+      }\left(
+      \begin{aligned}
+           & x_{i,j-1,a_1}\wedge x_{i,j,a_2}\wedge x_{i,j+1,a_3}       \wedge \\
+           & x_{i+1,j-1,a_4}\wedge x_{i+1,j,a_5}\wedge x_{i+1,j+1,a_6}
+        \end{aligned}
+      \right)
+      \right].
+  \end{align*}
+  $\varphi_{\text{cell}}$ says that each cell contains exactly one symbol in $C$. $\varphi_{\text{start}}$ says that the tableau starts with a valid starting configuration. $\varphi_{\text{accept}}$ says that $q_{\text{accept}}$ appears in one of the cells, indicating a accepting tableau. And $\varphi_{\text{move}}$ says that the computation is carried out legally. We assert, without proof, that this is a correct construction.
+\end{proof}
+
+% TODO: Alternative Proof in 9.3.
+
+Importance of NP-completeness: (1) Showing $B$ is NP-complete is evidence of computational intractability. (It is almost certainly not in P.) (2) Giving a good candidate for proving $\mathrm{P}\neq \mathrm{NP}$. (You cannot pick the wrong problem.)
+
+\begin{reference}{Thm}{ladner}
+  \textbf{Ladner 1975}\quad If $\mathrm{P}\neq \mathrm{NP}$, then there exist languages in NP that are neither in P nor NP-complete.
+\end{reference}
+
+\begin{reference}{Thm}{sat23sat}
+  (7.42) \textit{3SAT} is NP-complete.
+\end{reference}
+
+\begin{proof}[Proof Sketch]
+  We show that \textit{SAT}$\leq_p$\textit{3SAT}, by giving a polynomial reduction $f:\varphi\mapsto \varphi'$, where $\varphi\in \textit{SAT}$ and $\varphi'\in \textit{3SAT}$, preserving satisfiability (an equivalent conversion would likely take exponential time.)
+
+  First conduct the trivial and equivalent convertion that makes sure negation only occurs on leaves of the construction tree of a formula. Then assign a new variable to each binary conjunction (or disjunction) that is satisfiable iff the conjunction (or disjunction) is satisfiable. For conjunction we have $a\wedge b$ is satisfiable iff $c$ is satisfiable, where $c$ is s.t.
+  \[
+    ((a\wedge b)\to c)\wedge((a\wedge \neg b)\to \neg c)\wedge ((\neg a\wedge b)\to \neg c)\wedge ((\neg a\wedge \neg b)\to \neg c).
+  \]
+  For disjunction, similarly, $a\vee b$ is satisfiable iff $c$ is satisfiable, where $c$ is s.t.
+  \[
+    ((a\wedge b)\to c)\wedge((a\wedge \neg b)\to c)\wedge ((\neg a\wedge b)\to c)\wedge ((\neg a\wedge \neg b)\to \neg c).
+  \]
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[
+        level distance=1.5cm,
+        level 1/.style={sibling distance=4.5cm},
+        level 2/.style={sibling distance=2.5cm},
+        level 3/.style={sibling distance=2cm},
+        every node/.style={font=\normalsize},
+        op/.style={circle,draw,minimum size=7mm,inner sep=1pt}
+      ]
+
+      % Root node
+      \node[op] (and4) at (0,0) {$\land$}
+      child {node[op] (or2) {$\lor$}
+          child {node[op] (and1) {$\land$}
+              child {node[op] {$a$}}
+              child {node[op] {$b$}}
+            }
+          child {node[op] {$c$}}
+        }
+      child {node[op] (or3) {$\lor$}
+          child {node[op] {$\overline{a}$}}
+          child {node[op] {$b$}}
+        };
+
+      % Labels outside the operator nodes
+      \node[left=2pt of and4] {$z_4$};
+      \node[left=2pt of or2] {$z_2$};
+      \node[left=2pt of and1] {$z_1$};
+      \node[right=2pt of or3] {$z_3$};
+    \end{tikzpicture}
+    \caption{$\varphi=((a\wedge b)\vee c)\wedge(\overline{a}\vee b)$}
+  \end{figure}
+
+  Thus, for example, $\varphi=((a\wedge b)\vee c)\wedge(\overline{a}\vee b)$ is satisfiable iff
+  \[
+    \varphi' =
+    \begin{aligned}[t]
+       & ((a \land b) \rightarrow z_1) \land
+      ((\lnot a \land b) \rightarrow \lnot z_1) \land
+      ((a \land \lnot b) \rightarrow \lnot z_1) \land
+      ((\lnot a \land \lnot b) \rightarrow \lnot z_1) \land     \\
+       & ((z_1 \land c) \rightarrow z_2) \land
+      ((\lnot z_1 \land c) \rightarrow z_2) \land
+      ((z_1 \land \lnot c) \rightarrow z_2) \land
+      ((\lnot z_1 \land \lnot c) \rightarrow \lnot z_2) \land   \\
+       & ((\neg a \land b) \rightarrow z_3) \land
+      ((a \land b) \rightarrow z_3) \land
+      ((\neg a \land \lnot b) \rightarrow z_3) \land
+      ((a \land \lnot b) \rightarrow \lnot z_3) \land           \\
+       & ((z_2 \land z_3) \rightarrow z_4) \land
+      ((\lnot z_2 \land z_3) \rightarrow \lnot z_4) \land       \\
+       &
+      ((z_2 \land \lnot z_3) \rightarrow \lnot z_4) \land
+      ((\lnot z_2 \land \lnot z_3) \rightarrow \lnot z_4) \land \\
+       & (z_4\vee z_4\vee z_4)
+    \end{aligned}
+  \]
+  is satisfiable. Also observe that $((a\wedge b)\to c)$ is logically equivalent to $(\neg a\vee \neg b\vee c)$. Thus we are done. The correctness of this construction, as usual, is asserted without a proof. It should make a decent mathematical logic exercise.
+\end{proof}
+
+\begin{reference}{Thm}{hamnpcomplete}
+  (7.46) \textit{HAMPATH} is NP-complete.
+\end{reference}
+
+\begin{proof}[Proof Idea]
+  We simulate variables and clauses with ``gadgets'' made of subgraphs to reduce \textit{3SAT} to \textit{HAMPATH}. See page 314 for how this is done. Basically, the direction (zig-zag or zag-zig) in which the path goes through variables gadgets is the truth assignment.And clause gadgets are add so that if any of them is passed through, one of the corresponding literals should be assigned True.
+\end{proof}
+
+\begin{reference}{Defn}{nphard}
+  A language $B$ is \emph{NP-hard} iff $\forall A\in \mathrm{NP}, A\leq_p B$.
+\end{reference}
+
+\section*{Exercises and Problems}
+
+\setcounter{exercise}{12}
+
+\begin{exercise}{7.13}
+  Question to fill in.
+\end{exercise}
+
+\textcolor{red}{to do}
+
+\setcounter{exercise}{14}
+
+\begin{exercise}{7.15}
+  Show that P is closed under the star operation.
+\end{exercise}
+
+\textcolor{red}{to do}
+
+\setcounter{exercise}{17}
+
+\begin{exercise}{7.18}
+  Show that if $\mathrm{P}=\mathrm{NP}$, then every language $A\in \mathrm{P}$, except $A=\emptyset$ and $A=\Sigma^*$, is NP-complete.
+\end{exercise}
+
+Consider $B\in \mathrm{P}$ that is neither $\emptyset$ nor $\Sigma^*$. So there exists $a\notin B$ and $b\in B$. Consider also an arbitrary language $A\in \mathrm{P}$. Say that $M$ decides $A$ in polynomial time. Our $f$ works as follows: on input $\langle w\rangle$, simulate $M$ on $w$, if accepts output $b$, and if rejects output $a$.
+
+\setcounter{exercise}{25}
+
+\begin{exercise}{7.26}
+  Question to fill in.
+\end{exercise}
+
+\textcolor{red}{to do}
+
+\begin{exercise}{7.27}
+  Question to fill in.
+\end{exercise}
+
+\textcolor{red}{to do}
+
+\begin{exercise}{7.28}
+  Question to fill in.
+\end{exercise}
+
+\textcolor{red}{to do}
+
+
+\setcounter{exercise}{33}
+
+\begin{exercise}{7.34}
+  Show that $D$ in \ref{10thproblem} is NP-hard.
+\end{exercise}
+
+\textcolor{red}{to do}
+
+\setcounter{exercise}{35}
+
+\begin{exercise}{7.36}
+  Question to fill in.
+\end{exercise}
+
+\textcolor{red}{to do}
+
+\begin{exercise}{7.37}
+  Question to fill in.
+\end{exercise}
+
+\textcolor{red}{to do}
+
+\begin{exercise}{7.38}
+  Show that if $\mathrm{P}=\mathrm{NP}$, a polynomial time algorithm exists that produces a satisfying assignment when given a satisfiable Boolean formula.
+\end{exercise}
+
+\textcolor{red}{to do}
+
+\begin{exercise}{7.39}
+  Question to fill in.
+\end{exercise}
+
+\textcolor{red}{to do}
+
+\setcounter{exercise}{50}
+
+\begin{exercise}{7.51}
+  Question to fill in.
+\end{exercise}
+
+\textcolor{red}{to do}

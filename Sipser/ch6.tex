@@ -5,7 +5,7 @@
 \end{reference}
 
 \begin{reference}{Rmk}{self}
-  We describe in spirit and not formally a TM $SELF$, that halts with $\langle SELF\rangle$ on the tape. $SELF$ will be the combination of two TMs $A$ and $B$. $A=P_{\langle B\rangle}$. And $B$ on input $\langle M\rangle$ computes $q(\langle M\rangle)$, combines the result with $\langle M\rangle$ to make a complete TM, and finally prints the description of it and halt.
+  We describe in spirit and not formally a TM $\textit{SELF}$, that halts with $\langle \textit{SELF}\rangle$ on the tape. $\textit{SELF}$ will be the combination of two TMs $A$ and $B$. $A=P_{\langle B\rangle}$. And $B$ on input $\langle M\rangle$ computes $q(\langle M\rangle)$, combines the result with $\langle M\rangle$ to make a complete TM, and finally prints the description of it and halt.
 \end{reference}
 
 An English implementation would be:
@@ -37,11 +37,11 @@ Take \ref{recursiont} in the following fashion: consider a TM $T$ that computes 
 \end{proof}
 
 \begin{reference}{Thm}{mintm}
-  (6.7) $MIN_{\mathrm{TM}}=\{\langle M\rangle|M\text{ is a minimal TM under some encoding}\}$ is not recognizable.
+  (6.7) $\textit{MIN}_{\mathrm{TM}}=\{\langle M\rangle|M\text{ is a minimal TM under some encoding}\}$ is not recognizable.
 \end{reference}
 
 \begin{proof}
-  Assume that $E$ enumerates $MIN_{\mathrm{TM}}$. Construct TM
+  Assume that $E$ enumerates $\textit{MIN}_{\mathrm{TM}}$. Construct TM
   \begin{align*}
     C=\text{``} & \text{On input }\langle w\rangle                                             \\
                 & \text{1. Obtain via \ref{recursiont} }\langle C\rangle.                      \\
@@ -51,7 +51,7 @@ Take \ref{recursiont} in the following fashion: consider a TM $T$ that computes 
   Hence contradiction and we are done.
 \end{proof}
 
-\textit{Comment.} $MIN_{\mathrm{TM}}$ is very special, in that any infinite subset of it is not recognizable.
+\textit{Comment.} $\textit{MIN}_{\mathrm{TM}}$ is notable in that any infinite subset of it is not recognizable.
 
 \begin{reference}{Thm}{fixed}
   Let $t:\Sigma^*\to \Sigma^*$ be a computable function. Then there is a TM $F$ such that $t(\langle F\rangle)$ describes a TM equivalent to $F$.
@@ -92,13 +92,33 @@ Consider the statement ``This statement is unprovable''. It has to be true, thus
   A proof or the falsity of $\phi$ each leads to a contradiction. Thus we have an example statement that is true but without proof.
 \end{reference}
 
+\begin{reference}{Defn}{oracle}
+  (6.18) An \textbf{\textit{oracle}} for a language $B$ is an external device that is capable of reporting whether any string $w$ is a member of $B$. An oracle TM is a modified TM that has the additional capability of querying an oracle. We write $M^B$ to describe an oracle TM that has an oracle for language $B$.
+\end{reference}
+
+\begin{reference}{Defn}{turingreducible}
+  (6.20) Say $A$ is \textbf{\textit{Turing reducible}} (or \textbf{\textit{decidable relative}}, written $A\leq_T B$) to $B$, if there exists some $M^B$ that decides $A$.
+\end{reference}
+
+\begin{reference}{Eg}{tatm}
+  (6.19) $E_{\mathrm{TM}}\leq_T A_{\mathrm{TM}}$, for that we can construct TM
+  \begin{align*}
+    T^{A_{\mathrm{TM}}}=\text{``} & \text{On input }\langle M\rangle                                                       \\
+                                  & \text{1. Construct TM }N\text{ that simulates }M\text{ on all strings in parallel}     \\
+                                  & \quad\text{ and accepts if }M\text{ accepts any string.}                               \\
+                                  & \text{2. Query the oracle to determine whether }\langle N,0\rangle\in A_{\mathrm{TM}}. \\
+                                  & \text{3. If the oracle answers no, accept; if yes, reject.''}\qedhere
+  \end{align*}
+\end{reference}
+
 \section*{Exercises and Problems}
 
 \begin{exercise}{6.1}
   Give an example in the spirit of the recursion theorem of a program in a real programming language that prints itself out.
 \end{exercise}
 
-\begin{lstlisting}[caption=A piece of C that prints itself.]
+\begin{figure}[H]
+  \begin{lstlisting}
 #include <stdio.h>
 char *program = "#include <stdio.h>%cchar *program = %c%s%c;%cint main()%c{%c        printf(program, 10, 34, program, 34, 10, 10, 10, 10, 10, 10);%c        return 0;%c}%c";
 int main()
@@ -107,6 +127,8 @@ int main()
         return 0;
 }
 \end{lstlisting}
+  \caption{A piece of C that prints itself.}
+\end{figure}
 
 10 is the ASCII code for \texttt{NEWLINE} and 34 for \texttt{"}. To relate to \ref{self}, consider that $A$ is the string \texttt{*program}. $B$, the ``printer'', upon seeing a string, combines it with what ever will generate it. So the first \texttt{program} in line 5 is what $B$ sees, and the second is what generates the string. The combination is done in a nested fashion.
 

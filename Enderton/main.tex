@@ -7,6 +7,7 @@
 \usepackage{enumitem}
 \usepackage{alphalph}
 \usepackage[colorlinks=true, linkcolor=cyan, citecolor=green, urlcolor=blue]{hyperref}
+\usepackage{ifthen}
 
 \renewcommand{\qedsymbol}{$\dashv$}
 
@@ -27,7 +28,17 @@
   {}
 
 \newcounter{exercise}[section]
-\renewcommand{\theexercise}{\thesection.\arabic{exercise}}
+
+\makeatletter
+\renewcommand{\theexercise}{%
+  \thesection.%
+  \ifnum\value{exercise}<100
+    \arabic{exercise}%
+  \else
+  \@Alph{\numexpr\value{exercise}-100\relax}%
+  \fi
+}
+\makeatother
 
 \NewDocumentEnvironment{exercise}{m +b}
   {
@@ -74,6 +85,7 @@
 \input{ch1.tex}
 \input{ch2.tex}
 \input{ch3.tex}
+\input{ch4.tex}
 
 \backmatter
 

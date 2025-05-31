@@ -1,0 +1,17 @@
+\chapter{Space Complexity}
+
+\begin{reference}{Defn}{space}
+  (8.1) Let $f:\mathbb N\to \mathbb N$ where $f(n)\geq n$. Say a 1-tape TM $M$ \emph{runs in space} (or the \emph{space complexity} of $M$ is) $f(n)$ iff $M$ always halts and uses at most $f(n)$ tape cells on all inputs of length $n$. Say an NTM $N$ runs in space $f(n)$ iff all branches halt and each branch uses at most $f(n)$ tape cells on all inputs of length $n$.
+\end{reference}
+
+\begin{reference}{Defn}{spacecomplexityclass}
+  (8.2) Let $f:\mathbb N\to \mathbb R^+$ be a function.
+  \begin{align*}
+    \mathrm{SPACE}(f(n))  & =\{L|L\text{ is decided by an }O(f(n))\text{ space TM.}\}          \\
+    \mathrm{NSPACE}(f(n)) & =\{L|L\text{ is decided by an }O(f(n))\text{ space NTM.}\}\qedhere
+  \end{align*}
+\end{reference}
+
+\begin{reference}{Defn}{pnpspace}
+  (8.6) $\mathrm{PSPACE}=\bigcup_k \mathrm{SPACE}(n^k).$
+\end{reference}
