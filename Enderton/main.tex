@@ -29,25 +29,26 @@
 
 \newcounter{exercise}[section]
 
-\makeatletter
-\renewcommand{\theexercise}{%
-  \thesection.%
-  \ifnum\value{exercise}<100
-    \arabic{exercise}%
-  \else
-  \@Alph{\numexpr\value{exercise}-100\relax}%
-  \fi
-}
-\makeatother
+% \makeatletter
+% \renewcommand{\theexercise}{
+%   \ifnum\value{exercise}<100
+%   E.\thesection.\arabic{exercise}
+%   \else
+%   E.\thesection.\@Alph{\numexpr\value{exercise}-100\relax}
+%   \fi
+% }
+% \makeatother
 
-\NewDocumentEnvironment{exercise}{m +b}
+\renewcommand{\theexercise}{Ex.\thesection.\arabic{exercise}}
+
+\NewDocumentEnvironment{exercise}{+b}
   {
     \refstepcounter{exercise}
     \renewcommand{\qedsymbol}{$\triangleleft$}
 
-    \noindent\textbf{\theexercise}\label{#1}
+    \noindent\textbf{\arabic{exercise}}\label{E.\thesection.\arabic{exercise}}
     \pushQED{\qed}
-    #2
+    #1
     \popQED
 
   }

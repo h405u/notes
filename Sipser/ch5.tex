@@ -42,23 +42,23 @@
 \end{reference}
 
 \begin{reference}{Defn}{mappingr}
-  (5.20) $A$ is \textbf{\textit{mapping reducible}} to $B$, written $A\leq_m B$, if there is a computable function $f$ where $w\in A \Leftrightarrow f(w)\in B$. $f$ is then called a \textbf{\textit{reduction}} from $A$ to $B$.
+  (5.20) $A$ is \textbf{\textit{mapping reducible}} to $B$, written $A\leq_{\mathrm{m}} B$, if there is a computable function $f$ where $w\in A \Leftrightarrow f(w)\in B$. $f$ is then called a \textbf{\textit{reduction}} from $A$ to $B$.
 \end{reference}
 
 \begin{reference}{Thm}{mapdecrec}
-  (5.22, 5.28) If $A\leq_m B$ and $B$ is decidable (or recognizable), then $A$ is decidable (or recognizable).
+  (5.22, 5.28) If $A\leq_{\mathrm{m}} B$ and $B$ is decidable (or recognizable), then $A$ is decidable (or recognizable).
 \end{reference}
 
 Its proof is omitted as trivial. And the following is its contraposition.
 
 \begin{reference}{Cor}{mapun}
-  (5.23, 5.29) If $A\leq_m B$ and $A$ is undecidable (or unrecognizable), then $B$ is undecidable (or unrecognizable).
+  (5.23, 5.29) If $A\leq_{\mathrm{m}} B$ and $A$ is undecidable (or unrecognizable), then $B$ is undecidable (or unrecognizable).
 \end{reference}
 
 Mapping reducibility is useful to prove unrecognizability (often reducing $\overline{A_{\mathrm{TM}}}$), while ``reducibility to a decider'' is useful to prove undecidability (often reducing $A_{\mathrm{TM}})$.
 
 \begin{reference}{Eg}{mappingeg}
-  In \ref{etm}, we essentially constructed $f:\langle M,w\rangle\mapsto\langle M_w\rangle$, where $\langle M,w\rangle\in A_{\mathrm{TM}}\Leftrightarrow\langle M_w\rangle\in \overline{E_{\mathrm{TM}}}$. Thus $A_{\mathrm{TM}}\leq_m \overline{E_{\mathrm{TM}}}$ and $\overline{A_{\mathrm{TM}}}\leq_m E_{\mathrm{TM}}$. By \ref{mapun} $E_{\mathrm{TM}}$ is unrecognizable.
+  In \ref{etm}, we essentially constructed $f:\langle M,w\rangle\mapsto\langle M_w\rangle$, where $\langle M,w\rangle\in A_{\mathrm{TM}}\Leftrightarrow\langle M_w\rangle\in \overline{E_{\mathrm{TM}}}$. Thus $A_{\mathrm{TM}}\leq_{\mathrm{m}} \overline{E_{\mathrm{TM}}}$ and $\overline{A_{\mathrm{TM}}}\leq_{\mathrm{m}} E_{\mathrm{TM}}$. By \ref{mapun} $E_{\mathrm{TM}}$ is unrecognizable.
 \end{reference}
 
 \begin{reference}{Thm}{eqtm}
@@ -70,7 +70,7 @@ Mapping reducibility is useful to prove unrecognizability (often reducing $\over
 \end{reference}
 
 \begin{proof}
-  Let $T_{M,w}$ be a TM that simulates $M$ on $w$, $T_{rej}$ a TM that always rejects and $T_{acc}$ a TM that always accepts. Construct $f_1:\langle M,w\rangle\mapsto\langle T_{M,w},T_{rej}\rangle$. It follows that $\overline{A_{\mathrm{TM}}}\leq_m EQ_{\mathrm{TM}}$. Similarly, $f_2:\langle M,w\rangle\mapsto\langle T_{M,w},T_{acc}\rangle$ shows that $\overline{A_{\mathrm{TM}}}\leq_m \overline{EQ_{\mathrm{TM}}}$, and we are done.
+  Let $T_{M,w}$ be a TM that simulates $M$ on $w$, $T_{rej}$ a TM that always rejects and $T_{acc}$ a TM that always accepts. Construct $f_1:\langle M,w\rangle\mapsto\langle T_{M,w},T_{rej}\rangle$. It follows that $\overline{A_{\mathrm{TM}}}\leq_{\mathrm{m}} EQ_{\mathrm{TM}}$. Similarly, $f_2:\langle M,w\rangle\mapsto\langle T_{M,w},T_{acc}\rangle$ shows that $\overline{A_{\mathrm{TM}}}\leq_{\mathrm{m}} \overline{EQ_{\mathrm{TM}}}$, and we are done.
 \end{proof}
 
 \begin{reference}{Defn}{config}
@@ -189,7 +189,7 @@ The computation history method is useful for showing the undecidability of probl
 
 \section*{Exercises and Problems}
 
-\begin{exercise}{5.1}
+\begin{exercise}
   Show that
   \[
     EQ_{\mathrm{CFG}}=\{\langle G,H\rangle|G,H\text{ are CFGs and }L(G)=L(H)\}
@@ -201,21 +201,21 @@ The computation history method is useful for showing the undecidability of probl
 
 \setcounter{exercise}{20}
 
-\begin{exercise}{5.21}
+\begin{exercise}
   Question to fill in.
 \end{exercise}
 
 \textcolor{red}{to do}
 
-\begin{exercise}{5.22}
-  Show that $A$ is T-recognizable iff $A\leq_mA_{\mathrm{TM}}$.
+\begin{exercise}
+  Show that $A$ is T-recognizable iff $A\leq_{\mathrm{m}}A_{\mathrm{TM}}$.
 \end{exercise}
 
 ($\Leftarrow$) This is trivial by \ref{mapdecrec}.\newline
-($\Rightarrow$) Say that $L(R)=A$, then $f:w\mapsto\langle R,w\rangle$, where $w\in A$ shows that $A\leq_m A_{\mathrm{TM}}$.
+($\Rightarrow$) Say that $L(R)=A$, then $f:w\mapsto\langle R,w\rangle$, where $w\in A$ shows that $A\leq_{\mathrm{m}} A_{\mathrm{TM}}$.
 
-\begin{exercise}{5.23}
-  Show that $A$ is decidable iff $A\leq_m0^*1^*$.
+\begin{exercise}
+  Show that $A$ is decidable iff $A\leq_{\mathrm{m}}0^*1^*$.
 \end{exercise}
 
 ($\Leftarrow$) $0^*1^*$ is decidable, so this is trivial.\newline
@@ -223,15 +223,15 @@ The computation history method is useful for showing the undecidability of probl
 
 \setcounter{exercise}{24}
 
-\begin{exercise}{5.25}
-  Give an example of an undecidable language $B$, where $B\leq_m \overline{B}$. Is it possible that $B$ is a recognizable language?
+\begin{exercise}
+  Give an example of an undecidable language $B$, where $B\leq_{\mathrm{m}} \overline{B}$. Is it possible that $B$ is a recognizable language?
 \end{exercise}
 
 \textcolor{red}{to do}
 
 No. In that case both $B$ and $\overline{B}$ would both be recognizable, thus both decidable.
 
-\begin{exercise}{5.26}
+\begin{exercise}
   Question to fill in.
 \end{exercise}
 

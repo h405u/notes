@@ -1,0 +1,119 @@
+\chapter{Intractability}
+
+\begin{reference}{Defn}{spaceconstuctible}
+  A function $f:\mathbb N\to \mathbb N$, where $f(n)$ is at least $O(\log n)$, is called \emph{space constructible}, if the function is computable in space $O(f(n))$.
+\end{reference}
+
+For example, $\log\log\log n$ is not one. In fact it is \textit{equivalent} as constant space, indicating regular languages.
+
+\begin{reference}{Thm}{spacehier}
+  For any space constructible function $f:\mathbb N\to \mathbb N$, a language $A$ exists that is decidable in $O(f(n))$ space but not in $o(f(n))$ space. In other words, $\mathrm{SPACE}(o(f(n)))\subsetneq \mathrm{SPACE}(O(f(n)))$.
+\end{reference}
+
+\begin{proof}[Proof Sketch]
+  We exhibit $A\in \mathrm{SPACE}(f(n))$ but $A\notin \mathrm{SPACE}(o(f(n)))$, where $A=L(D)$ and $D$ is a TM we are to construct that runs in $f(n)$ space and ensures that $L(D)\neq L(M)$ for every $M$ that runs in $o(f(n))$ space.
+  \begin{align*}
+    D={``} & \text{ On input }w                                                                   \\
+    1.     & \text{ Mark off $f(|w|)$ tape cells. If ever try to use more tape, \textit{reject}.} \\
+    2.     & \text{ If $w\neq \langle M\rangle10^*$ for some TM $M$, \textit{reject.}}            \\
+    3.     & \text{ Simulate $M$ on $w$ for $|\Gamma_M|^{f(n)}\cdot f(n)\cdot|Q_M|$ steps.}       \\
+           & \quad\text{\textit{Accept} if $M$ rejects.}                                          \\
+           & \quad\text{\textit{Reject} if $M$ accepts or hasn't halted.''}
+  \end{align*}
+  Subtleties:
+  \begin{enumerate}
+    \item We actually do not care the case where $D$ or $M$ loops, for that we only consider deciders when talking about space complexity.
+    \item $D$ can simulate $M$ with a constant factor space overhead, even at worst cases where $M$ has a larger alphabet than $D$.
+    \item In case where $M$ runs in $o(f(n))$ but with a huge constant, we simulate on infinitely many $w$s, adding 0s to the input and removing them during computation. Note that this affects the strings that is going to be accepted by $D$, but not the determinism of $D$.\qedhere
+  \end{enumerate}
+\end{proof}
+
+\textit{Comment.} This construction, namely diagonization, is based on a key observation: a TM can simulate another given asymtotically larger running space. To utilize this we need a one-to-one mapping between TMs and strings to make sure that $D$ behaves differently on at least one string from every TM with a smaller running space. Suppose there is an oracle that one-to-one maps TMs to an arbitrary set of strings and the other way, we might as well query it to construct $D$ so that it behaves differently from $M$ on the string mapped from $M$. What's so special about $\langle M\rangle$ is that it \textit{is} one-to-one mapped from $M$, easy to decode, and does not demand an oracle or some infinite storage, and that is why we choose to define $D$'s behavior on $\langle M\rangle$ instead of some random string.
+
+%TODO: nondeterministic variants of hierarchy theorems
+
+By \ref{savitch} we have:
+
+\begin{reference}{Cor}{nlsubneqpspa}
+  $\mathrm{NL}\subsetneq \mathrm{PSPACE.}$
+\end{reference}
+
+\begin{reference}{Cor}{tqbfnotinnl}
+  $\textit{TQBF}\notin \mathrm{NL}$.
+\end{reference}
+
+\begin{proof}
+  Suppose it is. Note that the reduction in \ref{tqbfpspacec} is a log space one. That is, \textit{every} PSPACE language is in $\mathrm{NL}$, contradicting \ref{nlsubneqpspa}.
+\end{proof}
+
+Also, $\mathrm{L}=\mathrm{P}$ and $\mathrm{P}=\mathrm{PSPACE}$ cannot be both true.
+
+\begin{reference}{Thm}{timehier}
+  For any time constructible (similarly defined as \ref{spaceconstuctible}) function $f:\mathbb N\to \mathbb N$, there is a language $A$ where $A$ is decidable in $O(f(n))$ time not decidable in $o(\frac{f(n)}{\log f(n)})$ time.
+\end{reference}
+
+\begin{proof}[Proof Sketch]
+  This theorem is proved almost exactly the same as \ref{spacehier}, except that we do not limit the space used and simulate $M$ on $w$ for $\frac{f(n)}{\log f(n)}$ steps, so that if $M$ can be simulated in $\frac{f(n)}{\log f(n)}$ steps, $D$ behaves differently from $M$ on $\langle M\rangle$. But we lose a $\log f(n)$ factor, for that to count the steps used we need to move with the tape head a counter of size $\log f(n)$. (We don't want to keep it at the beginning of the tape for that will cost more time to update.)
+\end{proof}
+
+We may need some method other than diagonization to prove $\mathrm{L}\neq \mathrm{P}$ and $\mathrm{P}\neq \mathrm{PSPACE}$.
+
+\begin{reference}{Defn}{exp}
+  $\mathrm{EXPTIME}=\bigcup_k \mathrm{TIME}\left(2^{n^k}\right).$
+  $\mathrm{EXPSPACE}=\bigcup_k \mathrm{SPACE}\left(2^{n^k}\right).$
+\end{reference}
+
+We can simulate an amount of space using exponential time, so now the landscape is
+\[
+  \mathrm{L}\subseteq \mathrm{NL}\subseteq \mathrm{P}\subseteq \mathrm{NP}\subseteq \mathrm{PSPACE}\subseteq \mathrm{EXPTIME}\subseteq \mathrm{EXPSPACE}.
+\]
+
+EXPTIME-complete, EXPTIME-hard, EXPSPACE-complete, and EXPSPACE-hard are defined the way you would suppose they are. Reductions are polynomial.
+
+Call a language \emph{intractable} if it is not in P. By \ref{spacehier} and \ref{timehier}, we have that EXPTIME-complete and EXPSPACE-complete languages are not in P, thus intractable.
+
+\begin{reference}{Defn}{eqrex}
+  $EQ_{\mathrm{REX}}=\{\langle R_1,R_2\rangle|R_1\text{ and }R_2\text{ are equivalent regular expressions}\}.$
+\end{reference}
+
+\begin{reference}{Thm}{eqrexinpspace}
+  $EQ_{\mathrm{REX}}\in \mathrm{PSPACE}$.
+\end{reference}
+
+% TODO: proof
+
+Regular expressions with exponentiation are regular expressions (\ref{regularexpr}) that are allowed \textit{exponentiation} (e.g., $R^2=RR$) operation at generation.
+
+\begin{reference}{Defn}{eqrexe}
+  Let
+  \begin{align*}
+    EQ_{\mathrm{REX}\uparrow}=\{\langle R_1,R_2\rangle| & R_1\text{ and }R_2\text{ are equivalent regular}  \\
+                                                        & \text{expressions with exponentiation}\}.\qedhere
+  \end{align*}
+\end{reference}
+
+\begin{reference}{Thm}{eqrexeexpspac}
+  $EQ_{\mathrm{REX}\uparrow}$ is EXPSPACE-complete.
+\end{reference}
+
+\begin{proof}[Proof Sketch]
+
+\end{proof}
+
+\section*{Exercises and Problems}
+
+\setcounter{exercise}{16}
+
+\begin{exercise}
+  Question to fill in.
+\end{exercise}
+
+\textcolor{red}{to do}
+
+\setcounter{exercise}{18}
+
+\begin{exercise}
+  Question to fill in.
+\end{exercise}
+
+\textcolor{red}{to do}

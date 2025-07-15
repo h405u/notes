@@ -67,31 +67,31 @@ Intuitively, an arbitrary wff $\alpha$ is built up by finitely applying $\mathca
 
 \subsection*{Exercises}
 
-\begin{exercise}{E.1.1.1}
+\begin{exercise}
   Question to fill in.
 \end{exercise}
 
 Omitted as I do not like this exercise.
 
-\begin{exercise}{E.1.1.2}
+\begin{exercise}
   Question to fill in.
 \end{exercise}
 
 For the first part, we show first that any wff, in whose construction $\mathcal{E}$ is used at most 2 times, is not of length 2, 3, or 6. Then we show that the length of any other wff is at least 7. For the second part, We use induction on the length of a wff.
 
-\begin{exercise}{E.1.1.3}
+\begin{exercise}
   Question to fill in.
 \end{exercise}
 
 We use induction on the number of times $\mathcal{E}$ is used in the construction of a wff.
 
-\begin{exercise}{E.1.1.4}
+\begin{exercise}
   Question to fill in.
 \end{exercise}
 
 * We can show that the last expression in the sequence containing $A_4$ is not used by any other expression in the sequence, and neither is any expression containing $A_4$. Note that an expression in the sequence may not be used in its successors.
 
-\begin{exercise}{E.1.1.5}
+\begin{exercise}
   Question to fill in.
 \end{exercise}
 
@@ -146,25 +146,25 @@ Applying the \textit{truth-table} method to a wff with $n$ sentence symbols requ
 
 \subsection*{Exercises}
 
-\begin{exercise}{E.1.2.1}
+\begin{exercise}
   Question to fill in.
 \end{exercise}
 
 Omitted as trivial. One will find it highly nontrivial if they neglect `neither', as I did.
 
-\begin{exercise}{E.1.2.2}
+\begin{exercise}
   Question to fill in.
 \end{exercise}
 
 Omitted as trivial. We can consider this exercise intuitively by observing that $P \rightarrow Q$ is as helpful as a tautology to the truthfulness of $P$.
 
-\begin{exercise}{E.1.2.3}
+\begin{exercise}
   Question to fill in.
 \end{exercise}
 
 Omitted as trivial.
 
-\begin{exercise}{E.1.2.4}
+\begin{exercise}
   Show that \begin{enumerate}[label=(\alph*)]
     \item $\Sigma;\alpha\vDash \beta$ iff $\Sigma\vDash(\alpha\rightarrow \beta)$.
     \item $\alpha\vDash\Dashv \beta$ iff $\vDash(\alpha\rightarrow \beta)$.\qedhere
@@ -176,7 +176,7 @@ Omitted as trivial.
   \item ``For each truth assignment $\overline{v}$ that satisfies $\alpha$, it also satisfies $\beta$'' iff ``for each truth assignment $\overline{v}$, if $\overline{v}(\alpha)=T$ then $\overline{v}(\beta)=T$.'' The rest is omitted for brevity.
 \end{enumerate}
 
-\begin{exercise}{E.1.2.5}
+\begin{exercise}
   Prove or refute each of the following assertions:
   \begin{enumerate}[label=(\alph*)]
     \item If either $\Sigma \vDash \alpha$ or $\Sigma \vDash \beta$, then $\Sigma \vDash (\alpha \lor \beta)$.
@@ -186,7 +186,7 @@ Omitted as trivial.
 
 * (a) Obviously true. (b) $\vDash(\alpha\vee\neg \alpha)$, but in general neither $\vDash \alpha$ nor $\vDash (\neg \alpha)$ (except one of them is tautology.) Actually (b) is true iff $\Sigma$ is complete (\ref{complete}).
 
-\begin{exercise}{E.1.2.6}
+\begin{exercise}
   Question to fill in.
 \end{exercise}
 
@@ -195,13 +195,13 @@ Omitted as trivial.
   \item Let $\mathcal{S}'\subseteq \mathcal{S}$ be the set of sentence symbols used in $\Sigma;\tau$. Every truth assignment for $\mathcal{S}'$ that satisfies every member of $\Sigma$ agrees with some truth assignment for $S$ that satisfies every member of $\Sigma$, and thus satisfies $\tau$.
 \end{enumerate}
 
-\begin{exercise}{E.1.2.7}
+\begin{exercise}
   Question to fill in.
 \end{exercise}
 
 Which fork leads to the capital, if you belong to the people who always tell falsehoods?
 
-\begin{exercise}{E.1.2.8}
+\begin{exercise}
   (\textit{Substitution}) Consider a sequence $\alpha_1,\alpha_2,\dots$ of wffs. For each wff $\varphi$ let $\varphi^*$ be the result of replacing the sentence symbol $\mathrm{A_n}$ by $\alpha_n$ for each $n$.\begin{enumerate}[label=(\alph*)]
     \item Let $v$ be a truth assignment for the set of all sentence symbols; define $u$ to be the truth assignment for which $u(A_n)=\bar{v}(\alpha_n)$. Show that $\bar{u}(\varphi)=\bar{v}(\varphi^*)$.
     \item Show that if $\varphi$ is a tautology, then so is $\varphi^*$.\qedhere
@@ -213,13 +213,13 @@ Which fork leads to the capital, if you belong to the people who always tell fal
   \item It follows trivially from (a).
 \end{enumerate}
 
-\begin{exercise}{E.1.2.9}
+\begin{exercise}
   (\textit{Duality}) Let $\alpha$ be a wff whose only connective symbols are $\wedge,\vee$ and $\neg$. Let $\alpha^*$ be the result of interchanging $\wedge$ and $\vee$ and replacing each sentence symbol by its negation. Show that $\alpha^*$ is tautologically equivalent to $(\neg \alpha)$.
 \end{exercise}
 
-Say $D$ is the set of wffs such that $\overline{v}(\neg\alpha)=\overline{v}(\alpha^*)$, where $\alpha$ is a wff and $\overline{v}$ is any truth assignment for $\alpha$. We can show that $D$ contains all sentence symbols and is closed under $\mathcal E_\neg$, $\mathcal{E}_\wedge$ and $\mathcal{E}_\vee$. We can apply substitution (Exercise \ref{E.1.2.8}) in the process.
+Say $D$ is the set of wffs such that $\overline{v}(\neg\alpha)=\overline{v}(\alpha^*)$, where $\alpha$ is a wff and $\overline{v}$ is any truth assignment for $\alpha$. We can show that $D$ contains all sentence symbols and is closed under $\mathcal E_\neg$, $\mathcal{E}_\wedge$ and $\mathcal{E}_\vee$. We can apply substitution (\ref{E.1.2.8}) in the process.
 
-\begin{exercise}{E.1.2.10}
+\begin{exercise}
   Say that a set $\Sigma_1$ of wffs is \textit{equivalent} to a set $\Sigma_2$ of wffs iff for any wff $\alpha$, we have $\Sigma_1\vDash \alpha$ iff $\Sigma_2\vDash \alpha$. A set $\Sigma$ is \textit{independent} iff no member of $\Sigma$ is tautologically implied by the remaining members in $\Sigma$. Show that the following hold.\begin{enumerate}[label=(\alph*)]
     \item A finite set of wffs has an independent equivalent subset.
     \item An infinite set need not have an independent equivalent subset.
@@ -240,31 +240,31 @@ Say $D$ is the set of wffs such that $\overline{v}(\neg\alpha)=\overline{v}(\alp
         It is equivalent to $\Sigma$, for we can verify that $\Sigma'\vDash \Sigma$ using induction and $\Sigma\vDash \Sigma'$ is trivial. We can also easily verify that it is independent.
 \end{enumerate}
 
-\begin{exercise}{E.1.2.11}
+\begin{exercise}
   Question to fill in.
 \end{exercise}
 
 This is trivial considering that $\leftrightarrow$ is associative and commutative.
 
-\begin{exercise}{E.1.2.12}
+\begin{exercise}
   Question to fill in.
 \end{exercise}
 
 Omitted for brevity.
 
-\begin{exercise}{E.1.2.13}
+\begin{exercise}
   Question to fill in.
 \end{exercise}
 
 Watching Tennis. The formalization is omitted for brevity.
 
-\begin{exercise}{E.1.2.14}
+\begin{exercise}
   Question to fill in.
 \end{exercise}
 
-Omitted for it is a trivial specification of Exercise \ref{E.1.2.6}(a).
+Omitted for it is a trivial specification of \ref{E.1.2.6}(a).
 
-\begin{exercise}{E.1.2.15}
+\begin{exercise}
   Question to fill in.
 \end{exercise}
 
@@ -284,13 +284,13 @@ Conventions on notations are similar to \ref{sub: On Notation}.
 
 \subsection*{Exercises}
 
-\begin{exercise}{E.1.3.1}
+\begin{exercise}
   Question to fill in.
 \end{exercise}
 
 Omitted as trivial.
 
-\begin{exercise}{E.1.3.2}
+\begin{exercise}
   Question to fill in.
 \end{exercise}
 
@@ -298,13 +298,13 @@ $\begin{aligned}[t]
     \alpha= & (\gamma_0\wedge\theta_0), \\\beta=&\beta_0,\\\gamma=&(\gamma_0,\\\delta=&\theta_0)\wedge \beta_0.
   \end{aligned}$
 
-\begin{exercise}{E.1.3.3}
+\begin{exercise}
   Question to fill in.
 \end{exercise}
 
 Omitted as trivial.
 
-\begin{exercise}{E.1.3.4}
+\begin{exercise}
   Question to fill in.
 \end{exercise}
 
@@ -322,7 +322,7 @@ An other observation, as suggested, states that any wff
 \end{enumerate}
 We can state the algorithm accordingly.
 
-\begin{exercise}{E.1.3.5}
+\begin{exercise}
   The English language has a tendency to use two-part connectives:
   “both ... and ...” “either ... or ...” “if ..., then ....” How does
   this affect unique readability in English?
@@ -330,13 +330,13 @@ We can state the algorithm accordingly.
 
 I personally, due to limited proficiency in English, do not feel constrained or ambiguity when expressing using these connectives. We might though note that ``if'' often means iff in daily usage. For example, ``you can pass the exam if you score more than 60 percent of the points''.
 
-\begin{exercise}{E.1.3.6}
+\begin{exercise}
   We have given an algorithm for analyzing a wff by constructing its tree from the top down. There are also ways of constructing the tree from the bottom up. This can be done by looking through the formula for innermost pairs of parentheses. Give a complete description of an algorithm of this sort.
 \end{exercise}
 
-Omitted for brevity. This can be done very similarly to what we did in Exercise 4. The key is to recognize the vertices in a bottom up manner.
+Omitted for brevity. This can be done very similarly to what we did in \ref{E.1.3.4}. The key is to recognize the vertices in a bottom up manner.
 
-\begin{exercise}{E.1.3.7}
+\begin{exercise}
   Question to fill in.
 \end{exercise}
 
@@ -461,19 +461,19 @@ Note that the set of wffs is freely generated from the set of sentence symbols b
 
 \subsection*{Exercises}
 
-\begin{exercise}{E.1.4.1}
+\begin{exercise}
   Question to fill in.
 \end{exercise}
 
 Omitted as trivial.
 
-\begin{exercise}{E.1.4.2}
+\begin{exercise}
   Question to fill in.
 \end{exercise}
 
 We can show that $\rightarrow\wedge$ is not a proper segment of any wff by considering a inductive subset of the set of wffs, any of whose members does not have $\rightarrow\wedge$ as a proper segment.
 
-\begin{exercise}{E.1.4.3}
+\begin{exercise}
   Question to fill in.
 \end{exercise}
 
@@ -539,7 +539,7 @@ where each $\gamma_i$ is a conjunction
 \[
   \gamma_i=\beta_{i1}\wedge\cdots\wedge \beta_{in_i}
 \]
-and each $\beta_{ij}$ is a sentence symbol or the negation of one. DNFs are desirable in that they explicitly list the truth assignments satisfying them.
+and each $\beta_{ij}$ is a sentence symbol or the negation of one. DNFs are desirable in that they explicitly list the truth assignments that satisfy them. CNF is similarly defined and is desirable in that they explicitly list the truth assignments that fial to satisfy them.
 
 \begin{reference}{Cor}{c15c}
   (15C) For any wff $\varphi$, we can find a tautologically equivalent wff $\alpha$ in disjunctive normal form.
@@ -547,7 +547,7 @@ and each $\beta_{ij}$ is a sentence symbol or the negation of one. DNFs are desi
 
 A set $B$ of Boolean functions is \textit{complete}, if every boolean function $G:\{F,T\}^n\rightarrow\{F,T\}$ for $n\geq 1$ can be ``realized'' by $B$.
 
-It follows from Exercise \ref{E.1.2.9} and \ref{c15c} that both $\{\neg,\wedge\}$ and $\{\neg,\vee\}$ are complete.
+It follows from \ref{E.1.2.9} and \ref{c15c} that both $\{\neg,\wedge\}$ and $\{\neg,\vee\}$ are complete.
 
 \begin{reference}{Eg}{incompleteex}
   $\{\wedge,\rightarrow\}$ is not complete.
@@ -565,7 +565,7 @@ There are two $0$-place Boolean functions, $F$ and $T$. For the corresponding co
 
 \subsection*{Exercises}
 
-\begin{exercise}{E.1.5.1}
+\begin{exercise}
   Question to fill in.
 \end{exercise}
 
@@ -574,7 +574,7 @@ There are two $0$-place Boolean functions, $F$ and $T$. For the corresponding co
   \item A valid one should be $((A_1\vee A_2)\rightarrow(\neg(A_3\vee(A_1\wedge A_2))))$. The idea is to construct in form $\alpha\rightarrow \beta$.
 \end{enumerate}
 
-\begin{exercise}{E.1.5.2}
+\begin{exercise}
   Question to fill in.
 \end{exercise}
 
@@ -592,13 +592,13 @@ Relay switch (page 57) is also of particular interest in that it is very easy to
 
 \subsection*{Exercises}
 
-\begin{exercise}{E.1.6.1}
+\begin{exercise}
   Question to fill in.
 \end{exercise}
 
 Omitted for brevity. I suggest to use enumeration and to utilize symmetry and no better solutions occurred me.
 
-\begin{exercise}{E.1.6.2}
+\begin{exercise}
   Question to fill in.
 \end{exercise}
 
@@ -610,7 +610,7 @@ Omitted for brevity. I suggest to use enumeration and to utilize symmetry and no
   \item $(((\neg A)\wedge C)\vee(A\wedge B))$ and * $(((\neg A)\wedge C)\vee(A\wedge B)\vee(B\wedge C))$. We would like our disjunctions to span all rows of the matrix.
 \end{enumerate}
 
-\begin{exercise}{E.1.6.3}
+\begin{exercise}
   Question to fill in.
 \end{exercise}
 
@@ -676,14 +676,22 @@ We temporarily say that $\Sigma$ is \textit{finitely satisfiable} iff every fini
 \end{reference}
 
 \begin{proof}
-  We contrapositively state the \ref{compactnesst}: for a set $\Sigma$ of wffs, $\Sigma$ is unsatisfiable iff there is a finite $\Sigma_0\subseteq \Sigma$ that $\Sigma_0$ is unsatisfiable. $\Sigma\vDash \tau$ iff $\Sigma;\neg \tau$ is unsatisfiable, thus there is a finite $\Sigma_0\subseteq \Sigma;\neg\tau$ that is unsatisfiable. If $\neg\tau\in \Sigma_0$ then $\Sigma_0-\neg\tau\vDash \tau$, else $\Sigma_0\vDash \tau$ is vacuously true. Note that this proof can be done in the opposite direction, like what is done on page 60 of the book.
+  We contrapositively state the \ref{compactnesst}: for a set $\Sigma$ of wffs, $\Sigma$ is unsatisfiable iff there is a finite $\Sigma_0\subseteq \Sigma$ that $\Sigma_0$ is unsatisfiable.
+  \begin{align*}
+                & \Sigma\vDash \tau                                                                        \\
+    \text{iff } & \Sigma;\neg \tau \text{ is unsatisfiable}                                                \\
+    \text{iff } & \text{there is a finite }\Sigma_0\subseteq \Sigma;\neg\tau \text{ that is unsatisfiable}
+  \end{align*}
+  If $\neg\tau\in \Sigma_0$ then $\Sigma_0-\neg\tau;\neg\tau$ is unsatisfiable, thus $\Sigma_0-\neg\tau\vDash \tau$ and $\Sigma_0-\neg\tau\subseteq \Sigma$. Else we have that $\Sigma_0\vDash \tau$.
 \end{proof}
+
+Note that this proof can be done in the opposite direction, like what is done on page 60 of the book.
 
 \begin{proof}[Second Proof]
   We construct $\Sigma_0$ from $\Sigma;\tau$. Let $V=\{v_1,v_2,\dots,v_k\}$ denote the set of truth assignments that fail to satisfy $\tau$. Apparently $k\leq2^n$, where $n$ is the number of distinct variables in $\tau$. For each $v_i$ select $\alpha_i\in \Sigma$ such that $\overline{v_i}(\alpha_i)=F$. Let $\Sigma_0=\{\alpha_i|1\leq i\leq k\}$. Thus $\Sigma_0$ is finite. We claim that $\Sigma_0\vDash \tau$. This construction mainly takes advantage of the finiteness of the truth table of $\tau$.
 \end{proof}
 
-\subsection*{Effectiveness and Computability\footnote{Discussion in this subsection are carried out informally.}}
+\subsection*{Effectiveness and Computability\footnote{Discussions in this subsection are carried out informally.}}
 
 \begin{reference}{Defn}{effectivedecidable}
   A procedure is \textit{effective}, if it is an algorithm that can be mechanically implemented and takes finite time to execute. A set $\Sigma$ of expressions is \textit{decidable} iff there exists an effective procedure that, given an expression $\alpha$, will decide whether or not $\alpha\in \Sigma$.
@@ -739,20 +747,20 @@ Similarly, say that a function $f$ is \textit{effectively computable} (or simply
 
 \subsection*{Exercises}
 
-\begin{exercise}{E.1.7.1}
+\begin{exercise}
   Question to fill in.
 \end{exercise}
 
 See \ref{compactnesst}.
 
-\begin{exercise}{E.1.7.2}
+\begin{exercise}
   Question to fill in.
 \end{exercise}
 
 See \ref{compactnesst}.
 
-\begin{exercise}{E.1.7.3}
-  Question to fill in.
+\begin{exercise}
+  Prove \ref{compactnesst} from \ref{c17a}.
 \end{exercise}
 
 For a non-empty set $\Sigma$ of wffs and $\alpha\in \Sigma$, we have that
@@ -766,25 +774,25 @@ The choice of $\alpha$ is arbitrary, thus we have \ref{compactnesst} stated cont
 
 \setcounter{exercise}{4}
 
-\begin{exercise}{E.1.7.5}
+\begin{exercise}
   Where $\Sigma$ is a set of wffs, define a \textit{deduction} from $\Sigma$ to be a finite sequence $\langle \alpha_0,\dots,\alpha_n\rangle$ of wffs such that for each $k\leq n$, either (a) $\alpha_k$ is a tautology, (b) $\alpha_k\in \Sigma$, or (c) for some $i$ and $j$ less than $k$, $\alpha_i$ is $(\alpha_j\rightarrow \alpha_k)$ (\textit{modus ponens}). Give a decution from the set $\{\mathrm{\neg S\vee R, R\rightarrow P, S}\}$, the last component of which is $\mathrm{P}$.
 \end{exercise}
 
 $\mathrm{\langle S,\neg S\wedge R, (\neg S\wedge R)\rightarrow(S\rightarrow R), S\rightarrow R, R, R\rightarrow P, P\rangle.}$
 
-\begin{exercise}{E.1.7.6}
+\begin{exercise}
   (\textit{Soundness}) Let $\langle \alpha_0,\dots,\alpha_n\rangle$ be a deduction from $\Sigma$. Show that $\Sigma\vDash \alpha_k$ for each $k\leq n$.
 \end{exercise}
 
 We use strong induction and we mainly consider case (c), where for some $i$ and $j$ less than $k$, $\alpha_i=\alpha_j\rightarrow \alpha_k$. For every truth assignment $v$ that satisfies every member of $\Sigma$, we have $\bar{v}(\alpha_j)=\bar{v}(\alpha_j\rightarrow \alpha_k)=T$ considering the induction hypothesis, then according to the defintion of $\bar{v}$ we have $\bar{v}(\alpha_k)$.
 
-\begin{exercise}{E.1.7.7}
+\begin{exercise}
   (\textit{Completeness}) Show that whenever $\Sigma\vDash \tau$, then there exists a deduction from $\Sigma$, the last component of which is $\tau$.
 \end{exercise}
 
 Whenever $\Sigma\vDash\tau$, it follows from \ref{c17a} that there is a finite $\Sigma_0\subseteq \Sigma$ such that $\Sigma_0\vDash\tau$. Let $\Sigma_0=\{\alpha_1,\dots,\alpha_k\}$, we have that $\vDash \alpha_1\rightarrow \alpha_2\rightarrow\cdots\rightarrow \alpha_k\rightarrow\tau$.  A deduction the last component of which is $\tau$ is then immediate.
 
-\begin{exercise}{E.1.7.8}
+\begin{exercise}
   Question to fill in.
 \end{exercise}
 
@@ -792,7 +800,7 @@ See \ref{t17f}.
 
 \setcounter{exercise}{10}
 
-\begin{exercise}{E.1.7.11}
+\begin{exercise}
   Question to fill in.
 \end{exercise}
 

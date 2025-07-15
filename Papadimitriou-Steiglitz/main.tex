@@ -14,7 +14,7 @@
 \usepackage{float}
 
 \renewcommand{\qedsymbol}{$\dashv$}
-\renewcommand{\emph}[1]{\textbf{\textit{#1}}}
+\renewcommand{\emph}[1]{\textit{#1}}
 
 \newcounter{reference}[chapter]
 \renewcommand{\thereference}{\thechapter.\arabic{reference}}
@@ -33,16 +33,16 @@
   {}
 
 \newcounter{exercise}[chapter]
-\renewcommand{\theexercise}{Ex.\thechapter.\arabic{exercise}}
+\renewcommand{\theexercise}{\thechapter.\arabic{exercise}}
 
-\NewDocumentEnvironment{exercise}{+b}
+\NewDocumentEnvironment{exercise}{m +b}
   {
     \refstepcounter{exercise}
     \renewcommand{\qedsymbol}{$\triangleleft$}
 
-    \noindent\textbf{\arabic{exercise}}\label{\thechapter.\arabic{exercise}}
+    \noindent\textbf{\theexercise}\label{#1}
     \pushQED{\qed}
-    #1
+    #2
     \popQED
 
   }
@@ -86,7 +86,7 @@
   breakatwhitespace=false,
 }
 
-\title{Notes on Theory of Computation\footnote{Actually notes on \href{https://ocw.mit.edu/courses/18-404j-theory-of-computation-fall-2020/}{MIT OCW 18.404J}, but indexed according to Sipser's \emph{Introduction to the Theory of Computation} (3\textsuperscript{rd} ed).}}
+\title{Notes on Combinatorial Optimization}
 \author{Hao Su}
 \date{\today}
 
@@ -99,16 +99,7 @@
 
 \mainmatter
 
-\input{ch1.tex}
-\input{ch2.tex}
-\input{ch3.tex}
-\input{ch4.tex}
-\input{ch5.tex}
-\input{ch6.tex}
-\input{ch7.tex}
-\input{ch8.tex}
-\input{ch9.tex}
-\input{chx.tex}
+\input{ch01.tex}
 
 \backmatter
 

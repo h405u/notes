@@ -97,11 +97,11 @@ Consider the statement ``This statement is unprovable''. It has to be true, thus
 \end{reference}
 
 \begin{reference}{Defn}{turingreducible}
-  (6.20) Say $A$ is \textbf{\textit{Turing reducible}} (or \textbf{\textit{decidable relative}}, written $A\leq_T B$) to $B$, if there exists some $M^B$ that decides $A$.
+  (6.20) Say $A$ is \textbf{\textit{Turing reducible}} (or \textbf{\textit{decidable relative}}, written $A\leq_{\mathrm{T}} B$) to $B$, if there exists some $M^B$ that decides $A$.
 \end{reference}
 
 \begin{reference}{Eg}{tatm}
-  (6.19) $E_{\mathrm{TM}}\leq_T A_{\mathrm{TM}}$, for that we can construct TM
+  (6.19) $E_{\mathrm{TM}}\leq_{\mathrm{T}} A_{\mathrm{TM}}$, for that we can construct TM
   \begin{align*}
     T^{A_{\mathrm{TM}}}=\text{``} & \text{On input }\langle M\rangle                                                       \\
                                   & \text{1. Construct TM }N\text{ that simulates }M\text{ on all strings in parallel}     \\
@@ -113,7 +113,7 @@ Consider the statement ``This statement is unprovable''. It has to be true, thus
 
 \section*{Exercises and Problems}
 
-\begin{exercise}{6.1}
+\begin{exercise}
   Give an example in the spirit of the recursion theorem of a program in a real programming language that prints itself out.
 \end{exercise}
 
@@ -134,7 +134,7 @@ int main()
 
 \setcounter{exercise}{10}
 
-\begin{exercise}{6.11}
+\begin{exercise}
   Question to fill in.
 \end{exercise}
 

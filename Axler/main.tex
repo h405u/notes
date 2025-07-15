@@ -3,22 +3,21 @@
 \usepackage{parskip}
 \usepackage{amsmath, amssymb, amsthm, stmaryrd}
 \usepackage{graphicx}
-\usepackage{hyperref, cleveref}
 \usepackage[centering, includeheadfoot, width=6in, height=9in]{geometry}
 \usepackage{enumitem}
 \usepackage{xparse}
 \usepackage{lipsum}
 \usepackage{tikz-cd}
+\usepackage[colorlinks=true, linkcolor=cyan, citecolor=green, urlcolor=blue]{hyperref}
+\renewcommand{\qedsymbol}{$\dashv$}
+
+% \renewcommand{\thechapter}{\Roman{chapter}}
+\renewcommand{\thesection}{\thechapter\Alph{section}}
 
 \renewcommand{\qedsymbol}{$\dashv$}
 
-\renewcommand{\thechapter}{\Roman{chapter}}
-\renewcommand{\thesection}{\arabic{section}}
-
-\renewcommand{\qedsymbol}{$\dashv$}
-
-\newcounter{reference}[section]
-\renewcommand{\thereference}{\thesection.\arabic{reference}}
+\newcounter{reference}[chapter]
+\renewcommand{\thereference}{\thechapter.\arabic{reference}}
 
 \NewDocumentEnvironment{reference}{m m +b}
   {
@@ -34,7 +33,7 @@
   {}
 
 \newcounter{exercise}[section]
-\renewcommand{\theexercise}{Ex.\thechapter.\thesection.\arabic{exercise}}
+\renewcommand{\theexercise}{Ex.\thesection.\arabic{exercise}}
 
 \NewDocumentEnvironment{exercise}{+b}
   {
@@ -62,7 +61,7 @@
 
 \overfullrule=5pt
 
-\title{Notes on Algebra Chapter 0}
+\title{Notes on Linear Algebra Done Right}
 \author{Hao Su}
 \date{\today}
 
@@ -76,6 +75,8 @@
 \mainmatter
 
 \input{ch1.tex}
+\input{ch2.tex}
+% \input{ch3.tex}
 
 \backmatter
 

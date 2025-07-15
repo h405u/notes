@@ -1,0 +1,89 @@
+\chapter{Events and Probability}
+
+\begin{reference}{Eg}{verifypoly}
+  Consider the following procedure that verifies if $F(x)\equiv G(x)$, where $F(x)$ is given as a product $F(x)=\prod^d_{i=1}(x-a_i)$ and $G(x)$ is given in its canonical form: assume that the maximum exponent of $x$ in $F(x)$ and $G(x)$ is $d$, choose an integer $r$ uniformly at random in the range $\{1,\dots,100d\}$, and decide based on if $F(x)=G(x)$. Should an error occur then $F(x)\not\equiv G(x)$ and $r$ is a root of $F(x)-G(x)=0$, whose degree is no larger than $d$ and thus has no more than $d$ roots. Hence the chance of a wrong answer produced by this procedure is no more than $1/100$.
+\end{reference}
+
+\begin{reference}{Defn}{probabilityspace}
+  A \emph{probability space} has three components:
+  \begin{enumerate}
+    \item
+          a sample space $\Omega$, which is the set of all possible outcomes of the random process modeled by the probability space;
+    \item
+          a family of sets $\mathcal F$ representing the allowable events, where each set in $\mathcal F$ is a subset of the sample space; and
+    \item
+          a probability function $\mathrm{Pr}:\mathcal F\to \mathbb R$ satisfying \ref{probabilityfunc}.
+  \end{enumerate}
+  An element of $\Omega$ is called a \emph{simple} or \emph{elementary} event.
+\end{reference}
+
+In a discrete probability space $\mathcal F=2^\Omega$, and Pr is uniquely defined by the probabilities of the simple events. The events need to be \textit{measurable}, thus $\empty\in \mathcal F$ and $\mathcal F$ should be closed under complement and union and intersecton of countably many sets (a $\sigma$-algebra).
+
+\begin{reference}{Defn}{probabilityfunc}
+  A \emph{probability function} is any function $\mathrm{Pr}:\mathcal F\to \mathbb R$ that satisfies the following conditions:
+  \begin{enumerate}
+    \item for any event $E,0\leq \mathrm{Pr}(E)\leq 1$;
+    \item $\mathrm{Pr}(\Omega)=1;$ and
+    \item for any finite or countably infinite sequence of pairwise mutually disjoint events $E_1,E_2,E_3,\dots,$
+          \[
+            \mathrm{Pr}\left(\bigcup E_i\right)=\sum\mathrm{Pr}(E_i).\qedhere
+          \]
+  \end{enumerate}
+\end{reference}
+
+\begin{reference}{Lem}{pre1pluse2}
+  For any two events $E_1$ and $E_2$,
+  \begin{align*}
+    \mathrm{Pr}(E_1\cup E_2)
+     & =\mathrm{Pr}(E_1-E_1\cap E_2)+\mathrm{Pr}(E_2-E_1\cap E_2)+\mathrm{Pr}(E_1\cap E_2)                  \\
+     & =\mathrm{Pr}\left(E_1-E_1\cap E_2\right)+\mathrm{Pr}\left(E_2\right)                                 \\
+     & =\mathrm{Pr}\left(E_1\right)+\mathrm{Pr}\left(E_2\right)-\mathrm{Pr}\left(E_1\cap E_2\right)\qedhere
+  \end{align*}
+  Draw venn diagrams to utilize \ref{probabilityfunc}.
+\end{reference}
+
+\begin{reference}{Lem}{unionbound}
+  \emph{Union Bound}\quad For any countable sequence of events $E_1,E_2,\dots,$
+  \[
+    \mathrm{Pr}\left(\bigcup E_i\right)\leq\sum \mathrm{Pr}\left(E_i\right).\qedhere
+  \]
+\end{reference}
+
+\begin{reference}{Lem}{inexcluprin}
+  \emph{Inclusion-Exclusion Principle}\quad Let $E_1,\dots,E_n$ be any $n$ events. Then
+  \begin{align*}
+    \mathrm{Pr}\left(\bigcup_{i=1}^n E_i\right)=
+     & \sum_{i_1=1}^n \mathrm{Pr}\left(E_i\right)-\sum_{i_1<i_2}\mathrm{Pr}\left(E_i\cap E_j\right)+\sum_{i_1<i_2<i_3}\mathrm{Pr}\left(E_i\cap E_j\cap E_k\right) \\
+     & -\cdots+(-1)^{l+1}\sum_{i_1<i_2<\cdots<i_l}\mathrm{Pr}\left(\bigcap_{r=1}^lE_{i_r}\right)+\cdots.\qedhere
+  \end{align*}
+\end{reference}
+
+\begin{reference}{Defn}{independent}
+  Tow events $E$ and $F$ are \textit{independent} iff
+  \[
+    \mathrm{Pr}\left(E\cap F\right)=\mathrm{Pr}\left(E\right)\cdot \mathrm{Pr}\left(F\right).
+  \]
+  Events $E_1,E_2,\dots,E_k$ are \textit{mutually independent} iff for any $I\subseteq[1,k],$
+  \[
+    \mathrm{Pr}\left(\bigcap_{i\in I}E_i\right)=\prod_{i\in I}\mathrm{Pr}\left(E_i\right).\qedhere
+  \]
+\end{reference}
+
+\begin{reference}{Defn}{conditionalprobability}
+  The \textit{conditional probability} that $E$ occurs given that $F$ occurs is
+  \[
+    \mathrm{Pr}\left(E|F\right)=\displaystyle\frac{\mathrm{Pr}\left(E\cap F\right)}{\mathrm{Pr}\left(F\right)}.
+  \]
+  and is well defined only if $\mathrm{Pr}\left(F\right)>0$.
+\end{reference}
+
+This is very intuitive, looking for the probability of $E\cap F$ within the set of events defined by $F$. When $E$ and $F$ are independent and $\mathrm{Pr}\left(F\right)\neq 0$, we have
+\[
+  \mathrm{Pr}\left(E|F\right)=\displaystyle\frac{\mathrm{Pr}\left(E\cap F\right)}{\mathrm{Pr}\left(F\right)}=\displaystyle\frac{\mathrm{Pr}\left(E\right)\mathrm{Pr}\left(F\right)}{\mathrm{Pr}\left(F\right)}=\mathrm{Pr}\left(E\right).
+\]
+
+We may sample with or without replacement in \ref{verifypoly}, and sampling Without replacement seems a little better. We may opt for sampling with replacement yet, for easier analysis and implementation.
+
+\begin{reference}{Eg}{matrixmul}
+  Consider three $n\times n$ matrices $\mathbf{A,B,}$ and $\mathbf{C}$, and assume we are working over integers modulo 2. We want to verify whether $\mathbf{AB=C}$. Multiplying $\mathbf{A}$ and $\mathbf{B}$ takes roughly $\Theta(n^{2.37})$ operations. Instead we may choose a random vector $\overline{r}=(r_1,r_2,\dots,r_n)\in\{0,1\}^n$ and verify if $\mathbf{A(B}\overline{r})\neq \mathbf{C}\overline{r}$, which should take $\Theta(n^2)$ time in an obvious way.
+\end{reference}

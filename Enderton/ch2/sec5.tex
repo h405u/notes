@@ -29,14 +29,14 @@ The proof of \ref{soundnesst} proceeds via \ref{l25a}, whose proof, in turn, dep
 \end{reference}
 
 \begin{proof}
-  By Exercise \ref{E.2.2.6} any generalization of a valid formula is valid. Therefore it suffices to examine various axiom groups.
+  By \ref{E.2.2.6} any generalization of a valid formula is valid. Therefore it suffices to examine various axiom groups.
 
   \textit{Axiom group} 1: From \ref{truchassignmentonprimeformulas} we have that if $\emptyset$ tautologically implies $\alpha,\emptyset\vDash \alpha$.\newline
   \textit{Axiom group} 2: Immediate given \ref{substitutionl}.\newline
-  \textit{Axiom group} 3: See Exercise \ref{E.2.2.3}.\newline
-  \textit{Axiom group} 4: See Exercise \ref{E.2.2.4}.\newline
+  \textit{Axiom group} 3: See \ref{E.2.2.3}.\newline
+  \textit{Axiom group} 4: See \ref{E.2.2.4}.\newline
   \textit{Axiom group} 5: Trivial.\newline
-  \textit{Axiom group} 6: For an example see Exercise \ref{E.2.2.5}. We can use induction on terms and rest of the proof is trivial.
+  \textit{Axiom group} 6: For an example see \ref{E.2.2.5}. We can use induction on terms and rest of the proof is trivial.
 \end{proof}
 
 \begin{reference}{Thm}{soundnesst}
@@ -44,7 +44,7 @@ The proof of \ref{soundnesst} proceeds via \ref{l25a}, whose proof, in turn, dep
 \end{reference}
 
 \begin{proof}
-  We use induction on $\varphi$. By Exercise \ref{E.1.7.6} this is trivial.
+  We use induction on $\varphi$. By \ref{E.1.7.6} this is trivial.
 \end{proof}
 
 \begin{reference}{Cor}{c25c}
@@ -73,7 +73,7 @@ This proof states that \ref{c25e} is equivalent to \ref{soundnesst}. Note that `
 \end{reference}
 
 \begin{proof}[Proof Sketch]
-  This is a proof for a countable language with equality symbol. By Exercise \ref{E.2.5.2} it suffices to prove part (b). Similar to the proof of \ref{compactnesst}, we begin with a consistent set $\Gamma$ and extend it to a set $\Delta$ of formulas for which (i) $\Gamma\subseteq \Delta$. (ii) $\Delta$ is consistent and is maximal in the sense that for any formula $\alpha$, either $\alpha\in \Delta$ or $(\neg \alpha)\in \Delta$. (iii) For any formula $\varphi$ and variable $x$, there is a constant $c$ such that $(\neg\forall x\ \varphi\rightarrow\neg \varphi_c^x)\in \Delta.$ Then we form a structure $\mathfrak{A}$ in which members of $\Gamma$ not containing equality symbol can be satisfied. Finally, we change $\mathfrak{A}$ to accomodate formulas containing the equality symbol.
+  This is a proof for a countable language with equality symbol. By \ref{E.2.5.2} it suffices to prove part (b). Similar to the proof of \ref{compactnesst}, we begin with a consistent set $\Gamma$ and extend it to a set $\Delta$ of formulas for which (i) $\Gamma\subseteq \Delta$. (ii) $\Delta$ is consistent and is maximal in the sense that for any formula $\alpha$, either $\alpha\in \Delta$ or $(\neg \alpha)\in \Delta$. (iii) For any formula $\varphi$ and variable $x$, there is a constant $c$ such that $(\neg\forall x\ \varphi\rightarrow\neg \varphi_c^x)\in \Delta.$ Then we form a structure $\mathfrak{A}$ in which members of $\Gamma$ not containing equality symbol can be satisfied. Finally, we change $\mathfrak{A}$ to accomodate formulas containing the equality symbol.
 
   Let $\Gamma$ be a consistent set of wffs in a countable language.
 
@@ -110,7 +110,7 @@ This proof states that \ref{c25e} is equivalent to \ref{soundnesst}. Note that `
 \end{reference}
 
 \begin{proof}
-  These are trivial, given \ref{completenesst} and \ref{soundnesst}. (a) and (b) are indeed equivalent. Cf. Exercise \ref{E.1.7.3}.
+  These are trivial, given \ref{completenesst} and \ref{soundnesst}. (a) and (b) are indeed equivalent. Cf. \ref{E.1.7.3}.
 \end{proof}
 
 % TODO: proof by ultraproduct constuction.
@@ -153,7 +153,7 @@ The set of sentences implied by $\Gamma$ is decidable, yet we do not have a fixe
 
 \setcounter{exercise}{1}
 
-\begin{exercise}{E.2.5.2}
+\begin{exercise}
   Prove the equivalence of parts (a) and (b) of the \ref{completenesst}.
 \end{exercise}
 
@@ -171,13 +171,13 @@ The set of sentences implied by $\Gamma$ is decidable, yet we do not have a fixe
 
 \setcounter{exercise}{3}
 
-\begin{exercise}{E.2.5.4}
+\begin{exercise}
   Let $\Gamma=\{\neg\forall v_1 P v_1, Pv_2, Pv_3,\dots\}.$ Is $\Gamma$ consistent? Is $\Gamma$ satisfiable?
 \end{exercise}
 
 It is consistent and satisfiable. Define $P^{\mathfrak{A}}=\{v_2,v_3,\dots\}$ and $s:V\rightarrow|\mathfrak{A}|$ as identity, it follows that for all $\gamma\in \Gamma$, $\vDash_{\mathfrak{A}}\gamma[s]$.
 
-\begin{exercise}{E.2.5.5}
+\begin{exercise}
   Show that an infinite map (of countries) can be colored with four colors iff every finite submap of it can be.
 \end{exercise}
 
@@ -187,7 +187,7 @@ It is consistent and satisfiable. Define $P^{\mathfrak{A}}=\{v_2,v_3,\dots\}$ an
 
 \textit{Comment.} In fact $\alpha$ is not necessary if one finds it reasonable to color one country with two colors and have the validness of the coloring of a country defined accordingly. We are essentially trying to abstract the problem to an extent where it is in its simplest form that can be solved taking advantage of \ref{compactnesstfol}. By common sense, given a map (a set of countries and some topological relations on it, for example, a set of vetices and a set of edges) and a coloring (a set of formulas like $\Sigma$), we can easily (through an effective procedure) find a structure $\mathfrak{A}$ that safisfies every member of the coloring and tell if it is valid w.r.t. some country (that is, to define $V^{\mathfrak{A}}$), and predicate $V$ is an abstraction of that procedure. This actually requires the set of vertices and the set of edges to be decidable, for otherwise our predicate $V$ is not well defined.
 
-\begin{exercise}{E.2.5.6}
+\begin{exercise}
   Let $\Sigma_1$ and $\Sigma_2$ be sets of sentences such that nothing is a model of both $\Sigma_1$ and $\Sigma_2$. Show that there is a sentence $\tau$ such that
   \[
     \text{Mod } \Sigma_1 \subseteq \text{Mod } \tau \quad \text{and} \quad \text{Mod } \Sigma_2 \subseteq \text{Mod } \lnot \tau.\qedhere
@@ -198,7 +198,7 @@ We may suppose $\Sigma_1$ and $\Sigma_2$ are satisfiable (the other cases are om
 
 \textit{Comment.} This can be stated: Disjoint $\text{EC}_\Delta$ classes can be separated by an EC class.
 
-\begin{exercise}{E.2.5.7}
+\begin{exercise}
   For each of the following sentences, either show there is a deduction or give a counter-model (i.e., a structure in which it is false.)
   \begin{enumerate}[label=(\alph*)]
     \item $\forall x (Qx \rightarrow \forall y \, Qy)$
@@ -208,9 +208,36 @@ We may suppose $\Sigma_1$ and $\Sigma_2$ are satisfiable (the other cases are om
   \end{enumerate}
 \end{exercise}
 
-\textcolor{red}{to do}
+\begin{enumerate}[label=(\alph*)]
+  \item Not valid. Let $|\mathfrak A|=\{0,1\}$ and $Q^{\mathfrak A}=\{1\}$. Then $\mathfrak A$ is a counter-model.
+  \item
+        $\begin{aligned}[t]
+                       & \vdash(\exists xPx\to\forall yQy)\to \forall z(Pz\to Qz)                             \\
+            \Leftarrow & \exists xPx\to\forall yQy\vdash \forall z(Pz\to Qz)      & \text{by ded,}            \\
+            \Leftarrow & \{\exists xPx\to\forall yQy, Pz\}\vdash Qz               & \text{by gen and ded,}    \\
+                       & \text{which we show directly:}                                                       \\
+            1.         & \forall x\neg Px\vdash \neg Pz                           & \text{Ax.2; ded.}         \\
+            2.         & Pz\vdash \neg\forall x\neg Px                            & \text{1; contraposition.} \\
+            3.         & \{\exists xPx\to\forall yQy, Pz\}\vdash \forall yQy      & \text{2; MP.}             \\
+            4.         & \vdash\forall yQy\to Qz                                  & \text{Ax.2.}              \\
+            5.         & \{\exists xPx\to\forall yQy, Pz\}\vdash Qz               & \text{3; 4; MP.}          \\
+          \end{aligned}$
+  \item Not valid. Let $|\mathfrak A|=\{0,1\}$ and $P^{\mathfrak A}=Q^{\mathfrak A}=\{1\}$. Then $\mathfrak A$ is a counter-model.
+  \item
+        $\begin{aligned}[t]
+                       & \vdash\neg\exists y\forall x(Pxy \leftrightarrow \neg Pxx)                                                          \\
+            \Leftarrow & \vdash\forall y\neg \forall x(Pxy \leftrightarrow\neg Pxx)                                 & \text{by Ax.1 and MP,} \\
+            \Leftarrow & \vdash\neg \forall x(Pxy \leftrightarrow\neg Pxx)                                          & \text{by gen,}         \\
+                       & \text{which we show directly:}                                                                                      \\
+            1.         & \vdash\neg(Pxy \leftrightarrow \neg Pxx)_y^x                                               & \text{Ax.1.}           \\
+            2.         & \vdash\forall x(Pxy \leftrightarrow \neg Pxx)\to (Pxy \leftrightarrow \neg Pxx)_y^x        & \text{Ax.2.}           \\
+            3.         & \vdash\neg(Pxy \leftrightarrow \neg Pxx)_y^x\to\neg\forall x(Pxy \leftrightarrow \neg Pxx) & \text{2; Ax.1; MP.}    \\
+            4.         & \vdash\neg \forall x(Pxy \leftrightarrow\neg Pxx)                                          & \text{1; 3; MP.}       \\
+          \end{aligned}$
+\end{enumerate}
 
-\begin{exercise}{E.2.5.8}
+
+\begin{exercise}
   Assume the language (with equality) has just the parameters $\forall$ and $P$, where $P$ is a two-place predicate symbol. Let $\mathfrak{A}$ be the structure with $|\mathfrak{A}| = \mathbb{Z}$, and with $\langle a, b \rangle \in P^{\mathfrak{A}}$ iff $|a - b| = 1$. Thus $\mathfrak{A}$ looks like an infinite graph:
   \[
     \cdots \longleftrightarrow \bullet \longleftrightarrow \bullet \longleftrightarrow \bullet \longleftrightarrow \cdots

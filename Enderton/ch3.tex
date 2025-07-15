@@ -3,8 +3,89 @@
 
 \section{Number Theory}
 
-\textit{The language of number theory} is a first-order language with equality and parameters $\forall, 0, \mathrm{S}, <, +, \cdot$ and E, where E is a two-place function symbol. The intended structure for it is $\mathfrak{R}=(\mathbb{N};0,S,<,+,\cdot,E)$, where $E$ is exponentiation on $\mathbb{N}$. Thus \textit{number theory} is $\mathrm{Th}\mathfrak{R}$.
+\textit{The language of number theory} is a first-order language with equality and parameters $\forall, 0, \mathrm{S}, <, +, \cdot$ and E, where E is a two-place function symbol. The intended structure for it is $\mathfrak{N}=(\mathbb{N};0,S,<,+,\cdot,E)$, where $E$ is exponentiation on $\mathbb{N}$. Thus \textit{number theory} is $\mathrm{Th}\mathfrak{N}$.
+
+We can assign to each formula $\alpha$ of the language of number theory an integer $\sharp \alpha$, called the G\"odel number of $\alpha$. Any way of assigning should suffice, as long as we can effectively find $\sharp \alpha$ from $\alpha$ and vice versa. Similarly, to each finite sequence $D$ of formulas we assign an integer $\mathcal G(D)$.
+
+\subsection*{Self-reference}
 
 \begin{reference}{Thm}{t30a}
-  Let $A\subseteq \mathrm{Th}\mathfrak{R}$, and assume that $\{\sharp\alpha|\alpha\in A\}$ is a set definable in $\mathfrak{R}$. Then we can find a sentence $\sigma$ such that $\sigma\in \mathrm{Th}\mathfrak{R}$ but $\sigma$ is not deducible from $A$.
+  Let $A\subseteq \mathrm{Th}\mathfrak{N}$, and assume that $\{\sharp\alpha|\alpha\in A\}$ is a set definable in $\mathfrak{N}$. Then we can find a sentence $\sigma$ such that $\sigma\in \mathrm{Th}\mathfrak{N}$ but $\sigma$ is not deducible from $A$.
 \end{reference}
+
+\begin{proof}
+  We construct $\sigma$ to express that $\sigma$ itself is not a theorem of $A$. Thus if $A\vdash \sigma$, then what $\sigma$ says is false, contradicting the fact that $A$ consists of true sentences. And so $A\not\vdash \sigma$, whence $\sigma$ is true.
+
+  To begin with, consider ternary relation $R$: $\langle a,b,c\rangle\in R$ iff $a$ is the G\"odel number of some formula $\alpha$ and $c$ is the value of $\mathcal G$ at some deduction from $A$ of $\alpha(\mathrm{S}^b \mathrm{0}).$ We use here the notation: $\varphi(t)=\varphi_t^{v_1},\varphi(t_1,t_2)=(\varphi_{t_1}^{v_1})_{t_2}^{v_2}$, and so forth.
+
+  Then because $\{\sharp \alpha|\alpha\in A\}$ is definable in $\mathfrak N$, it follows that $R$ is definable also. Let $\rho$ be a formula that defines $R$ in $\mathfrak N$. Let $q$ be the G\"odel number of
+  \[
+    \forall v_3\neg \rho(v_1,v_1,v_3).
+  \]
+  Then let $\sigma$ be
+  \[
+    \forall v_3\neg \rho(\mathrm{S}^q \mathrm{0},\mathrm{S}^q \mathrm{0},v_3).
+  \]
+  Thus $\sigma$ says that no number is the value of $\mathcal G$ at a deduction from $A$ of the result of replacing, in formula number $q$, the variable $v_1$ by the numeral for $q$; i.e., no number is the value of $\mathcal G$ at a deduction of $\sigma$.
+
+  Suppose that there is a deduction of $\sigma$ from $A$. Let $k$ be the value of $\mathcal G$ at a deduction. Then $\langle q,q,k\rangle\in R$ and hence
+  \[
+    \vDash_{\mathfrak N}\rho(\mathrm{S}^q \mathrm{0},\mathrm{S}^q \mathrm{0},\mathrm{S}^k \mathrm{0}).
+  \]
+  And by
+  \[
+    \sigma\vdash\neg\rho(\mathrm{S}^q \mathrm{0},\mathrm{S}^q \mathrm{0},\mathrm{S}^k \mathrm{0})
+  \]
+  we have that $\not\vDash_{\mathfrak N}\sigma$. But $A\vdash \sigma$ and the members of $A$ are true in $\mathfrak N$, so we have a contradiction.
+
+  Hence there is no deduction of $\sigma$ from $A$. And so for every $k$, we have that $\langle q,q,k\rangle\notin R$. i.e., $\vDash_{\mathfrak N}\sigma$.
+\end{proof}
+
+% TODO: why does it follow that $R$ is definable?
+
+\begin{reference}{Cor}{c30b}
+  The set $\{\sharp \tau|\vDash_{\mathfrak N}\tau\}$ of G\"odel numbers of sentences true in $\mathfrak N$ is a set that is not definable in $\mathfrak N$.
+\end{reference}
+
+\begin{proof}
+  Say that $\mathrm{Th}\mathfrak N$ is definable. Then take $A=\mathrm{Th}\mathfrak N$ in \ref{t30a}, we will have that $A\vdash \sigma$, obtaining a contradiction.
+\end{proof}
+
+\subsection*{Diagonalization}
+
+An approach that feels less of magic. Define a binary relation $P$ on the natural numbers: $\langle a,b\rangle\in P$ iff $a$ is the G\"odel number of a formula $\alpha(v_1)$ (with just $v_1$ free) and $\vDash_{\mathfrak N}\alpha(\mathrm{S}^b \mathrm{0}).$ (``$\alpha$ is true of $b$.'') Then any set of natural numbers that is definable in $\mathfrak N$ equals, for some $a$, the ``vertical section'' $P_a=\{b|\langle a,b\rangle\in P\}$ of $P$. So any definable set of natural numbers is somewhere on the list $P_1,P_2,\dots$.
+
+Now we ``diagonalize out'' of the list. Define the set $H=\{b|\langle b,b\rangle\notin P\}.$ (``$b$ is not true of $b$.'') Then $H$ is nowhere on the list. ($H\neq P_k$ because $k\in H \Leftrightarrow k\notin P_k$. i.e., $H$ differs from $P_k$ upon $k$.) Therefore $H$ is not definable in $\mathfrak N$.
+
+Yet it should be, defined by
+\[
+  \neg[\left(b\text{ is the G\"odel number of a formula }\alpha(v_1)\right)\wedge\vDash_{\mathfrak N}\alpha(\mathrm{S}^b \mathrm{0})].
+\]
+Then why? An answer is proposed by \ref{t30c}. Thus, we cannot assert a sentence in the language.
+
+%TODO: Is that all?
+
+\begin{reference}{Thm}{t30c}
+  \begin{enumerate}[label=(\alph*)]
+    \item $\{\sharp \tau|\vDash_{\mathfrak N}\tau\}$ is not definable in $\mathfrak N$.
+    \item*$\mathrm{Th}\mathfrak N$ is undecidable.
+    \item*$\mathrm{Th}\mathfrak N$ is not axiomatizable (\ref{axiomatizable}).\qedhere
+  \end{enumerate}
+\end{reference}
+
+\begin{proof}
+  (a): If to the contrary $\mathrm{Th}\mathfrak N$ is definable, then $H$ should be definable. For that say $\varphi$ defines $\mathrm{Th}\mathfrak N$, then we can easily say that $\vDash_{\mathfrak N}\alpha(\mathrm{S}^b \mathrm{0})$ by the sentence $\varphi(\sharp\alpha(\mathrm{S}^b \mathrm{0}))$. Cf. \ref{c30b}.\newline
+  (b): It follows from the argument that every decidable set of natural numbers must be definable in $\mathfrak N$.\newline
+  (c): By \ref{c26i} and (b) and that $\mathrm{Th}\mathfrak N$ is complete.
+\end{proof}
+
+\subsection*{Computability}
+
+\begin{reference}{Thm}{t30d}
+  For any decidable (or even effectively enumerable) set $A$ of axioms, $\mathrm{Cn}A\neq \mathrm{Th}\mathfrak N$. Because the $\mathrm{Cn}A$ is effectively enumerable that $\mathrm{Th}\mathfrak N$ is not.
+\end{reference}
+
+%TODO: show that th N is not effectively enumerable.
+
+\section{Natual Numbers with Successor}
+

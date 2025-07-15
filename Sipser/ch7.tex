@@ -66,10 +66,8 @@ Let $\textit{PATH}=\{\langle G,s,t\rangle|G\text{ is a directed graph with a pat
 \end{reference}
 
 \begin{proof}[Proof Idea]
-  We use BFS. Cf. \ref{edfa}.
+  We use BFS. Cf. \ref{edfa}. Specifically, we mark nodes until all nodes are marked. This takes at most $O(n^4)$ stepes.
 \end{proof}
-
-That BFS is polynomial is nontrivial. (Or it is?)
 
 \begin{reference}{Defn}{nruntime}
   (7.9) Let $N$ be a nondeterministic TM that is a decisider. The \emph{running time} of $N$ is the function $f:\mathbb{N}\to \mathbb{N}$, where $f(n)$ is the maximum number of steps that $N$ uses on any branch of its computation on any input of length $n$.
@@ -131,8 +129,8 @@ For example, a certificate for a string in \textit{HAMPATH} could be a Hamiltoni
 \end{reference}
 
 \begin{proof}[Proof Idea]
-  ($\Leftarrow$) The NTM can simulate the verifier by guessing the certificate.\newline
-  ($\Rightarrow$) Given the NTM and the certificate, the verifier checkes if the certificate indicates an accepting branch of the NTM.
+  ($\Rightarrow$) The verifier can simulate the NTM by guessing the certificate and verifying it.\newline
+  ($\Leftarrow$) Given the NTM and the certificate, we construct a verifier that checkes if the certificate indicates an accepting branch of the NTM.
 \end{proof}
 
 Intuitively,
@@ -178,11 +176,11 @@ Then decide \( A_{\text{CFG}} \) by starting from \( G \)'s start variable.
 Let \textit{SAT} denote all satisfiable boolean formulas.
 
 \begin{reference}{Defn}{preduc}
-  (7.29) $A$ is \emph{polynomial time reducible} to $B$ ($A\leq_p B$) iff $A\leq_m B$ by a reduction function that is computable in polynomial time.
+  (7.29) $A$ is \emph{polynomial time reducible} to $B$ ($A\leq_{\mathrm{P}} B$) iff $A\leq_{\mathrm{m}} B$ by a reduction function that is computable in polynomial time.
 \end{reference}
 
 \begin{reference}{Thm}{preducab}
-  If $A\leq_pB$ and $B\in \mathrm{P}$ then $A\in \mathrm{P}$.
+  If $A\leq_{\mathrm{P}}B$ and $B\in \mathrm{P}$ then $A\in \mathrm{P}$.
 \end{reference}
 
 \begin{reference}{Thm}{satpnp}
@@ -197,7 +195,7 @@ We basically attempt to show that all members of NP is polynomial time reducible
   A \emph{literal} is a Boolean variable or its negation. A \emph{clause} is the disjuction of several literals. A formula is in \emph{conjunctive normal form} (CNF), iff it is the conjunction of several clauses. It is a \emph{3cnf-formula} iff all its clauses have 3 literals.
 \end{reference}
 
-Let $\textit{3SAT}=\{\langle \phi\rangle|\phi\text{ is a satisfiable 3cnf-formula}\}$.
+Let $3\textit{SAT}=\{\langle \phi\rangle|\phi\text{ is a satisfiable 3cnf-formula}\}$.
 
 \begin{reference}{Defn}{clique}
   A \emph{clique} in an undirected graph is a fully connected subgraph. A \emph{$k$-clique} is one containing $k$ nodes.
@@ -206,7 +204,7 @@ Let $\textit{3SAT}=\{\langle \phi\rangle|\phi\text{ is a satisfiable 3cnf-formul
 Let $\textit{CLIQUE}=\{\langle G,k\rangle|G\text{ is an undirected graph with a $k$-clique}\}. \textit{CLIQUE}\in \mathrm{NP},$ for that the clique is a certificate.
 
 \begin{reference}{Thm}{3satclique}
-  (7.32) $\textit{3SAT}\leq_p \textit{CLIQUE}$.
+  (7.32) $3\textit{SAT}\leq_{\mathrm{P}} \textit{CLIQUE}$.
 \end{reference}
 
 \begin{proof}[Proof Idea]
@@ -216,7 +214,7 @@ Let $\textit{CLIQUE}=\{\langle G,k\rangle|G\text{ is an undirected graph with a 
 \textit{Comment.} The size of clauses (3 here) does not matter here.
 
 \begin{reference}{Defn}{npcomplete}
-  (7.34) A language \( B \) is \emph{NP-complete} iff (1) \( B\in \mathrm{NP} \), and (2) $\forall A\in \mathrm{NP}, A\leq_p B.$
+  (7.34) A language \( B \) is \emph{NP-complete} iff (1) \( B\in \mathrm{NP} \), and (2) $\forall A\in \mathrm{NP}, A\leq_{\mathrm{P}} B.$
 \end{reference}
 
 If $B$ is NP-complete and $B\in \mathrm{P}$ then $\mathrm{P}=\mathrm{NP}$.
@@ -270,11 +268,11 @@ Importance of NP-completeness: (1) Showing $B$ is NP-complete is evidence of com
 \end{reference}
 
 \begin{reference}{Thm}{sat23sat}
-  (7.42) \textit{3SAT} is NP-complete.
+  (7.42) 3\textit{SAT} is NP-complete.
 \end{reference}
 
 \begin{proof}[Proof Sketch]
-  We show that \textit{SAT}$\leq_p$\textit{3SAT}, by giving a polynomial reduction $f:\varphi\mapsto \varphi'$, where $\varphi\in \textit{SAT}$ and $\varphi'\in \textit{3SAT}$, preserving satisfiability (an equivalent conversion would likely take exponential time.)
+  We show that \textit{SAT}$\leq_{\mathrm{P}}$3\textit{SAT}, by giving a polynomial reduction $f:\varphi\mapsto \varphi'$, where $\varphi\in \textit{SAT}$ and $\varphi'\in 3\textit{SAT}$, preserving satisfiability (an equivalent conversion would likely take exponential time.)
 
   First conduct the trivial and equivalent convertion that makes sure negation only occurs on leaves of the construction tree of a formula. Then assign a new variable to each binary conjunction (or disjunction) that is satisfiable iff the conjunction (or disjunction) is satisfiable. For conjunction we have $a\wedge b$ is satisfiable iff $c$ is satisfiable, where $c$ is s.t.
   \[
@@ -350,18 +348,18 @@ Importance of NP-completeness: (1) Showing $B$ is NP-complete is evidence of com
 \end{reference}
 
 \begin{proof}[Proof Idea]
-  We simulate variables and clauses with ``gadgets'' made of subgraphs to reduce \textit{3SAT} to \textit{HAMPATH}. See page 314 for how this is done. Basically, the direction (zig-zag or zag-zig) in which the path goes through variables gadgets is the truth assignment.And clause gadgets are add so that if any of them is passed through, one of the corresponding literals should be assigned True.
+  We simulate variables and clauses with ``gadgets'' made of subgraphs to reduce 3\textit{SAT} to \textit{HAMPATH}. See page 314 for how this is done. Basically, the direction (zig-zag or zag-zig) in which the path goes through variables gadgets is the truth assignment.And clause gadgets are add so that if any of them is passed through, one of the corresponding literals should be assigned True.
 \end{proof}
 
 \begin{reference}{Defn}{nphard}
-  A language $B$ is \emph{NP-hard} iff $\forall A\in \mathrm{NP}, A\leq_p B$.
+  A language $B$ is \emph{NP-hard} iff $\forall A\in \mathrm{NP}, A\leq_{\mathrm{P}} B$.
 \end{reference}
 
 \section*{Exercises and Problems}
 
 \setcounter{exercise}{12}
 
-\begin{exercise}{7.13}
+\begin{exercise}
   Question to fill in.
 \end{exercise}
 
@@ -369,7 +367,7 @@ Importance of NP-completeness: (1) Showing $B$ is NP-complete is evidence of com
 
 \setcounter{exercise}{14}
 
-\begin{exercise}{7.15}
+\begin{exercise}
   Show that P is closed under the star operation.
 \end{exercise}
 
@@ -377,7 +375,7 @@ Importance of NP-completeness: (1) Showing $B$ is NP-complete is evidence of com
 
 \setcounter{exercise}{17}
 
-\begin{exercise}{7.18}
+\begin{exercise}
   Show that if $\mathrm{P}=\mathrm{NP}$, then every language $A\in \mathrm{P}$, except $A=\emptyset$ and $A=\Sigma^*$, is NP-complete.
 \end{exercise}
 
@@ -385,19 +383,19 @@ Consider $B\in \mathrm{P}$ that is neither $\emptyset$ nor $\Sigma^*$. So there 
 
 \setcounter{exercise}{25}
 
-\begin{exercise}{7.26}
+\begin{exercise}
   Question to fill in.
 \end{exercise}
 
 \textcolor{red}{to do}
 
-\begin{exercise}{7.27}
+\begin{exercise}
   Question to fill in.
 \end{exercise}
 
 \textcolor{red}{to do}
 
-\begin{exercise}{7.28}
+\begin{exercise}
   Question to fill in.
 \end{exercise}
 
@@ -406,7 +404,7 @@ Consider $B\in \mathrm{P}$ that is neither $\emptyset$ nor $\Sigma^*$. So there 
 
 \setcounter{exercise}{33}
 
-\begin{exercise}{7.34}
+\begin{exercise}
   Show that $D$ in \ref{10thproblem} is NP-hard.
 \end{exercise}
 
@@ -414,25 +412,25 @@ Consider $B\in \mathrm{P}$ that is neither $\emptyset$ nor $\Sigma^*$. So there 
 
 \setcounter{exercise}{35}
 
-\begin{exercise}{7.36}
+\begin{exercise}
   Question to fill in.
 \end{exercise}
 
 \textcolor{red}{to do}
 
-\begin{exercise}{7.37}
+\begin{exercise}
   Question to fill in.
 \end{exercise}
 
 \textcolor{red}{to do}
 
-\begin{exercise}{7.38}
+\begin{exercise}
   Show that if $\mathrm{P}=\mathrm{NP}$, a polynomial time algorithm exists that produces a satisfying assignment when given a satisfiable Boolean formula.
 \end{exercise}
 
 \textcolor{red}{to do}
 
-\begin{exercise}{7.39}
+\begin{exercise}
   Question to fill in.
 \end{exercise}
 
@@ -440,7 +438,7 @@ Consider $B\in \mathrm{P}$ that is neither $\emptyset$ nor $\Sigma^*$. So there 
 
 \setcounter{exercise}{50}
 
-\begin{exercise}{7.51}
+\begin{exercise}
   Question to fill in.
 \end{exercise}
 

@@ -1,0 +1,284 @@
+\chapter{Vector Spaces}
+
+\section{\texorpdfstring{$\mathbb R^n$ and $\mathbb C^n$}{Rn and Cn}}
+
+\begin{reference}{Defn}{addmultc}
+  \textit{Addition} and \textit{multiplication} on $\mathbb C$ are defined by
+  \begin{align*}
+    (a+bi)+(c+di)     & =(a+c)+(b+d)i     \\
+    (a+bi)\cdot(c+di) & =(ac-bd)+(ad+bc)i
+  \end{align*}
+  where $a,b,c,d\in \mathbb R$.
+\end{reference}
+
+By properties of $\mathbb R$ and \ref{addmultc} we obtain properties of $\mathbb C$. By the existence of inverses we define $-\alpha$ and $\frac{1}{\alpha}$, and subtraction and division accordingly.
+
+\begin{reference}{Note}{notations}
+  Use $\mathbb F$ (i.e., fields) to denote either $\mathbb R$ or $\mathbb C$. Elements of $\mathbb F$ are \textit{scalars}. Say that $x_k$ is the $k^{\mathrm{th}}$ \textit{coordinate} of the \textit{list} $(x_1,\dots,x_n)$. Lists, when thought of as arrows, are \textit{vectors}. Addition and scalar multiplication on lists are defined componentwise in the standard way.
+\end{reference}
+
+\subsection*{Exercises}
+
+\setcounter{exercise}{4}
+
+\begin{exercise}
+  Additive inverse of complex arithmetic.
+\end{exercise}
+
+This is due to the additive inverse of real arithmetic.
+
+\begin{exercise}
+  Multiplicative inverse of complex arithmetic.
+\end{exercise}
+
+For $\alpha=a+bi$, where $a\neq0$, we have $\frac{a-bi}{a^2+b^2}$ as the multiplicative inverse of $\alpha$. Thus one exists. Also all the multiplicative inverses of $\alpha$ equals it by real arithmetic.
+
+\setcounter{exercise}{7}
+
+\begin{exercise}
+  Find two distinct square roots of $i$.
+\end{exercise}
+
+We solve the equation $\left(a+bi\right)^2=i$ to get $\pm\left(\frac{\sqrt{2}}{2}+\frac{\sqrt{2}}{2}i\right)$.
+
+\section{Definition of Vector Space}
+
+We need a space where things act like vectors, which is defined as follows.
+
+\begin{reference}{Defn}{vectorspace}
+  A \textit{vector space} over a field $\mathbb F$ is a set \( V \) equipped with two operations: vector addition \( + : V \times V \to V \), and scalar multiplication \( \cdot : \mathbb F \times V \to V \), satisfying the following axioms:
+  \begin{enumerate}
+    \item \((V, +)\) is an abelian group, i.e.:
+          \begin{enumerate}
+            \item (Associativity) \( u + (v + w) = (u + v) + w \) for all \( u, v, w \in V \),
+            \item (Commutativity) \( u + v = v + u \) for all \( u, v \in V \),
+            \item (Identity) There exists an element \( 0 \in V \) such that \( v + 0 = v \) for all \( v \in V \),
+            \item (Inverses) For each \( v \in V \), there exists an element \( -v \in V \) such that \( v + (-v) = 0 \).
+          \end{enumerate}
+    \item Scalar multiplication satisfies:
+          \begin{enumerate}
+            \item (Multiplicative identity) \( 1 \cdot v = v \) for all \( v \in V \),
+            \item (Associativity) \( a \cdot (b \cdot v) = (ab) \cdot v \) for all \( a, b \in \mathbb F \), \( v \in V \),
+            \item (Distributivity over vector addition) \( a \cdot (u + v) = a \cdot u + a \cdot v \) for all \( a \in \mathbb F \), \( u, v \in V \),
+            \item (Distributivity over field addition) \( (a + b) \cdot v = a \cdot v + b \cdot v \) for all \( a, b \in \mathbb F \), \( v \in V \).\qedhere
+          \end{enumerate}
+  \end{enumerate}
+\end{reference}
+
+The simplest vector space is $\{0\}$.
+
+\begin{reference}{Defn}{vectorpoint}
+  Elements of a vector space are called \textit{vectors} or \textit{points}.
+\end{reference}
+
+\begin{reference}{Eg}{functionvectorspace}
+  For $f,g\in \mathbb F^S$ and $\lambda\in \mathbb F$, $f+g\in \mathbb F^S$ is defined by $\forall x\in S, (f+g)(x)=f(x)+g(x)$ and $\lambda f\in \mathbb F^S$ by $\forall x(\lambda f)(x)=\lambda f(x)$. If $S\neq\emptyset$, then $\mathbb F^S$ is a vector space over $\mathbb F$. The vector space $\mathbb F^n$ is a special case of $\mathbb F^S$, where $S=\{1,2,\dots,n\}$.
+\end{reference}
+
+\begin{reference}{Thm}{uniqueadditiveidentity}
+  A vector space has a unique additive identity.
+\end{reference}
+
+\begin{proof}
+  Suppose 0 and $0'$ are both additive identities for some vector space $V$. Then
+  \[
+    0'=0'+0=0+0'=0.\qedhere
+  \]
+\end{proof}
+
+\begin{reference}{Thm}{uniqueadditiveinverse}
+  Every element in a vector space has a unique additive inverse.
+\end{reference}
+
+\begin{proof}
+  Suppose $a\in V$ has two additive inverses $b$ and $c$. Then
+  \[
+    b=b+(a+c)=(b+a)+c=c.\qedhere
+  \]
+\end{proof}
+
+Notations like $-v$ and $w-v$ make sense due to the uniqueness of additive inverses. From now on, $V$ denotes a vector space over $\mathbb F$.
+
+\begin{reference}{Thm}{0timesvec}
+  $\forall v\in V, 0v=0.$
+\end{reference}
+
+\begin{proof}
+  We have for any $v\in V$
+  \[
+    0v=(0+0)v=0v+0v.
+  \]
+  Adding the additive inverse of $0v$ to both sides of the equation above gives $0=0v$.
+\end{proof}
+
+\textit{Comment.} We \textit{have} to use distributivity for that's where vector addition and scalar multiplication are connected in \ref{vectorspace}. The first equation holds because $0\in \mathbb F$.
+
+\begin{reference}{Thm}{scalartimes0}
+  $\forall a\in \mathbb F, a0=0.$
+\end{reference}
+
+\begin{proof}
+  We have for any $a\in \mathbb F$
+  \[
+    a0=a(0+0)=a0+a0.
+  \]
+  Adding the additive inverse of $a0$ to both sides of the equation above gives $0=a0$.
+\end{proof}
+
+Similarly, $0=(1+(-1))v$ gives us
+
+\begin{reference}{Thm}{-1v=-v}
+  $\forall v\in V, (-1)v=-v.$
+\end{reference}
+
+\subsection*{Exercises}
+
+\begin{exercise}
+  Prove that $\forall v\in V, -(-v)=v.$
+\end{exercise}
+
+$0=(-v)+(-(-v))=v+(-v).$
+
+\begin{exercise}
+  Suppose $a\in \mathbb F,v\in V,$ and $av=0.$ Prove that $a=0$ or $v=0$.
+\end{exercise}
+
+If $a\neq0$ we have that $v=(a\cdot \frac{1}{a})v=\frac{1}{a}\cdot(av)=0$, which is equivalent to what we are asked to prove.
+
+\setcounter{exercise}{4}
+
+\begin{exercise}
+  Show that (d) of item 1 in \ref{vectorspace} can be replaced with \ref{0timesvec}.
+\end{exercise}
+
+We are to show the existence of additive inverse from \ref{0timesvec} and the rest of \ref{vectorspace}.
+\[
+  0=0v=(1-1)v=v+(-1)v.
+\]
+Thus the additive inverse of $v$ exists, namely $(-1)v$.
+
+\begin{exercise}
+  Let $\infty$ and $-\infty$ denote two distinct objects, neither of which is in $\mathbb{R}$. Define an addition and scalar multiplication on $\mathbb{R} \cup \{\infty, -\infty\}$: the sum and product of two real numbers is as usual, and for $t \in \mathbb{R}$ define
+  \[
+    t \infty =
+    \begin{cases}
+      -\infty & \text{if } t < 0, \\
+      0       & \text{if } t = 0, \\
+      \infty  & \text{if } t > 0,
+    \end{cases}
+    \quad
+    t(-\infty) =
+    \begin{cases}
+      \infty  & \text{if } t < 0, \\
+      0       & \text{if } t = 0, \\
+      -\infty & \text{if } t > 0,
+    \end{cases}
+  \]
+  and
+  \[
+    \begin{aligned}
+      t + \infty         & = \infty + t = \infty + \infty = \infty,           \\
+      t + (-\infty)      & = (-\infty) + t = (-\infty) + (-\infty) = -\infty, \\
+      \infty + (-\infty) & = (-\infty) + \infty = 0.
+    \end{aligned}
+  \]
+  With these operations of addition and scalar multiplication, is $\mathbb{R} \cup \{\infty, -\infty\}$ a vector space over $\mathbb{R}$? Explain.
+\end{exercise}
+
+Consider $(\mathbb R\cup\{\infty,-\infty\},+)$. Commutativity and existence of identity and inverses holds by definition. However $(u,v,w)=(3,\infty,-\infty)$ violates commutativity, hence $(\mathbb R\cup\{\infty,-\infty\},+)$ is not an abelian group, thus $\mathbb{R} \cup \{\infty, -\infty\}$ not a vector space.
+
+\setcounter{exercise}{7}
+
+\begin{exercise}
+  Suppose $V$ is a real vector space.
+
+  \begin{itemize}
+    \item The \emph{complexification} of $V$, denoted by $V_{\mathbb{C}}$, equals $V \times V$. An element of $V_{\mathbb{C}}$ is an ordered pair $(u, v)$, where $u, v \in V$, but we write this as $u + iv$.
+
+    \item Addition on $V_{\mathbb{C}}$ is defined by
+          \[
+            (u_1 + iv_1) + (u_2 + iv_2) = (u_1 + u_2) + i(v_1 + v_2)
+          \]
+          for all $u_1, v_1, u_2, v_2 \in V$.
+
+    \item Complex scalar multiplication on $V_{\mathbb{C}}$ is defined by
+          \[
+            (a + bi)(u + iv) = (au - bv) + i(av + bu)
+          \]
+          for all $a, b \in \mathbb{R}$ and all $u, v \in V$.
+  \end{itemize}
+
+  Prove that with the definitions of addition and scalar multiplication as above, $V_{\mathbb{C}}$ is a complex vector space.
+\end{exercise}
+
+We verify each of the requirements specified by \ref{vectorspace} by properties of $V$ as an vector space, very much like verifying the properties of $\mathbb C$ by those of $\mathbb R$.
+
+\textit{Comment}. Think of $V$ as a subset of $V_{\mathbb C}$ by identifying $u\in V$ with $u+i0$. The construction of $V_{\mathbb C}$ can then be thought of as generalizing the construction of $\mathbb C^n$ from $\mathbb R^n$ (thought of as a subset of $\mathbb C^n$.)
+
+\section{Subspaces}
+
+\begin{reference}{Defn}{subspace}
+  A subset $U$ of $V$ is called a \textit{subspace} of $V$ if $U$ is also a vector space with the same additive identity, addition, and scalar multiplication as on $V$.
+\end{reference}
+
+\begin{reference}{Thm}{subspacecondition}
+  $U\subseteq V$ is a subspace of $V$ iff it (1) has the additive identity of $V$ (or is nonempty, because we can take $u\in U$ then $0u\in U$.), (2) is closed under addtion, and (3) is closed under scalar multiplication.
+\end{reference}
+
+\begin{proof}
+  Both directions hold by definition. In paticular, closure ensures that addition and multiplication are reasonably defined ($U\times U\to U$ and $\mathbb F\times U\to U$) and properties such as associativity hold because they hold on $V$ and $U\subseteq V$.
+\end{proof}
+
+\begin{reference}{Eg}{egsubspaces}
+  The set of differentiable real-valued functions $f$ on the interval (0,3) such that $f'(2)=b$ is a subspace of $\mathbb R^{(0,3)}$ iff $b=0$ for closure under scalar multiplication, which shows the linear structure underlying parts of calculus. The subspaces of $\mathbb R^2$ are precisely $\{0\}$ all lines in $\mathbb R^2$ containing the origin and $\mathbb R$, which intuitively justifies the word ``linear''.
+\end{reference}
+
+% TODO: prove this
+
+\begin{reference}{Defn}{sumsubspace}
+  Suppose $V_1,\dots,V_m$ are subspaces of $V$. The \textit{sum} of them is
+  \[
+    V_1+\cdots+V_m=\{v_1+\cdots+v_m|\bigwedge v_i\in V_i\}\qedhere
+  \]
+\end{reference}
+
+\begin{reference}{Thm}{sumsubspacesmallest}
+  Suppose $V_1,\dots,V_m$ are subspaces of $V$. Then $V_1+\cdots+V_m$ is the smallest subspace of $V$ containing $V_1,\dots,V_m$.
+\end{reference}
+
+\begin{proof}
+  That $V_1+\cdots+V_m$ is a subspace and contains $V_1,\dots,V_m$ is trivial. Suppose that $V'$ contains $V_1,\dots,V_m$ and is a subspace. By \ref{sumsubspace} and closure under addition we have that $V_1+\dots+V_m\subseteq V'$, thus the minimality.
+\end{proof}
+
+\begin{reference}{Defn}{directsum}
+  Suppose $V_1,\dots,V_m$ are subspaces of $V$. The sum $V_1+\cdots+V_m$ is called a \textit{direct sum} if each element of $V_1+\cdots+V_m$ can be written in only one way as a sum $v_1+\cdots+v_m$ where each $v_k\in V_k$, denoted $V_1\oplus\cdots\oplus V_m$.
+\end{reference}
+
+The definition of direct sum requires every vector in the sum to have a unique representation as an appropriate sum.
+
+\begin{reference}{Thm}{directsumcondition}
+  Suppose $V_1,\dots,V_m$ are subspaces of $V$. Then $V_1+\cdots+V_m$ is a direct sum iff the only way to write 0 as a sum $v_1+\cdots+v_m$, where each $v_k\in V_k$, is by taking each $v_k$ equal to 0.
+\end{reference}
+
+\begin{proof}
+  ($\Rightarrow$ is trivial. Consider $\Leftarrow$.)
+  Suppose for sake of contradiction that $V_1+\cdots+V_m$ is \textit{not} a direct sum. Then there exists $v\in V_1+\cdots+V_m$ such that $v=v_1'+\cdots+v_m'=v_1''+\cdots+v_m''$, where $v_k'\in V_k$ and $v_k''\in V_k$ for each $k$ and $(v_1',\dots,v_m')\neq(v_1'',\dots,v_m'')$. Then we have $0=(v_1'-v_1'')+\cdots+(v_m'-v_m'')$ and at least a $j$ such that $v_j'-v_j''\neq0$. Hence contradiction.
+\end{proof}
+
+\begin{reference}{Thm}{directsumoftwosubspaces}
+  Suppose $U$ and $W$ are subspaces of $V$. Then
+  \[
+    U+W\text{ is a direct sum}\Leftrightarrow U\cap W=\{0\}.\qedhere
+  \]
+\end{reference}
+
+\begin{proof}
+  $\Rightarrow:$ Say that $v\in U\cap W$ and $v\neq0$, then $0=v+(-v)$, where $v\in U$ and $-v\in W$, hence $U+W$ is not a direct sum, and contradiction.\newline
+  $\Leftarrow:$ Say that $0=a+b$, where $a\in U$, $b\in W$, and $a\neq 0$. Then $b=-a\in U$. Hence $b\in U\cap W$ and $b\neq 0$, and contradiction.
+\end{proof}
+
+Sums of subspaces are analogous to unions of subsets. Similarly, direct sums of subspaces are analogous to disjoint unions of subsets.
+
+% TODO: are these notions isomorphic in some sense?
+
+\subsection*{Exercises}

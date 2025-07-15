@@ -102,7 +102,7 @@ If no variable occurs free in the wff $\alpha$ (i.e., if $\bar{h}(\alpha)=\empty
 
 \subsection*{Exercises}
 
-\begin{exercise}{E.2.1.1}
+\begin{exercise}
   Translate from English to the first-order language specified as follows. ($\forall$, for all things; $N$, is a number; $I$, interesting; $<$, is less than; $0$, a constant symbol intended to denote zero.)
   \begin{enumerate}[label=(\alph*)]
     \item Zero is less than any number.
@@ -135,7 +135,7 @@ If no variable occurs free in the wff $\alpha$ (i.e., if $\bar{h}(\alpha)=\empty
         \)
 \end{enumerate}
 
-\begin{exercise}{E.2.1.2}
+\begin{exercise}
   Translate with the language specified in \ref{E.2.1.1} $\forall x(Nx\rightarrow Ix\rightarrow\neg\forall y(Ny\rightarrow Iy\rightarrow\neg x<y))$.
 \end{exercise}
 
@@ -143,7 +143,7 @@ Any interesting number has the property that that it is not less than any inster
 
 \setcounter{exercise}{4}
 
-\begin{exercise}{E.2.1.5}
+\begin{exercise}
   Translate from English to the first-order language specified as follows. ($\forall$ , for all things; $P$, is a person; $T$, is a time; $Fxy$, you can fool $x$ at $y$. One or more of the above may be ambiguous, in which case you will need more than one translation.) (a) You can fool some of the people all of the time. (b) You can fool all of the people some of the time. (c) You can’t fool all of the people all of the time.
 \end{exercise}
 
@@ -151,7 +151,7 @@ Any interesting number has the property that that it is not less than any inster
 
 \setcounter{exercise}{8}
 
-\begin{exercise}{E.2.1.9}
+\begin{exercise}
   Question to fill in.
 \end{exercise}
 
@@ -452,7 +452,7 @@ An \textit{automorphism} of the structure $\mathfrak{A}$ is an isomorphism of $\
 
 \subsection*{Exercises}
 
-\begin{exercise}{E.2.2.1}
+\begin{exercise}
   Show that (a) $\Gamma;\alpha\vDash \varphi$ iff $\Gamma\vDash(\alpha\to \varphi)$; and (b) $\varphi\vDash\Dashv \psi$ iff $\vDash(\varphi \leftrightarrow \psi).$
 \end{exercise}
 
@@ -467,7 +467,7 @@ An \textit{automorphism} of the structure $\mathfrak{A}$ is an isomorphism of $\
   \item This should be a specification of (a), and is omitted for brevity.
 \end{enumerate}
 
-\begin{exercise}{E.2.2.2}
+\begin{exercise}
   Question to fill in.
 \end{exercise}
 
@@ -478,8 +478,11 @@ Observe that $P$ is a transitive relation in (a), an antisymmetric one in (b) an
   \item $(\mathbb{Z}_{>0}, |)$, where $|$ is the ``divides'' relation on positive integers.
 \end{enumerate}
 
-\begin{exercise}{E.2.2.3}
-  Question to fill in.
+\begin{exercise}
+  Show that
+  \[
+    \{\forall x(\alpha\to \beta),\forall x \alpha\}\vDash\forall x \beta.\qedhere
+  \]
 \end{exercise}
 
 Consider a fixed $\mathfrak{A}$ and $s$, for every $d\in|\mathfrak{A}|$,
@@ -490,15 +493,15 @@ Consider a fixed $\mathfrak{A}$ and $s$, for every $d\in|\mathfrak{A}|$,
   \Rightarrow     & \vDash_{\mathfrak{A}}\beta[s(x|d)]                                                                                               \\
   \Leftrightarrow & \vDash_{\mathfrak{A}}\forall x\ \beta[s].
 \end{align*}
-Thus $\{\forall x(\alpha\rightarrow \beta),\forall x\ \alpha\}\vDash\forall x\ \beta$. One should note that the $\wedge$ and $\Leftrightarrow$ and $\Rightarrow$ used in this proof are only simplifications of meta-reasoning in English. The Same works for many exercises (for example, \ref{E.2.2.1}).
+Thus $\{\forall x(\alpha\rightarrow \beta),\forall x\ \alpha\}\vDash\forall x\ \beta$. One should note that the $\wedge$ and $\Leftrightarrow$ and $\Rightarrow$ used in this proof are only simplifications of meta-reasoning in English. The same works for many exercises (for example, \ref{E.2.2.1}).
 
-\begin{exercise}{E.2.2.4}
+\begin{exercise}
   Show that if $x$ does not occur free in $\alpha$, then $\alpha\vDash\forall x \alpha$.
 \end{exercise}
 
-Consider a fixed $\mathfrak{A}$ and $s$. For every $d\in|\mathfrak{A}|$, we have that $s$ and $s(x|d)$ agree at all free variables of $\alpha$, and by \ref{t22a} $\vDash_{\mathfrak{A}}\alpha[s]\Leftrightarrow\ \vDash_{\mathfrak{A}}\alpha[s(x|d)]\Leftrightarrow\ \vDash_{\mathfrak{A}}\forall x\ \alpha[s].$
+Consider a fixed $\mathfrak{A}$ and $s$. For every $d\in|\mathfrak{A}|$, we have that $s$ and $s(x|d)$ agree at all free variables of $\alpha$, then by \ref{t22a} $\vDash_{\mathfrak{A}}\alpha[s]\Leftrightarrow\ \vDash_{\mathfrak{A}}\alpha[s(x|d)]\Leftrightarrow\ \vDash_{\mathfrak{A}}\forall x\ \alpha[s].$
 
-\begin{exercise}{E.2.2.5}
+\begin{exercise}
   Question to fill in.
 \end{exercise}
 
@@ -511,13 +514,13 @@ By \ref{E.2.2.1} it suffices to show that $\{=xy, Pzfx\}\vDash Pzfy$. Consider a
 \end{align*}
 Thus $\{=xy, Pzfx\}\vDash Pzfy$.
 
-\begin{exercise}{E.2.2.6}
-  Show that a formula $\theta$ is valid iff $\forall\theta$ is valid.
+\begin{exercise}
+  Show that a formula $\theta$ is valid iff $\forall x\theta$ is valid.
 \end{exercise}
 
-By \ref{E.2.2.4} it suffices to show that if a wff $\varphi$ has free variables then it is not valid. To show that we first prove that for any wff $\varphi$ there exist $\mathfrak{A}$ and $s$ such that $\vDash_{\mathfrak{A}}\varphi[s]$ and then show that if $\varphi$ is not a sentence, there exist $\mathfrak{A}'$ and $s'$ such that $\nvDash_{\mathfrak{A}'}\varphi[s']$. I suppose the above is a working proof sketch but we might as well instead prove this directly for the sake of brevity: Consider a fixed $\mathfrak{A}$ and $s$, $\vDash_{\mathfrak{A}}\varphi[s(x|d)]$ holds for every $d\in|\mathfrak{A}|$ since $\varphi$ is \textit{valid}, and that is exactly $\vDash_{\mathfrak{A}}\forall x\ \varphi$. Thus $\varphi \Leftrightarrow\forall x\ \varphi$.
+By \ref{E.2.2.4} it suffices to show that if a wff $\varphi$ has free variables then it is not valid. To show that we first prove that for any wff $\varphi$ there exist $\mathfrak{A}$ and $s$ such that $\vDash_{\mathfrak{A}}\varphi[s]$ and then show that if $\varphi$ is not a sentence, there exist $\mathfrak{A}'$ and $s'$ such that $\nvDash_{\mathfrak{A}'}\varphi[s']$. I suppose the above is a working proof sketch but we might as well instead prove this directly for the sake of brevity: Consider a fixed $\mathfrak{A}$ and $s$, $\vDash_{\mathfrak{A}}\varphi[s(x|d)]$ holds for every $d\in|\mathfrak{A}|$ since $\varphi$ is \textit{valid}, and that is exactly $\vDash_{\mathfrak{A}}\forall x\ \varphi[s]$. For the other direction we take $d=s(x)$. Thus $\varphi \Leftrightarrow\forall x\ \varphi$.
 
-\begin{exercise}{E.2.2.7}
+\begin{exercise}
   Restate the definition of ``$\mathfrak{A}$ satisfies $\varphi$ with $s$'' by defining recursively a function $\overline{h}$ such that $\mathfrak{A}$ satisfies $\varphi$ with $s$ iff $s\in \overline{h}(\varphi).$
 \end{exercise}
 
@@ -525,7 +528,7 @@ See \ref{altersatisfaction}.
 
 \setcounter{exercise}{8}
 
-\begin{exercise}{E.2.2.9}
+\begin{exercise}
   Assume that the language has equality and a two-place predicate symbol $P$. For each of the following conditions, find a sentence $\sigma$ such that the structure $\mathfrak{A}$ is a model of $\sigma$ iff the condition is met.
   \begin{enumerate}
     \item $|\mathfrak{A}|$ has exactly two members.
@@ -540,7 +543,7 @@ See \ref{altersatisfaction}.
   \item $\forall x\exists y\forall z\exists p\forall q\forall r(P\ xy\wedge(P\ xz\to y=z)\wedge P\ pq\wedge(P\ rq\to p=r))$.
 \end{enumerate}
 
-\begin{exercise}{E.2.2.10}
+\begin{exercise}
   Show that
   \[
     \models_{\mathfrak{A}} \forall v_2 \, Q v_1 v_2 [ [c^\mathfrak{A}] ] \quad \text{iff} \quad \models_{\mathfrak{A}} \forall v_2 \, Q c v_2.
@@ -550,7 +553,7 @@ See \ref{altersatisfaction}.
 
 See \ref{substitutionl}.
 
-\begin{exercise}{E.2.2.11}
+\begin{exercise}
   For each of the following relations, give a formula which defines it in \((\mathbb{N}; +, \cdot)\). (The language is assumed to have equality and the parameters \(\forall\), \(+\), and \(\cdot\)).
   \begin{enumerate}
     \item \(\{0\}\).
@@ -571,7 +574,7 @@ See \ref{substitutionl}.
 
 \setcounter{exercise}{12}
 
-\begin{exercise}{E.2.2.13}
+\begin{exercise}
   Question to fill in.
 \end{exercise}
 
@@ -579,7 +582,7 @@ Omitted as trivial.
 
 \setcounter{exercise}{15}
 
-\begin{exercise}{E.2.2.16}
+\begin{exercise}
   Give a sentence having models of size $2n$ for every positive integer $n$, but no finite models of odd size. (The language should have equality and whatever parameters you choose.)
 \end{exercise}
 
@@ -590,7 +593,7 @@ Idea: One method is to make a sentence that says, “Everything is either red or
   \item $\forall x\forall y(Ryx\to Rzx)$.
 \end{enumerate}
 
-\begin{exercise}{E.2.2.17}
+\begin{exercise}
   (a) Consider a language with equality whose only parameter (aside from $\forall$) is a two-place predicate symbol $P$. Show that if $\mathfrak{A}$ is finite and $\mathfrak{A}\equiv \mathfrak{B}$ then $\mathfrak{A}$ is isomorphic to $\mathfrak{B}$.
   (b) Show that the result of part (a) holds regardless of what the parameters the language contains.
 \end{exercise}
@@ -599,7 +602,7 @@ Idea: One method is to make a sentence that says, “Everything is either red or
 (b) This is a trivial extension of part (a). We only need to make sure that there is a sentence $\sigma$ that ``describes'' $\mathfrak{A}$ to preserve the parameters, which is feasible when $\mathfrak{A}$ is finite.
 
 \setcounter{exercise}{100}
-\begin{exercise}{E.2.2.a}
+\begin{exercise}
   Consider a language having equality and a binary predicate symbol $R$. Give a sentence $\sigma$ such that \textit{finite} members of Mod $\sigma$ are unions of disjoint directed cycles (by disjoint we mean that no vertices or edges are shared), where $R$ is thought of as the edge relation. Now give an infinite model for $\sigma$.
 \end{exercise}
 
@@ -738,7 +741,7 @@ The converse of $\Rightarrow$ does not hold, because cases exist where a logical
   For $(\Rightarrow)$ we use induction on $\varphi$. For $(\Leftarrow)$ we use \ref{c17a}.
 \end{proof}
 
-The above proof is related to Exercise \ref{E.1.7.6} and \ref{E.1.7.7}. We are using sentential compactness for a possibly uncountable language.
+The above proof is related to \ref{E.1.7.6} and \ref{E.1.7.7}. We are using sentential compactness for a possibly uncountable language.
 
 \subsection*{Deductions and Metatheorems}
 
@@ -775,9 +778,9 @@ The above proof is related to Exercise \ref{E.1.7.6} and \ref{E.1.7.7}. We are u
 \end{reference}
 
 \begin{proof}
-  By \ref{t24b} and Exercise \ref{E.1.2.4}(a) we have that
+  By \ref{t24b} and \ref{E.1.2.4}(a) we have that
   \begin{align*}
-    \Gamma;\gamma\vdash \varphi\Leftrightarrow\  & \Gamma\cup \Lambda;\varphi\text{ tautologically implies }\varphi \\\Leftrightarrow\ &\Gamma\cup \Lambda\text{ tautologically implies }(\gamma\rightarrow \varphi)\\\Leftrightarrow\ &\Gamma\vdash(\gamma\rightarrow \varphi).\qedhere
+    \Gamma;\gamma\vdash \varphi\Leftrightarrow\  & \Gamma\cup \Lambda;\gamma\text{ tautologically implies }\varphi \\\Leftrightarrow\ &\Gamma\cup \Lambda\text{ tautologically implies }(\gamma\rightarrow \varphi)\\\Leftrightarrow\ &\Gamma\vdash(\gamma\rightarrow \varphi).\qedhere
   \end{align*}
 \end{proof}
 
@@ -898,7 +901,7 @@ The author intend to present in this chapter not just a deductive calculus, but 
 
 \subsection*{Exercises}
 
-\begin{exercise}{E.2.4.1}
+\begin{exercise}
   For a term $u$, let $u_t^x$ be the expression obtained from u by replacing the variable $x$ by the term $t$. Restate this definition without using any form of the word “replace” or its synonyms.
 \end{exercise}
 
@@ -906,15 +909,63 @@ See \ref{substiterm}.
 
 \setcounter{exercise}{2}
 
-\begin{exercise}{E.2.4.3}
+\begin{exercise}
   Question to fill in.
 \end{exercise}
 
 See \ref{truchassignmentonprimeformulas}.
 
+\begin{exercise}
+  Show by Hilbert style deduction that $\vdash\forall x \varphi\to\exists x \varphi$.
+\end{exercise}
+
+$\begin{aligned}[t]
+    \vdash\forall x\ \varphi\rightarrow\exists x\ \varphi
+    \Leftarrow & \forall x\ \varphi\vdash \exists x\ \varphi           & \text{by deduction theorem,}         \\
+    \Leftarrow & \forall x\ \varphi\vdash \neg\forall x\ \neg \varphi  & \text{by rewriting,}                 \\
+    \Leftarrow & \forall x\ \neg \varphi \vdash \neg\forall x\ \varphi & \text{by contraposition and rule T,} \\
+    \Leftarrow & \neg \varphi\vdash \neg\forall x\ \varphi             & \text{by Ax.2 and MP,}               \\
+    \Leftarrow & \forall x\ \varphi\vdash \varphi                      & \text{by contraposition and rule T,} \\
+    \Leftarrow & \vdash\forall x\ \varphi\to \varphi                   & \text{by MP, which is Ax.2.}
+  \end{aligned}$
+
+\setcounter{exercise}{6}
+
+\begin{exercise}
+  Show that
+  \begin{enumerate}[label=(\alph*)]
+    \item $\vdash\exists x(Px\rightarrow\forall x\ Px);$
+    \item $\{Qx, \forall y(Qy\rightarrow\forall z\ Pz)\}\vdash\forall x\ Px.$\qedhere
+  \end{enumerate}
+\end{exercise}
+
+\begin{enumerate}[label=(\alph*)]
+  \item
+        $\begin{aligned}[t]
+                       & \vdash\exists x(Px\to \forall xPx)                                                                             \\
+            \Leftarrow & \{\forall x\neg(Px\to \forall xPx)\}\text{ is inconsistent}         & \text{by RAA,}                           \\
+            \Leftarrow & \forall x\neg(Px\to \forall xPx)\vdash \forall xPx                                                             \\
+                       & \wedge      \forall x\neg(Px\to \forall xPx)\vdash \neg\forall xPx,                                            \\
+                       & \text{where}                                                                                                   \\
+                       & \forall x\neg(Px\to \forall xPx)\vdash \forall xPx                                                             \\
+            \Leftarrow & \vdash\forall x\neg(Px\to \forall xPx)\to \forall xPx               & \text{by MP,}                            \\
+            \Leftarrow & \vdash\forall x(\neg(Px\to \forall xPx)\to Px)                      & \text{by Ax.3 and MP,}                   \\
+            \Leftarrow & \neg(Px\to \forall xPx)\to Px,                                      & \text{by generalization theorem and MP,} \\
+                       & \text{which is Ax.1, and}                                                                                      \\
+                       & \forall x\neg(Px\to \forall xPx)\vdash \neg\forall xPx,                                                        \\
+            \Leftarrow & \neg(Px\to \forall xPx)\to \neg\forall x Px                         & \text{by Ax.2, which is Ax.1.}
+          \end{aligned}$
+  \item
+        $\begin{aligned}[t]
+            1. & \vdash \forall y(Qy\to \forall zPz)\to Qx\to\forall zPz        & \text{Ax.2.}   \\
+            2. & \{Qx,\forall y(Qy\to\forall zPz)\}\vdash \forall zPz           & \text{1; ded.} \\
+            3. & \{Qx, \forall y(Qy\rightarrow\forall z\ Pz)\}\vdash\forall xPx & \text{EAV.}    \\
+          \end{aligned}$
+\end{enumerate}
+
 \setcounter{exercise}{8}
 
-\begin{exercise}{E.2.4.9}
+\begin{exercise}
   (\textit{Re-replacement})\begin{enumerate}[label=(\alph*)]
     \item Show by two examples that $(\varphi_y^x)_x^y$ is not in general equal to $\varphi$, where the first shows that $x$ may occur in $(\varphi_y^x)_x^y$ at a place where it does not occur in $\varphi$ and the second shows that $x$ may occur in a $\varphi$ at a place where it does not occur in $(\varphi_y^x)_x^y$.
     \item Prove \ref{re-replacementl}.\qedhere
@@ -926,11 +977,66 @@ See \ref{truchassignmentonprimeformulas}.
   \item See \ref{re-replacementl}.
 \end{enumerate}
 
-\begin{exercise}{E.2.4.10}
-  Question to fill in.
+\begin{exercise}
+  Show that $\forall x\forall y\ Pxy\vdash\forall y\forall x\ Pyx.$\qedhere
 \end{exercise}
 
 This is immediate by \ref{t24i}.
+
+\setcounter{exercise}{14}
+
+\begin{exercise}
+  Show that
+  \begin{enumerate}[label=(\alph*)]
+    \item $\exists x\ \alpha\vee\exists x\ \beta \leftrightarrow \exists x(\alpha\vee \beta);$
+    \item $\forall x\ \alpha\vee\forall x\ \beta \rightarrow \forall x(\alpha\vee \beta).$\qedhere
+  \end{enumerate}
+\end{exercise}
+
+\begin{enumerate}[label=(\alph*)]
+  \item
+        $\begin{aligned}[t]
+            \mathrm{a}. & \vdash\exists x\ \alpha\vee\exists x\ \beta\to \exists x(\alpha\vee \beta)                                                                   \\
+            \Leftarrow  & \exists x\ \alpha\vee\exists x\ \beta\vdash \exists x(\alpha\vee \beta)            & \text{by deduction theorem,}                            \\
+            \Leftarrow  & \forall x\neg(\alpha\vee \beta)\vdash\forall x\neg \alpha\wedge\forall x\neg \beta & \text{by contraposition and Ax.1,}                      \\
+                        & \text{which we show directly:}                                                                                                               \\
+            1.          & \vdash\neg(\alpha\vee \beta)_c^x\to\neg \alpha_c^x                                 & \text{Ax.1. $c$ does not occur in $\alpha$ or $\beta$.} \\
+            2.          & \vdash\forall x\neg(\alpha\vee \beta)\to\neg (\alpha\vee\beta)_c^x                 & \text{Ax.2.}                                            \\
+            3.          & \vdash\forall x\neg(\alpha\vee \beta)\to\neg \alpha_c^x                            & \text{1; 2; MP.}                                        \\
+            4.          & \alpha_c^x\vdash\neg\forall x\neg(\alpha\vee \beta)                                & \text{3; ded; contraposition.}                          \\
+            5.          & \exists x \alpha\vdash\neg\forall x\neg(\alpha\vee \beta)                          & \text{4; EI.}                                           \\
+            6.          & \forall x\neg(\alpha\vee \beta)\vdash\forall x\neg\alpha                           & \text{5; contraposition.}                               \\
+            7.          & \forall x\neg(\alpha\vee \beta)\vdash\forall x\neg\beta                            & \text{same as how 6 is deduced.}                        \\
+            8.          & \forall x\neg(\alpha\vee \beta)\vdash\forall x\neg \alpha\wedge\forall x\neg \beta & \text{7; 8; rule T.}                                    \\
+          \end{aligned}$\par
+        $\begin{aligned}[t]
+            \mathrm{b}. & \vdash\exists x(\alpha\vee \beta)\to\exists x \alpha\vee\exists x \beta                                                                                    \\
+            \Leftarrow  & (\alpha\vee \beta)_c^x\vdash\exists x \alpha\vee\exists x \beta                        & \text{by ded and EI ($c$ does not occur in $\alpha$ or $\beta$),} \\
+                        & \text{which we show directly:}                                                                                                                             \\
+            1.          & \forall x\neg \alpha\vdash\neg \alpha_c^x                                              & \text{Ax.2; ded.}                                                 \\
+            2.          & \alpha_c^x\vdash\exists x \alpha                                                       & \text{1; contraposition.}                                         \\
+            3.          & \alpha_c^x\vdash\exists x \alpha\vee\exists x \beta                                    & \text{2; Ax.1; rule T.}                                           \\
+            4.          & \neg(\exists x \alpha\vee \exists x \beta)\vdash\neg \alpha_c^x                        & \text{3; contraposition; Ax.1.}                                   \\
+            5.          & \neg(\exists x \alpha\vee \exists x \beta)\vdash\neg \beta_c^x                         & \text{same as how 4 is deduced.}                                  \\
+            6.          & \neg(\exists x \alpha\vee \exists x \beta)\vdash(\neg \alpha\wedge\neg \beta)_c^x      & \text{4; 5; rule T.}                                              \\
+            7.          & (\alpha\vee \beta)_c^x\vdash \exists x \alpha\vee \exists \beta                        & \text{6; contraposition.}                                         \\
+            \mathrm{c}. & \vdash\exists x \alpha\vee \exists x \beta \leftrightarrow \exists x(\alpha\vee \beta) & \text{a; b; rule T.}
+          \end{aligned}$
+  \item $\begin{aligned}[t]
+                       & \vdash\forall x \alpha\vee\forall x \beta\to\forall x(\alpha\vee \beta)                                                                              \\
+            \Leftarrow & \forall x \alpha\vee \forall x \beta\vdash\forall x(\alpha\vee \beta)               & \text{by deduction theorem,}                                   \\
+            \Leftarrow & \exists x\neg(\alpha\vee \beta)\vdash\exists x \neg \alpha\wedge\exists x\neg \beta & \text{by contraposition and Ax.1,}                             \\
+            \Leftarrow & \neg(\alpha\vee \beta)_c^x\vdash\exists x \neg \alpha\wedge\exists x\neg \beta      & \text{by EI, where $c$ does not occur in $\alpha$ or $\beta$,} \\
+                       & \text{which we show directly:}                                                                                                                       \\
+            1.         & \vdash\forall x \alpha\to \alpha_c^x                                                & \text{Ax.2.}                                                   \\
+            2.         & \forall x \alpha\vdash \alpha_c^x                                                   & \text{1; ded.}                                                 \\
+            3.         & \vdash\alpha_c^x\to (\alpha\vee \beta)_c^x                                          & \text{Ax.1.}                                                   \\
+            4.         & \forall \alpha\vdash(\alpha\vee \beta)_c^x                                          & \text{2; 3; MP.}                                               \\
+            5.         & \neg(\alpha\vee \beta)_c^x\vdash\exists x\neg \alpha                                & \text{4; contraposition.}                                      \\
+            6.         & \neg(\alpha\vee \beta)_c^x\vdash\exists x\neg \beta                                 & \text{same as how 5 is deduced.}                               \\
+            7.         & \neg(\alpha\vee \beta)_c^x\vdash\exists x \neg \alpha\wedge\exists x\neg \beta      & \text{5; 6; rule T.}                                           \\
+          \end{aligned}$
+\end{enumerate}
 
 \input{ch2/sec5.tex}
 
