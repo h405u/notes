@@ -17,7 +17,7 @@ If $\mathcal{S}$ is a set of sets, consider sets \[
 \end{reference}
 In terms of the corresponding subset $R$ of $S\times S$, ‘reflexivity’ says that the diagonal is contained in $R$; ‘symmetry’ says that $R$ is unchanged if flipped about the diagonal; while unfortunately ‘transitivity’ does not have a similarly nice pictorial translation.
 
-A \textit{partition} $\mathcal{P}$ of $S$ is a set of disjoint nonempty subsets of $S$ such that $\bigcup_{P\in \mathcal{P}}P=S$. An equivalence relation $\sim$ on $S$ indicates a partion of $S$ and vice versa: for every element $a\in S$, the \textit{equivalence class} of $a$ (w.r.t. $\sim$) is the subset of $S$ defined by $[a]_{\sim}:=\{b\in S|b\sim a\}$, and the equivalence classes form a partition $\mathcal{P}_{\sim}$ of $S$.
+A \textit{partition} $\mathcal{P}$ of $S$ is a set of disjoint nonempty subsets of $S$ such that $\bigcup_{P\in \mathcal{P}}P=S$. An equivalence relation $\sim$ on $S$ indicates a partion of $S$ and vice versa: for every element $a\in S$, the \textit{equivalence class} of $a$ (w.r.t. $\sim$) is the subset of $S$ defined by $[a]_{\sim}:=\{b\in S\mid b\sim a\}$, and the equivalence classes form a partition $\mathcal{P}_{\sim}$ of $S$.
 
 \begin{reference}{Defn}{I.1.2}
   The \textit{quotient} of the set $S$ w.r.t. the equivalence relation $\sim$ is the set $S/\sim:=\mathcal{P}_{\sim}$ of equivalence classes of elements of $S$ w.r.t. $\sim$.
@@ -29,7 +29,7 @@ A \textit{partition} $\mathcal{P}$ of $S$ is a set of disjoint nonempty subsets 
   Locate a discussion of Russell’s paradox, and understand it.
 \end{exercise}
 
-Consider set $R=\{x|x\notin x\}$. It follows that $R\in R \Leftrightarrow\neg(R\in R)$. Modern set theories avoid this by restricting the comprehension principle, which states that for any property, there is a set of all things satisfying that property.
+Consider set $R=\{x\mid x\notin x\}$. It follows that $R\in R \Leftrightarrow\neg(R\in R)$. Modern set theories avoid this by restricting the comprehension principle, which states that for any property, there is a set of all things satisfying that property.
 
 \begin{exercise}
   Prove that if $\sim$ is an equivalence relation on a set $S$, $\mathcal{P}_{\sim}$ is a partition of $S$.
@@ -63,8 +63,8 @@ A minimal example should be $\{(a,b),(b,a),(b,c),(c,b)\}$ on $\{a,b,c\}$. Note t
 
 The proofs are trivial.
 \begin{align*}
-  \mathbb{R}/\sim=                     & \{\{x+k|k\in \mathbb{Z}\}|x\in[0,1)\subseteq\mathbb{R}\}.                      \\
-  \mathbb{R}\times \mathbb{R}/\approx= & \{\{(x+k_1,y+k_2)|, k_1,k_2\in \mathbb{Z}\}|x,y\in[0,1)\subseteq \mathbb{R}\}.
+  \mathbb{R}/\sim=                     & \{\{x+k\mid k\in \mathbb{Z}\}\mid x\in[0,1)\subseteq\mathbb{R}\}.                    \\
+  \mathbb{R}\times \mathbb{R}/\approx= & \{\{(x+k_1,y+k_2)\mid k_1,k_2\in \mathbb{Z}\}\mid x,y\in[0,1)\subseteq \mathbb{R}\}.
 \end{align*}
 
 \section{Functions between sets}
@@ -73,7 +73,7 @@ A common thread for just about every structure to be introduced will be to try t
 
 Sets interact with each other through \textit{functions}. The \textit{graph} of a function $f$ from a set $A$ to a set $B$ is a subset of $A\times B$:
 \[
-  \Gamma_f:=\{(a,b)\times A\in B|b=f(a)\}\subseteq A\times B.
+  \Gamma_f:=\{(a,b)\times A\in B\mid b=f(a)\}\subseteq A\times B.
 \]
 Given distinction between the source and the target of $f$, $f$ is exactly $\Gamma_f$. Think of $f$ in `dynamic' terms, as a way to `go from $A$ to $B$'. Require that $(\forall a\in A)(\exists !b\in B)(a,b)\in \Gamma_f$.
 
@@ -81,7 +81,7 @@ $B^A$ denotes the set of all functions from $A$ to $B$, which is a special subse
 
 Define $\mathrm{id}_A:A\rightarrow A$ by $(\forall a\in A)\mathrm{id}_A(a)=a$.
 
-If $S\subseteq A$, denote by $f(S)$ the subset of $B$ defined by $f(S):=\{b\in B|(\exists a\in S)b=f(a)\}$. $f(A)$ is called the \textit{image} of $f$, denoted `$\mathrm{im}f$'.
+If $S\subseteq A$, denote by $f(S)$ the subset of $B$ defined by $f(S):=\{b\in B\mid(\exists a\in S)b=f(a)\}$. $f(A)$ is called the \textit{image} of $f$, denoted `$\mathrm{im}f$'.
 
 Define $f|_{S}:S\rightarrow B$ by $(\forall s\in S):f|_{S}(s)=f(s)$. So $f|_S=f\circ i$, where $i:S\rightarrow A$ is the inclusion. Also $f(S)=\mathrm{im}\ f|_S$.
 

@@ -11,10 +11,10 @@
   where $a,b,c,d\in \mathbb R$.
 \end{reference}
 
-By properties of $\mathbb R$ and \ref{addmultc} we obtain properties of $\mathbb C$. By the existence of inverses we define $-\alpha$ and $\frac{1}{\alpha}$, and subtraction and division accordingly.
+By properties of $\mathbb R$ and \ref{addmultc} we obtain properties of $\mathbb C$. By the existence of inverses we define $-\alpha$ and $\displaystyle\frac{1}{\alpha}$, and subtraction and division accordingly.
 
 \begin{reference}{Note}{notations}
-  Use $\mathbb F$ (i.e., fields) to denote either $\mathbb R$ or $\mathbb C$. Elements of $\mathbb F$ are \textit{scalars}. Say that $x_k$ is the $k^{\mathrm{th}}$ \textit{coordinate} of the \textit{list} $(x_1,\dots,x_n)$. Lists, when thought of as arrows, are \textit{vectors}. Addition and scalar multiplication on lists are defined componentwise in the standard way.
+  Use $\mathbb F$ (i.e., fields) to denote either $\mathbb R$ or $\mathbb C$. Elements of $\mathbb F$ are \textit{scalars}. Say that $x_k$ is the $k^{\mathrm{th}}$ \textit{coordinate} of the \textit{list} $(x_1,\dots,x_n)$ ($n$, the \textit{length} of the list, has to be finite). Lists, when thought of as arrows, are \textit{vectors}. Addition and scalar multiplication on lists are defined componentwise in the standard way.
 \end{reference}
 
 \subsection*{Exercises}
@@ -31,7 +31,7 @@ This is due to the additive inverse of real arithmetic.
   Multiplicative inverse of complex arithmetic.
 \end{exercise}
 
-For $\alpha=a+bi$, where $a\neq0$, we have $\frac{a-bi}{a^2+b^2}$ as the multiplicative inverse of $\alpha$. Thus one exists. Also all the multiplicative inverses of $\alpha$ equals it by real arithmetic.
+For $\alpha=a+bi$, where $a\neq0$, we have $\displaystyle\frac{a-bi}{a^2+b^2}$ as the multiplicative inverse of $\alpha$. Thus one exists. Also all the multiplicative inverses of $\alpha$ equals it by real arithmetic.
 
 \setcounter{exercise}{7}
 
@@ -39,7 +39,7 @@ For $\alpha=a+bi$, where $a\neq0$, we have $\frac{a-bi}{a^2+b^2}$ as the multipl
   Find two distinct square roots of $i$.
 \end{exercise}
 
-We solve the equation $\left(a+bi\right)^2=i$ to get $\pm\left(\frac{\sqrt{2}}{2}+\frac{\sqrt{2}}{2}i\right)$.
+We solve the equation $\left(a+bi\right)^2=i$ to get $\pm\left(\displaystyle\frac{\sqrt{2}}{2}+\frac{\sqrt{2}}{2}i\right)$.
 
 \section{Definition of Vector Space}
 
@@ -143,7 +143,7 @@ $0=(-v)+(-(-v))=v+(-v).$
   Suppose $a\in \mathbb F,v\in V,$ and $av=0.$ Prove that $a=0$ or $v=0$.
 \end{exercise}
 
-If $a\neq0$ we have that $v=(a\cdot \frac{1}{a})v=\frac{1}{a}\cdot(av)=0$, which is equivalent to what we are asked to prove.
+If $a\neq0$ we have that $\displaystyle v=(a\cdot \frac{1}{a})v=\frac{1}{a}\cdot(av)=0$, which is equivalent to what we are asked to prove.
 
 \setcounter{exercise}{4}
 
@@ -238,7 +238,7 @@ We verify each of the requirements specified by \ref{vectorspace} by properties 
 \begin{reference}{Defn}{sumsubspace}
   Suppose $V_1,\dots,V_m$ are subspaces of $V$. The \textit{sum} of them is
   \[
-    V_1+\cdots+V_m=\{v_1+\cdots+v_m|\bigwedge v_i\in V_i\}\qedhere
+    V_1+\cdots+V_m=\{v_1+\cdots+v_m\mid\bigwedge v_i\in V_i\}\qedhere
   \]
 \end{reference}
 
@@ -282,3 +282,93 @@ Sums of subspaces are analogous to unions of subsets. Similarly, direct sums of 
 % TODO: are these notions isomorphic in some sense?
 
 \subsection*{Exercises}
+
+\setcounter{exercise}{5}
+
+\begin{exercise}
+  Is $\{(a,b,c)\in \mathbb R^3\mid a^3=b^3\}$ a subspace of $\mathbb R^3$? How about $\mathbb C^3$?
+\end{exercise}
+
+By $a^3=b^3$ we have that $(a-b)(a^2+ab+b^2)=0$. That is, if $b\neq0$ then $\displaystyle\frac{a}{b}\in\left\{1,\frac{-1\pm\sqrt{3}i}{2}\right\}$. We need a unique $\displaystyle\frac{a}{b}$ so that it is closed under addition, which holds in $\mathbb R$ but not in $\mathbb C$.
+
+\begin{exercise}
+  Prove or give a counterexample: If $U$ is a nonempty subset of $\mathbb{R}^2$ such that $U$ is closed under addition and contains additive inverses, then $U$ is a subspace of $\mathbb{R}^2$.
+\end{exercise}
+
+A counterexample is $\mathbb Z^2$.
+
+\begin{exercise}
+  Give an example of a nonempty subset $U$ of $\mathbb R^2$ such that $U$ is closed under scalar multiplication, but $U$ is not a subspace of $\mathbb R$.
+\end{exercise}
+
+C.f. \ref{Ex.1C.6}. Easily we have that $\{(a,b)\mid a=2b\vee a=b\}$ is not closed under addition. Note that $\{(a,b)\mid a=2b\}+\{(a,b)\mid a=b\}$ is a direct sum, yet their union is not a subspace.
+
+\setcounter{exercise}{11}
+
+\begin{exercise}
+  Prove that the union of two subspaces of $V$ is a subspace of $V$ iff one of the subspaces is a subset of another.
+\end{exercise}
+
+Suppose otherwise that $U$ and $W$ are subspaces of $V$, $u\in U\setminus W$, and $w\in W\setminus U$. Then $u+w\notin U\cup W$, for that otherwise contradiction will arise. Hence $U\cup W$ is not a subspace of $V$.
+
+\begin{exercise}
+  Prove that the union of three subspaces of $V$ is a subspace of $V$ iff one of the subspaces contains the other two.
+\end{exercise}
+
+\textcolor{red}{to do}
+% Suppose that $A,B,C$ are subspaces of $V$, $\overline{a}\in B\cup C\setminus A$, $\overline{b}\in A\cup C\setminus B$, and $\overline{c}\in A\cup B\setminus C$. Suppose without loss of generality that $\overline{a}+\overline{b}+\overline{c}\in B\cup C$. Then $\overline{b}+\overline{c}\in B\cup C$. If $\overline{b}\in C\subseteq B\cup C$ then $\overline{c}\in B$. Then $\overline{b}+\overline{c}\notin B$, for that otherwise we will have $\overline{b}\in B$ and contradiction. Similarly $\overline{b}+\overline{c}\notin C$. Hence $\overline{b}+\overline{c}\notin B\cup C$ and contradiction. Thus $\overline{b}\notin C$ and $\overline{b}\in A$. Similarly $\overline{c}\in A$ and consequently $\overline{b}+\overline{c}\in A$. Now we consider whether or not $\overline{a}+\overline{b}+\overline{c}\in A$. If $\overline{a}+\overline{b}+\overline{c}\in A$ we have that $\overline{a}\in A$ and contradiction. Otherwise
+
+\setcounter{exercise}{17}
+
+\begin{exercise}
+  Does the operation of addition on the subspaces of $V$ have an additive identity? Which subspaces have additive inverses?
+\end{exercise}
+
+$\{0\}$ is \textit{the} additive identity of addition on subspaces of $V$. Also only $\{0\}$ has an additive inverse, namely itself. Suppose otherwise for sake of contradiction that $W\subseteq V$ has an additive inverse $-W$, $w\in W$, and $w\neq0$. Then $w=w+0\in W+(-W)=\{0\}$, hence contradiction.
+
+\begin{exercise}
+  Prove or give a counterexample: If $V_1,V_2,U$ are subspaces of $V$ such that $V_1+U=V_2+U$ then $V_1=V_2$.
+\end{exercise}
+
+$V_1+U=V_2+U$ should always hold, as long as $V_1\subseteq U$ and $V_2\subseteq U$, considering \ref{sumsubspacesmallest}.
+
+\begin{exercise}
+  Suppose $U=\{(x,x,y,y)\in \mathbb F^4\mid x,y\in \mathbb F\}$. Find a subspace $W$ of $\mathbb F^4$ such that $\mathbb F^4=U\oplus W$.
+\end{exercise}
+
+It is easy to verify that $\{(x,-x,y,-y)\in \mathbb F^4\mid x,y\in \mathbb F\}$ suffices.
+
+\begin{exercise}
+  Suppose
+  \[
+    U = \{(x, y, x + y, x - y, 2x) \in \mathbb{F}^5 : x, y \in \mathbb{F} \}.
+  \]
+  Find a subspace \( W \) of \( \mathbb{F}^5 \) such that \( \mathbb{F}^5 = U \oplus W \).
+\end{exercise}
+
+\textcolor{red}{to do}
+
+\begin{exercise}
+  Suppose
+  \[
+    U = \{(x, y, x + y, x - y, 2x) \in \mathbb{F}^5 : x, y \in \mathbb{F} \}.
+  \]
+  Find three subspaces \( W_1, W_2, W_3 \) of \( \mathbb{F}^5 \), none of which equals \( \{0\} \), such that
+  \[
+    \mathbb{F}^5 = U \oplus W_1 \oplus W_2 \oplus W_3.\qedhere
+  \]
+\end{exercise}
+
+\textcolor{red}{to do}
+
+\begin{exercise}
+  Prove or give a counterexample: If $V_1,V_2,U$ are subspaces of $V$ such that $V=V_1\oplus U=V_2\oplus U$ then $V_1=V_2$.
+\end{exercise}
+
+A counterexample is that $V_1=\{(x,0)\mid x\in \mathbb R\}, V_2=\{(x,x)\mid x\in \mathbb R\}, U=\{(0,y)\mid y\in \mathbb R\},$ and $V=\mathbb R^2$. The intuition is well illustrated by the counterexample: there are different sets of vectors that span a plane, which may share same components.
+
+\begin{exercise}
+  Let $V_e$ denote the set of real-valued even functions on $\mathbb R$ and $V_o$ the set of real-valued odd functions. Show that $\mathbb R^{\mathbb R}=V_e\oplus V_o$.
+\end{exercise}
+
+Trivial considering that $f(x)=\displaystyle\frac{1}{2}\left(f(x)+f(-x)\right)+\frac{1}{2}\left(f(x)-f(-x)\right)$.

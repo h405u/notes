@@ -27,16 +27,16 @@
 %   {}
 
 \newcounter{exercise}[chapter]
-\renewcommand{\theexercise}{\thechapter.\arabic{exercise}}
+\renewcommand{\theexercise}{Ex.\thechapter.\arabic{exercise}}
 
-\NewDocumentEnvironment{exercise}{m +b}
+\NewDocumentEnvironment{exercise}{+b}
   {
     \refstepcounter{exercise}
     \renewcommand{\qedsymbol}{$\triangleleft$}
 
-    \noindent\textbf{\theexercise}\label{#1}
+    \noindent\textbf{\arabic{exercise}}\label{\theexercise}
     \pushQED{\qed}
-    #2
+    #1
     \popQED
 
   }
@@ -68,13 +68,12 @@
 
 \mainmatter
 
+\input{ch01.tex}
 \setcounter{chapter}{2}
 \input{ch03.tex}
 
 \backmatter
 \appendix
-% \chapter{Appendix}
-% \input{appendix.tex}
 
 \bibliographystyle{plain}
 \bibliography{references}
