@@ -130,7 +130,7 @@ Note that adding existential quantifiers ahead makes \textit{SAT} a special case
   $B$ is \emph{PSPACE-hard} iff for all $A\in \mathrm{PSPACE},A\leq_{\mathrm{P}} B$, and is \emph{PSPACE-complete} if additionally we have $B\in \mathrm{PSPACE}$.
 \end{reference}
 
-We are not using $\leq_{\mathrm{PSPACE}}$, because it will make \textit{every} language in PSPACE PSPACE-complete, thus uninsteresting. In general, we would not like to make reductions too powerful.
+We are not using $\leq_{\mathrm{PSPACE}}$, for that it will make \textit{every} language in PSPACE PSPACE-complete, thus uninsteresting. In general, we would not like to make reductions too powerful.
 
 \begin{reference}{Thm}{tqbfpspacec}
   \textit{TQBF} is {PSPACE-complete}.
@@ -294,7 +294,7 @@ Note that $\log n$ is the lower threshold for $f(n)$ or $t(n)$, because with les
   \end{proof}
   Switching gears!
 
-  Let $path_d(\langle G,s,t\rangle)=\begin{cases}\text{YES,}&\text{if $G$ has path of length no more than $d$ from $s$ to $t$,}\\ \text{NO,}&\text{if not.}\end{cases}$\newline
+  Let $path_d(\langle G,s,t\rangle)=\begin{cases}\text{YES,}&\text{if $G$ has a path of length $\leq d$ from $s$ to $t$,}\\ \text{NO,}&\text{if not.}\end{cases}$\newline
   Let $R_d(G,s)=\{u|path_d(\langle G,s,u\rangle)=\text{YES}\}$ and $c_d(\langle G,s\rangle)=|R_d(G,s)|$.
 
   Now, with almost the same proof, we have:

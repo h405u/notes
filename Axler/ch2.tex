@@ -28,4 +28,58 @@ The proof is omitted as trivial.
 
 \begin{reference}{Defn}{finitedimensionalvectorspace}
   A vector space is called \textit{finite-dimensional} if some list of vectors in it spans the space.
+  A vector space is called \textit{infinite-dimensional} if it is not finite-dimensional.
 \end{reference}
+
+\begin{reference}{Defn}{polynomial}
+  A function \( p : \mathbb{F} \to \mathbb{F} \) is called a \textit{polynomial} with coefficients in \( \mathbb{F} \) if there exist \( a_0, \ldots, a_m \in \mathbb{F} \) such that
+  \[
+    p(z) = a_0 + a_1 z + a_2 z^2 + \cdots + a_m z^m
+  \]
+  for all \( z \in \mathbb{F} \). \(\mathcal P(\mathbb{F})\) is the set of all polynomials with coefficients in \( \mathbb{F} \).
+\end{reference}
+
+If a polynomial is represented by two set of coefficients, then subtracting one representation of the polynomial from the other produces a polynomial that is identically zero as a function on $\mathbb F$ and hence has all zero coefficients (which is obvious). Thus the coefficients of a polynomial are uniquely determined by the polynomial.
+
+\begin{reference}{Defn}{polynomial degree}
+  A polynomial \( p \in \mathcal{P}(\mathbb{F}) \) is said to have \textit{degree} \( m \) if there exist scalars
+  \( a_0, a_1, \ldots, a_m \in \mathbb{F} \) with \( a_m \ne 0 \) such that for every \( z \in \mathbb{F} \), we have
+  \[
+    p(z) = a_0 + a_1 z + \cdots + a_m z^m.
+  \]
+  The polynomial that is identically \( 0 \) is said to have degree \( -\infty \). The degree of a polynomial \( p \) is denoted by \( \deg p \). For $m$ a nonnegative integer, $\mathcal P_m(\mathbb F)$ denotes the set of all polynomials with coefficients in $\mathbb F$ and degree at most $m$.
+\end{reference}
+
+$\mathcal P_m(\mathbb F)=\mathrm{span}(1,z,\dots,z^m)$ and thus a finite-dimensional vector space for each $m\in \mathbb N$. Consider any list of elements of \( \mathcal{P}(\mathbb{F}) \). Let \( m \) denote the highest degree of the polynomials in this list. Then every polynomial in the span of this list has degree at most \( m \). Thus \( z^{m+1} \) is not in the span of our list. Hence no list spans \( \mathcal{P}(\mathbb{F}) \). Thus \( \mathcal{P}(\mathbb{F}) \) is infinite-dimensional.
+
+\begin{reference}{Defn}{linearlyindependent}
+  A list $v_1,\dots,v_m$ of vectors in $V$ is called \textit{linearly independent} if the only choice of $a_1,\dots,a_m\in \mathbb F$ that makes
+  \[
+    a_1v_1+\cdots+a_mv_m=0
+  \]
+  is $a_1=\cdots=a_m=0$. The empty list $()$ is declared to be linearly independent.
+\end{reference}
+
+$\mathrm{span}(v_1,\dots,v_m)$ is by definition $\mathrm{span}(v_1)+\cdots+ \mathrm{span}(v_m)$ and is a direct sum iff $v_1,\dots,v_m$ is linearly independent. C.f. \ref{directsumcondition}.
+
+If some vectors are removed from a linearly independent list, the remaining list is also linearly independent.
+
+\begin{reference}{Defn}{linearlydependent}
+  A list of vectors in $V$ is called \textit{linearly dependent} if it is not linearly independent.
+\end{reference}
+
+If some vector in a list of vectors in $V$ is a linear combination of the other vectors, then the list is linearly dependent.
+
+\begin{reference}{Thm}{lineardependencelemma}
+  Suppose $v_1, \ldots, v_m$ is a linearly dependent list in $V$. Then there exists
+  $k \in \{1, 2, \ldots, m\}$ such that
+  \[
+    v_k \in \operatorname{span}(v_1, \ldots, v_{k-1}).
+  \]
+  Furthermore, if $k$ satisfies the condition above and the $k^{\text{th}}$ term is removed from
+  $v_1, \ldots, v_m$, then the span of the remaining list equals $\operatorname{span}(v_1, \ldots, v_m)$.
+\end{reference}
+
+\begin{proof}
+
+\end{proof}
